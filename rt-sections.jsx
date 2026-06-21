@@ -1788,7 +1788,7 @@ const Footer = () => (
 );
 
 // ── PAGE ──────────────────────────────────────────────────────
-const ritlumPage = () => (
+const RitlumPage = () => (
   <div style={{ fontFamily: T.font, background: RT.dark }}>
     <Nav />
     <Hero />
@@ -1802,4 +1802,4 @@ const ritlumPage = () => (
   </div>
 );
 
-window.ritlumPage = ritlumPage;
+window.RitlumPage = RitlumPage;
