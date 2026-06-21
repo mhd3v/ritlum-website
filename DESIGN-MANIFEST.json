@@ -25,17 +25,14 @@
       "assets/slices2/06-s.png",
       "assets/slices3/01-s.png",
       "assets/slices3/02-s.png",
-      "ritlumi.html",
+      "ritlum.html",
       "rt-device.jsx",
       "rt-nfc.jsx",
       "rt-phone.jsx",
       "rt-sections.jsx",
       "rt-tokens.jsx"
     ],
-    "html": [
-      "_harness.html",
-      "ritlumi.html"
-    ],
+    "html": ["_harness.html", "ritlum.html"],
     "css": [],
     "scriptsAndComponents": [
       "rt-device.jsx",
@@ -74,7 +71,7 @@
       "implementationNote": "Preserve visual hierarchy, responsive behavior, and interactive states from this screen."
     },
     {
-      "file": "ritlumi.html",
+      "file": "ritlum.html",
       "role": "screen",
       "implementationNote": "Preserve visual hierarchy, responsive behavior, and interactive states from this screen."
     }
@@ -109,9 +106,7 @@
     ]
   },
   "tokens": {
-    "source": [
-      "_harness.html"
-    ],
+    "source": ["_harness.html"],
     "required": [
       "background",
       "surface",

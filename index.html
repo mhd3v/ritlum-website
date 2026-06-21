@@ -1,110 +1,199 @@
 <!doctype html>
 <html lang="en">
-<head>
-  <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>ritlumi — your habits, brought into the light</title>
-  <meta name="description" content="A beautiful habit app and ritlumi, a physical desk tracker that mirrors your progress in glowing light. Tap an NFC token to log a habit." />
+    <head>
+        <meta charset="utf-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1" />
+        <title>ritlum — your habits, brought into the light</title>
+        <meta
+            name="description"
+            content="A beautiful habit app and ritlum, a physical desk tracker that mirrors your progress in glowing light. Tap an NFC token to log a habit."
+        />
 
-  <style>
-    html, body { margin: 0; padding: 0; background: #141217; }
-    * { box-sizing: border-box; }
-    body {
-      font-family: -apple-system, BlinkMacSystemFont, "SF Pro Text", "SF Pro", system-ui, sans-serif;
-      -webkit-font-smoothing: antialiased;
-      text-rendering: optimizeLegibility;
-    }
-    a { -webkit-tap-highlight-color: transparent; }
-    html { scroll-behavior: smooth; }
-    ::selection { background: rgba(91,157,249,0.3); }
+        <style>
+            html,
+            body {
+                margin: 0;
+                padding: 0;
+                background: #141217;
+            }
+            * {
+                box-sizing: border-box;
+            }
+            body {
+                font-family:
+                    -apple-system, BlinkMacSystemFont, "SF Pro Text", "SF Pro",
+                    system-ui, sans-serif;
+                -webkit-font-smoothing: antialiased;
+                text-rendering: optimizeLegibility;
+            }
+            a {
+                -webkit-tap-highlight-color: transparent;
+            }
+            html {
+                scroll-behavior: smooth;
+            }
+            ::selection {
+                background: rgba(91, 157, 249, 0.3);
+            }
 
-    /* device breathing glow: keep this on opacity so the LED matrix is not
+            /* device breathing glow: keep this on opacity so the LED matrix is not
        repainted through a filter on every frame. */
-    @keyframes rt-breathe-kf {
-      0%, 100% { opacity: 0.16; }
-      50%      { opacity: 0.42; }
-    }
-    .rt-breathe {
-      contain: paint;
-      isolation: isolate;
-      overflow: hidden;
-    }
-    .rt-breathe::after {
-      content: "";
-      position: absolute;
-      inset: 0;
-      border-radius: inherit;
-      pointer-events: none;
-      background:
-        radial-gradient(70% 80% at 50% 44%, rgba(255,255,255,0.18), rgba(255,255,255,0.04) 54%, transparent 78%);
-      opacity: 0.16;
-      animation: rt-breathe-kf 4.5s ease-in-out infinite;
-      will-change: opacity;
-      transform: translateZ(0);
-      z-index: 1;
-    }
+            @keyframes rt-breathe-kf {
+                0%,
+                100% {
+                    opacity: 0.16;
+                }
+                50% {
+                    opacity: 0.42;
+                }
+            }
+            .rt-breathe {
+                contain: paint;
+                isolation: isolate;
+                overflow: hidden;
+            }
+            .rt-breathe::after {
+                content: "";
+                position: absolute;
+                inset: 0;
+                border-radius: inherit;
+                pointer-events: none;
+                background: radial-gradient(
+                    70% 80% at 50% 44%,
+                    rgba(255, 255, 255, 0.18),
+                    rgba(255, 255, 255, 0.04) 54%,
+                    transparent 78%
+                );
+                opacity: 0.16;
+                animation: rt-breathe-kf 4.5s ease-in-out infinite;
+                will-change: opacity;
+                transform: translateZ(0);
+                z-index: 1;
+            }
 
-    /* NFC token emitted ripples */
-    @keyframes rt-ripple-kf {
-      0%   { transform: scale(0.85); opacity: 0; }
-      18%  { opacity: 0.7; }
-      100% { transform: scale(2.1); opacity: 0; }
-    }
-    .rt-ripple { animation: rt-ripple-kf 1.5s ease-out infinite; }
+            /* NFC token emitted ripples */
+            @keyframes rt-ripple-kf {
+                0% {
+                    transform: scale(0.85);
+                    opacity: 0;
+                }
+                18% {
+                    opacity: 0.7;
+                }
+                100% {
+                    transform: scale(2.1);
+                    opacity: 0;
+                }
+            }
+            .rt-ripple {
+                animation: rt-ripple-kf 1.5s ease-out infinite;
+            }
 
-    @keyframes rt-fade-up-kf {
-      from { opacity: 0; transform: translateY(8px); }
-      to   { opacity: 1; transform: translateY(0); }
-    }
-    .rt-carousel-arrow { transition: background 200ms ease, box-shadow 200ms ease; }
-    .rt-carousel-arrow:hover { background: #fff; box-shadow: 0 2px 6px rgba(20,20,20,0.08), 0 8px 22px rgba(20,20,20,0.07); }
-    .rt-carousel-dot { transition: width 300ms ease, background 300ms ease; cursor: pointer; }
+            @keyframes rt-fade-up-kf {
+                from {
+                    opacity: 0;
+                    transform: translateY(8px);
+                }
+                to {
+                    opacity: 1;
+                    transform: translateY(0);
+                }
+            }
+            .rt-carousel-arrow {
+                transition:
+                    background 200ms ease,
+                    box-shadow 200ms ease;
+            }
+            .rt-carousel-arrow:hover {
+                background: #fff;
+                box-shadow:
+                    0 2px 6px rgba(20, 20, 20, 0.08),
+                    0 8px 22px rgba(20, 20, 20, 0.07);
+            }
+            .rt-carousel-dot {
+                transition:
+                    width 300ms ease,
+                    background 300ms ease;
+                cursor: pointer;
+            }
 
-    @media (prefers-reduced-motion: reduce) {
-      .rt-breathe::after, .rt-ripple { animation: none !important; }
-      html { scroll-behavior: auto; }
-    }
+            @media (prefers-reduced-motion: reduce) {
+                .rt-breathe::after,
+                .rt-ripple {
+                    animation: none !important;
+                }
+                html {
+                    scroll-behavior: auto;
+                }
+            }
 
-    /* responsive */
-    @media (max-width: 920px) {
-      .rt-trio, .rt-features { grid-template-columns: 1fr 1fr !important; }
-      .rt-features > * { grid-column: span 1 !important; }
-    }
-    @media (max-width: 720px) {
-      .rt-navlinks { display: none !important; }
-      .rt-trio, .rt-features { grid-template-columns: 1fr !important; }
-      .rt-timeline { grid-template-columns: 1fr !important; gap: 36px !important; }
-      .rt-timeline-line { display: none !important; }
-    }
-  </style>
+            /* responsive */
+            @media (max-width: 920px) {
+                .rt-trio,
+                .rt-features {
+                    grid-template-columns: 1fr 1fr !important;
+                }
+                .rt-features > * {
+                    grid-column: span 1 !important;
+                }
+            }
+            @media (max-width: 720px) {
+                .rt-navlinks {
+                    display: none !important;
+                }
+                .rt-trio,
+                .rt-features {
+                    grid-template-columns: 1fr !important;
+                }
+                .rt-timeline {
+                    grid-template-columns: 1fr !important;
+                    gap: 36px !important;
+                }
+                .rt-timeline-line {
+                    display: none !important;
+                }
+            }
+        </style>
 
-  <script src="https://unpkg.com/react@18.3.1/umd/react.production.min.js" crossorigin="anonymous"></script>
-  <script src="https://unpkg.com/react-dom@18.3.1/umd/react-dom.production.min.js" crossorigin="anonymous"></script>
-  <script src="https://unpkg.com/@babel/standalone@7.29.0/babel.min.js" integrity="sha384-m08KidiNqLdpJqLq95G/LEi8Qvjl/xUYll3QILypMoQ65QorJ9Lvtp2RXYGBFj1y" crossorigin="anonymous"></script>
+        <script
+            src="https://unpkg.com/react@18.3.1/umd/react.production.min.js"
+            crossorigin="anonymous"
+        ></script>
+        <script
+            src="https://unpkg.com/react-dom@18.3.1/umd/react-dom.production.min.js"
+            crossorigin="anonymous"
+        ></script>
+        <script
+            src="https://unpkg.com/@babel/standalone@7.29.0/babel.min.js"
+            integrity="sha384-m08KidiNqLdpJqLq95G/LEi8Qvjl/xUYll3QILypMoQ65QorJ9Lvtp2RXYGBFj1y"
+            crossorigin="anonymous"
+        ></script>
 
-  <script type="text/babel" src="rt-tokens.jsx"></script>
-  <script type="text/babel" src="rt-device.jsx"></script>
-  <script type="text/babel" src="rt-phone.jsx"></script>
-  <script type="text/babel" src="rt-nfc.jsx"></script>
-  <script type="text/babel" src="rt-sections.jsx"></script>
-</head>
-<body>
-  <div id="root"></div>
+        <script type="text/babel" src="rt-tokens.jsx"></script>
+        <script type="text/babel" src="rt-device.jsx"></script>
+        <script type="text/babel" src="rt-phone.jsx"></script>
+        <script type="text/babel" src="rt-nfc.jsx"></script>
+        <script type="text/babel" src="rt-sections.jsx"></script>
+    </head>
+    <body>
+        <div id="root"></div>
 
-  <template id="__bundler_thumbnail">
-    <svg viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
-      <rect width="100" height="100" rx="20" fill="#141217" />
-      <g>
-        <circle cx="38" cy="42" r="4.2" fill="#5B9DF9" />
-        <circle cx="54" cy="42" r="4.2" fill="#F0A05A" />
-        <circle cx="38" cy="58" r="4.2" fill="#62C089" />
-        <circle cx="54" cy="58" r="4.2" fill="#E78AAE" />
-      </g>
-    </svg>
-  </template>
+        <template id="__bundler_thumbnail">
+            <svg viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
+                <rect width="100" height="100" rx="20" fill="#141217" />
+                <g>
+                    <circle cx="38" cy="42" r="4.2" fill="#5B9DF9" />
+                    <circle cx="54" cy="42" r="4.2" fill="#F0A05A" />
+                    <circle cx="38" cy="58" r="4.2" fill="#62C089" />
+                    <circle cx="54" cy="58" r="4.2" fill="#E78AAE" />
+                </g>
+            </svg>
+        </template>
 
-  <script type="text/babel" data-presets="react">
-    ReactDOM.createRoot(document.getElementById('root')).render(<RitlumiPage />);
-  </script>
-</body>
+        <script type="text/babel" data-presets="react">
+            ReactDOM.createRoot(document.getElementById("root")).render(
+                <ritlumPage />,
+            );
+        </script>
+    </body>
 </html>

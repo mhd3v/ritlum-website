@@ -64,7 +64,7 @@ For responsive web exports, treat these as a modern breakpoint system for one ad
 
 ## Entry points
 - `_harness.html`
-- `ritlumi.html`
+- `ritlum.html`
 
 ## Styles
 - None detected
