@@ -1,0 +1,72 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>capture harness</title>
+  <style>
+    html, body { margin: 0; padding: 0; background: transparent; }
+    * { box-sizing: border-box; }
+    #stage { position: absolute; top: 0; left: 0; }
+    #spacer { height: 1120px; }
+  </style>
+  <script src="https://unpkg.com/react@18.3.1/umd/react.development.js" integrity="sha384-hD6/rw4ppMLGNu3tX5cjIb+uRZ7UkRJ6BPkLpg4hAu/6onKUg4lLsHAs9EBPT82L" crossorigin="anonymous"></script>
+  <script src="https://unpkg.com/react-dom@18.3.1/umd/react-dom.development.js" integrity="sha384-u6aeetuaXnQ38mYT8rp6sbXaQe3NL9t+IBXmnYxwkUI2Hw4bsp2Wvmx4yRQF1uAm" crossorigin="anonymous"></script>
+  <script src="https://unpkg.com/@babel/standalone@7.29.0/babel.min.js" integrity="sha384-m08KidiNqLdpJqLq95G/LEi8Qvjl/xUYll3QILypMoQ65QorJ9Lvtp2RXYGBFj1y" crossorigin="anonymous"></script>
+
+  <script type="text/babel" src="../tokens.jsx"></script>
+  <script type="text/babel" src="../icons.jsx"></script>
+  <script type="text/babel" src="../components.jsx"></script>
+  <script type="text/babel" src="../screens-confirm-dialog.jsx"></script>
+  <script type="text/babel" src="../screens-today-context.jsx"></script>
+  <script type="text/babel" src="../screens-main-a.jsx"></script>
+  <script type="text/babel" src="../screens-main-b.jsx"></script>
+  <script type="text/babel" src="../screens-history-v2.jsx"></script>
+  <script type="text/babel" src="../screens-detail.jsx"></script>
+  <script type="text/babel" src="../screens-detail-v2.jsx"></script>
+  <script type="text/babel" src="../screens-detail-v2-screens.jsx"></script>
+  <script type="text/babel" src="../screens-goal-types.jsx"></script>
+  <script type="text/babel" src="../screens-stats-tabs.jsx"></script>
+  <script type="text/babel" src="../screens-reminders.jsx"></script>
+  <script type="text/babel" src="../screens-tracker-display.jsx"></script>
+</head>
+<body>
+  <div id="stage"></div>
+  <div id="spacer"></div>
+
+  <script type="text/babel" data-presets="react">
+    const SCALE = 1.3;
+    const Bezel = ({ children }) => (
+      <div style={{
+        width: 402, height: 874, borderRadius: 48, overflow: 'hidden',
+        position: 'relative', background: T.bg,
+        boxShadow: '0 0 0 10px #16151a, 0 0 0 11px rgba(0,0,0,0.55)',
+      }}>
+        <div style={{
+          position: 'absolute', top: 11, left: '50%', transform: 'translateX(-50%)',
+          width: 110, height: 32, borderRadius: 20, background: '#000', zIndex: 50,
+        }} />
+        {children}
+      </div>
+    );
+
+    const SCREENS = {
+      today:   () => <TodayScreen />,
+      stats:   () => <StatsScreen />,
+      history: () => <HistoryScreenMain />,
+    };
+
+    let root = ReactDOM.createRoot(document.getElementById('stage'));
+    function render(name) {
+      const S = SCREENS[name] || SCREENS.today;
+      root.render(
+        <div style={{ padding: 14 }}>
+          <Bezel><S /></Bezel>
+        </div>
+      );
+    }
+    window.setScreen = (name) => { window.scrollTo(0,0); render(name); return name; };
+    render('today');
+  </script>
+</body>
+</html>
