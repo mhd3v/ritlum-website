@@ -111,16 +111,35 @@ const AppStoreButton = () => (
   </a>
 );
 
+const SUPABASE_URL = "https://vryollgtsaiktxyidusb.supabase.co";
+const SUPABASE_ANON_KEY = "sb_publishable_qJAJ33itN-OewOspeW24dA_gm5A7Jck";
+
 const NotifyForm = ({ dark, compact }) => {
   const [email, setEmail] = useState("");
   const [sent, setSent] = useState(false);
-  const submit = (e) => {
+  const [error, setError] = useState(false);
+  const submit = async (e) => {
     e.preventDefault();
-    if (!email.trim()) return;
+    const value = email.trim();
+    if (!value) return;
+    setError(false);
     try {
-      localStorage.setItem("ritlum_notify", email);
-    } catch (_) {}
-    setSent(true);
+      const res = await fetch(`${SUPABASE_URL}/rest/v1/waitlist`, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          apikey: SUPABASE_ANON_KEY,
+          Authorization: `Bearer ${SUPABASE_ANON_KEY}`,
+          Prefer: "return=minimal",
+        },
+        body: JSON.stringify({ email: value }),
+      });
+      // 409 = unique-constraint conflict, i.e. this email already joined.
+      if (!res.ok && res.status !== 409) throw new Error(`status ${res.status}`);
+      setSent(true);
+    } catch (_) {
+      setError(true);
+    }
   };
   if (sent)
     return (
@@ -189,6 +208,11 @@ const NotifyForm = ({ dark, compact }) => {
       >
         Notify me on Kickstarter
       </button>
+      {error && (
+        <div style={{ color: "#d14343", fontSize: 13 }}>
+          Something went wrong — please try again.
+        </div>
+      )}
     </form>
   );
 };
