@@ -316,14 +316,30 @@ const SectionLabel = ({ children, dark }) => (
 );
 
 // ── NAV ───────────────────────────────────────────────────────
+const NAV_LINKS = [
+  { href: "#tracker", label: "Tracker" },
+  { href: "#app", label: "App" },
+  { href: "#tokens", label: "Tokens" },
+  { href: "#pricing", label: "Pricing" },
+  { href: "#timeline", label: "Timeline" },
+  { href: "#faq", label: "FAQ" },
+];
+
 const Nav = () => {
   const [solid, setSolid] = useState(false);
+  const [menuOpen, setMenuOpen] = useState(false);
   useEffect(() => {
     const on = () => setSolid(window.scrollY > 40);
     on();
     window.addEventListener("scroll", on, { passive: true });
     return () => window.removeEventListener("scroll", on);
   }, []);
+  useEffect(() => {
+    if (!menuOpen) return;
+    const close = () => setMenuOpen(false);
+    window.addEventListener("hashchange", close);
+    return () => window.removeEventListener("hashchange", close);
+  }, [menuOpen]);
   const link = {
     color: T.muted,
     textDecoration: "none",
@@ -339,10 +355,12 @@ const Nav = () => {
         left: 0,
         right: 0,
         zIndex: 100,
-        background: solid ? "rgba(250,248,244,0.82)" : "transparent",
-        backdropFilter: solid ? "saturate(180%) blur(16px)" : "none",
-        WebkitBackdropFilter: solid ? "saturate(180%) blur(16px)" : "none",
-        borderBottom: `1px solid ${solid ? T.border : "transparent"}`,
+        background:
+          solid || menuOpen ? "rgba(250,248,244,0.82)" : "transparent",
+        backdropFilter: solid || menuOpen ? "saturate(180%) blur(16px)" : "none",
+        WebkitBackdropFilter:
+          solid || menuOpen ? "saturate(180%) blur(16px)" : "none",
+        borderBottom: `1px solid ${solid || menuOpen ? T.border : "transparent"}`,
         transition: "background 240ms ease, border-color 240ms ease",
       }}
     >
@@ -359,24 +377,11 @@ const Nav = () => {
         <Wordmark />
         <div style={{ display: "flex", alignItems: "center", gap: 28 }}>
           <div className="rt-navlinks" style={{ display: "flex", gap: 26 }}>
-            <a href="#tracker" style={link}>
-              Tracker
-            </a>
-            <a href="#app" style={link}>
-              App
-            </a>
-            <a href="#tokens" style={link}>
-              Tokens
-            </a>
-            <a href="#pricing" style={link}>
-              Pricing
-            </a>
-            <a href="#timeline" style={link}>
-              Timeline
-            </a>
-            <a href="#faq" style={link}>
-              FAQ
-            </a>
+            {NAV_LINKS.map((l) => (
+              <a key={l.href} href={l.href} style={link}>
+                {l.label}
+              </a>
+            ))}
           </div>
           <a
             href="#notify"
@@ -392,8 +397,85 @@ const Nav = () => {
           >
             Notify me
           </a>
+          <button
+            className="rt-nav-toggle"
+            aria-label={menuOpen ? "Close menu" : "Open menu"}
+            aria-expanded={menuOpen}
+            onClick={() => setMenuOpen((v) => !v)}
+            style={{
+              display: "none",
+              width: 36,
+              height: 36,
+              alignItems: "center",
+              justifyContent: "center",
+              background: "transparent",
+              border: "none",
+              padding: 0,
+              cursor: "pointer",
+            }}
+          >
+            <span
+              style={{
+                position: "relative",
+                width: 19,
+                height: 13,
+                display: "inline-block",
+              }}
+            >
+              {[0, 1, 2].map((i) => (
+                <span
+                  key={i}
+                  style={{
+                    position: "absolute",
+                    left: 0,
+                    right: 0,
+                    top: i === 0 ? 0 : i === 1 ? 5.5 : 11,
+                    height: 1.6,
+                    borderRadius: 1,
+                    background: T.ink,
+                    transition: "transform 200ms ease, opacity 200ms ease",
+                    transform:
+                      menuOpen && i === 0
+                        ? "translateY(5.5px) rotate(45deg)"
+                        : menuOpen && i === 2
+                          ? "translateY(-5.5px) rotate(-45deg)"
+                          : "none",
+                    opacity: menuOpen && i === 1 ? 0 : 1,
+                  }}
+                />
+              ))}
+            </span>
+          </button>
         </div>
       </div>
+      {menuOpen && (
+        <div
+          className="rt-nav-mobile-menu"
+          style={{
+            borderTop: `1px solid ${T.border}`,
+            padding: "10px 28px 18px",
+            display: "flex",
+            flexDirection: "column",
+          }}
+        >
+          {NAV_LINKS.map((l) => (
+            <a
+              key={l.href}
+              href={l.href}
+              onClick={() => setMenuOpen(false)}
+              style={{
+                ...link,
+                color: T.ink,
+                padding: "12px 0",
+                borderBottom: `1px solid ${T.border}`,
+                fontSize: 16,
+              }}
+            >
+              {l.label}
+            </a>
+          ))}
+        </div>
+      )}
     </nav>
   );
 };
