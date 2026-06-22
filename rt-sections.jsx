@@ -4,29 +4,38 @@
 
 // ── small shared pieces ───────────────────────────────────────
 const LogoMark = ({ size = 26 }) => {
-  const cols = [T.habit.blue, T.habit.orange, T.habit.green, T.habit.pink];
+  const dots = [
+    T.habit.blue,
+    T.habit.green,
+    "rgba(255,255,255,0.10)",
+    T.habit.orange,
+    T.habit.pink,
+    T.habit.cyan,
+    "rgba(255,255,255,0.10)",
+    T.habit.purple,
+    T.habit.blue,
+  ];
   return (
     <span
       style={{
         width: size,
         height: size,
-        borderRadius: size * 0.28,
+        borderRadius: size * 0.235,
         background: "#16151a",
         display: "inline-grid",
-        gridTemplateColumns: "1fr 1fr",
-        gap: size * 0.12,
+        gridTemplateColumns: "repeat(3, 1fr)",
+        gap: size * 0.085,
         padding: size * 0.2,
-        boxShadow: "inset 0 0 0 1px rgba(255,255,255,0.08)",
+        boxShadow: "inset 0 0 0 0.5px rgba(255,255,255,0.06)",
         flexShrink: 0,
       }}
     >
-      {cols.map((c, i) => (
+      {dots.map((c, i) => (
         <span
           key={i}
           style={{
             borderRadius: 99,
             background: c,
-            boxShadow: `0 0 ${size * 0.18}px ${c}`,
           }}
         />
       ))}
@@ -47,7 +56,7 @@ const Wordmark = ({ color = T.ink, size = 21 }) => (
     <span
       style={{ fontSize: size, fontWeight: 600, letterSpacing: -0.6, color }}
     >
-      ritlum
+      Ritlum
     </span>
   </span>
 );
@@ -81,65 +90,24 @@ const Eyebrow = ({ children, dark }) => (
   </span>
 );
 
-// App Store–style pill (generic mark, no trademarked art)
-const AppStoreButton = ({ dark }) => (
+const AppStoreButton = () => (
   <a
     href="#"
     onClick={(e) => e.preventDefault()}
     style={{
       display: "inline-flex",
       alignItems: "center",
-      gap: 11,
       textDecoration: "none",
-      background: dark ? RT.darkInk : T.ink,
-      color: dark ? T.ink : "#fff",
-      padding: "13px 20px",
-      borderRadius: 14,
+      width: 164,
+      height: "auto",
       cursor: "pointer",
     }}
   >
-    <span
-      style={{
-        display: "grid",
-        gridTemplateColumns: "1fr 1fr",
-        gap: 2.5,
-        width: 18,
-      }}
-    >
-      {[0, 1, 2, 3].map((i) => (
-        <span
-          key={i}
-          style={{
-            width: 7.5,
-            height: 7.5,
-            borderRadius: 2.4,
-            background: dark ? T.ink : "#fff",
-          }}
-        />
-      ))}
-    </span>
-    <span style={{ textAlign: "left", lineHeight: 1.1 }}>
-      <span
-        style={{
-          display: "block",
-          fontSize: 10.5,
-          opacity: 0.7,
-          fontWeight: 500,
-        }}
-      >
-        Download on the
-      </span>
-      <span
-        style={{
-          display: "block",
-          fontSize: 16,
-          fontWeight: 600,
-          letterSpacing: -0.3,
-        }}
-      >
-        App Store
-      </span>
-    </span>
+    <img
+      src="assets/download-on-app-store.svg"
+      alt="Download on the App Store"
+      style={{ display: "block", width: "100%", height: "auto" }}
+    />
   </a>
 );
 
@@ -412,7 +380,7 @@ const HERO_ROWS = TRACKER_ROWS;
 
 const Hero = () => (
   <Section
-    style={{ paddingTop: 120, paddingBottom: 96, overflow: "hidden", background: "#FAF7F3" }}
+    style={{ paddingTop: 120, paddingBottom: 96, overflow: "hidden" }}
   >
     {/* soft ambient wash */}
     <div
@@ -437,7 +405,7 @@ const Hero = () => (
       }}
     >
       <Reveal>
-        <Eyebrow>iOS app out now · ritlum tracker on Kickstarter this summer</Eyebrow>
+        <Eyebrow>iOS app out now · Ritlum tracker on Kickstarter this summer</Eyebrow>
       </Reveal>
       <Reveal delay={60}>
         <h1
@@ -468,7 +436,7 @@ const Hero = () => (
           }}
         >
           A beautifully simple habit app — and{" "}
-          <span style={{ color: T.ink, fontWeight: 600 }}>ritlum</span>, a
+          <span style={{ color: T.ink, fontWeight: 600 }}>Ritlum</span>, a
           physical desk tracker that mirrors your progress in glowing light. Tap
           a token, watch your habit light up.
         </p>
@@ -516,7 +484,7 @@ const Hero = () => (
       >
         <img
           src="hero-device-v3.png"
-          alt="The ritlum iOS app and the ritlum desk tracker side by side, both showing the same habits"
+          alt="The Ritlum iOS app and the Ritlum desk tracker side by side, both showing the same habits"
           loading="eager"
           style={{
             position: "relative",
@@ -659,7 +627,7 @@ const Callout = ({ children, color = T.ink }) => (
 );
 
 const TrackerSection = () => (
-  <Section id="tracker" style={{ paddingTop: 100, paddingBottom: 100 }}>
+  <Section panel id="tracker" style={{ paddingTop: 100, paddingBottom: 100 }}>
     <Reveal style={{ maxWidth: 700 }}>
       <SectionLabel>The device</SectionLabel>
       <h2
@@ -673,7 +641,7 @@ const TrackerSection = () => (
           color: T.ink,
         }}
       >
-        ritlum — a tracker that lives on your desk.
+        Ritlum — a tracker that lives on your desk.
       </h2>
       <p
         style={{
@@ -723,7 +691,7 @@ const TrackerSection = () => (
         >
           <img
             src="device.png"
-            alt="The ritlum desk tracker — a frosted triangular panel of soft LEDs"
+            alt="The Ritlum desk tracker — a frosted triangular panel of soft LEDs"
             style={{
               width: "min(540px, 88%)",
               height: "auto",
@@ -795,7 +763,7 @@ const TrackerSection = () => (
       >
         <TrackerFeature
           title="Gets better over the air"
-          body="New animations, display modes and features arrive as free OTA firmware updates — straight from the app. The ritlum on your desk keeps growing."
+          body="New animations, display modes and features arrive as free OTA firmware updates — straight from the app. The Ritlum on your desk keeps growing."
         >
           <div
             style={{
@@ -836,7 +804,7 @@ const TrackerSection = () => (
 
         <TrackerFeature
           title="Clock mode"
-          body="Not tracking right now? The same matrix becomes a soft pixel clock — so ritlum earns its desk space all day long."
+          body="Not tracking right now? The same matrix becomes a soft pixel clock — so Ritlum earns its desk space all day long."
         >
           <div
             style={{
@@ -848,7 +816,12 @@ const TrackerSection = () => (
               border: `1px solid ${T.border}`,
             }}
           >
-            <TrackerDevice width={210} mode="clock" clock="9:41" />
+            <TrackerDevice
+              width={210}
+              mode="clock"
+              clock="9:41"
+              clockColor={T.habit.blue}
+            />
           </div>
         </TrackerFeature>
 
@@ -1188,7 +1161,7 @@ const AppCarousel = () => {
 };
 
 const AppSection = () => (
-  <Section panel id="app" style={{ paddingTop: 100, paddingBottom: 100 }}>
+  <Section id="app" style={{ paddingTop: 100, paddingBottom: 100 }}>
     <Reveal style={{ maxWidth: 700, margin: "0 auto", textAlign: "center" }}>
       <SectionLabel>The app</SectionLabel>
       <h2
@@ -1336,7 +1309,7 @@ const FeaturesSection = () => (
         <FeatureCard
           span
           title="Every kind of habit"
-          body="Check it off once, count toward a target, or run a timer. ritlum shapes itself to how you actually build the habit."
+          body="Check it off once, count toward a target, or run a timer. Ritlum shapes itself to how you actually build the habit."
         >
           <div style={{ display: "flex", gap: 12, width: "100%" }}>
             <GoalChip label="Once" color={T.habit.blue}>
@@ -1556,13 +1529,13 @@ const TimelineSection = () => {
     {
       tag: "Summer 2026",
       title: "Kickstarter goes live",
-      body: "Back ritlum and lock in early-bird pricing on the tracker + tokens.",
+      body: "Back Ritlum and lock in early-bird pricing on the tracker + tokens.",
       color: T.green,
       active: true,
     },
     {
       tag: "Q4 2026",
-      title: "ritlum ships",
+      title: "Ritlum ships",
       body: "The desk tracker arrives — pair it, and your habits light up.",
       color: T.habit.orange,
       active: false,
@@ -1855,7 +1828,7 @@ const PricingSpecsSection = () => (
               padding: "4px 0 2px",
             }}
           >
-            <IncludedItem>One ritlum desk tracker</IncludedItem>
+            <IncludedItem>One Ritlum desk tracker</IncludedItem>
             <IncludedItem>Starter set of 4 habit tokens</IncludedItem>
             <IncludedItem>USB-C cable</IncludedItem>
             <IncludedItem>Free lifetime firmware updates</IncludedItem>
@@ -1928,7 +1901,7 @@ const PricingSpecsSection = () => (
 const FAQS = [
   {
     q: "Is the app available now?",
-    a: "Yes — the ritlum iOS app is live today and free to use. The physical desk tracker comes later, funded through the Kickstarter campaign launching this summer.",
+    a: "Yes — the Ritlum iOS app is live today and free to use. The physical desk tracker comes later, funded through the Kickstarter campaign launching this summer.",
   },
   {
     q: "Do I need the tracker to use the app?",
@@ -2029,7 +2002,7 @@ const FaqItem = ({ q, a, open, onClick }) => (
 const FaqSection = () => {
   const [open, setOpen] = useState(0);
   return (
-    <Section id="faq" style={{ paddingTop: 100, paddingBottom: 100 }}>
+    <Section panel id="faq" style={{ paddingTop: 100, paddingBottom: 100 }}>
       <div
         style={{
           maxWidth: 820,
@@ -2073,7 +2046,6 @@ const FaqSection = () => {
 // ── CLOSING CTA ───────────────────────────────────────────────
 const CtaSection = () => (
   <Section
-    panel
     id="notify"
     style={{
       paddingTop: 104,
@@ -2091,7 +2063,7 @@ const CtaSection = () => (
         height: 700,
         pointerEvents: "none",
         background:
-          "radial-gradient(50% 50% at 50% 50%, rgba(231,138,174,0.08), rgba(91,157,249,0.05) 45%, rgba(242,239,234,0) 72%)",
+          "radial-gradient(50% 50% at 50% 50%, rgba(231,138,174,0.08), rgba(91,157,249,0.05) 45%, rgba(250,248,244,0) 72%)",
       }}
     />
     <div
@@ -2129,7 +2101,7 @@ const CtaSection = () => (
             color: T.muted,
           }}
         >
-          Download the app to begin, and get notified the moment the ritlum
+          Download the app to begin, and get notified the moment the Ritlum
           Kickstarter goes live.
         </p>
       </Reveal>
@@ -2175,9 +2147,6 @@ const Footer = () => (
     >
       <div>
         <Wordmark />
-        <div style={{ fontSize: 12.5, color: T.faint, marginTop: 10 }}>
-          “ritlum” is a working name and may change before launch.
-        </div>
       </div>
       <div style={{ display: "flex", gap: 24, fontSize: 14 }}>
         {["Tracker", "App", "Tokens", "Pricing", "Timeline", "FAQ"].map((l) => (
@@ -2190,7 +2159,7 @@ const Footer = () => (
           </a>
         ))}
       </div>
-      <div style={{ fontSize: 13, color: T.faint }}>© 2026 ritlum</div>
+      <div style={{ fontSize: 13, color: T.faint }}>© 2026 Ritlum</div>
     </div>
   </footer>
 );

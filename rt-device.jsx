@@ -385,11 +385,16 @@ const NfcToken = ({
             left: "50%",
             transform: "translateX(-50%)",
             marginTop: 10,
+            padding: "5px 9px",
+            borderRadius: 99,
+            background: "rgba(255,255,255,0.78)",
+            border: `1px solid ${T.border}`,
             whiteSpace: "nowrap",
             fontSize: 12,
             letterSpacing: 0.3,
-            color: RT.darkMuted,
+            color: T.ink2,
             fontWeight: 600,
+            boxShadow: "0 8px 18px -16px rgba(20,16,10,0.42)",
           }}
         >
           {label}

@@ -47,17 +47,17 @@ const TAP1 = 680,
   BEAM1_END = TAP1 + 640,
   FILL1_START = TAP1 + 540,
   TOAST1_START = TAP1 + 140;
-const TAP2 = 2500,
+const TAP2 = 1900,
   RIPPLE2_END = TAP2 + 600,
   BEAM2_START = TAP2 + 320,
   BEAM2_END = TAP2 + 640,
   FILL2_START = TAP2 + 540,
   TOAST2_START = TAP2 + 140;
-const TOAST1_END = 2300,
-  TOAST2_END = 4400,
-  LIFT_START = 3250,
-  LIFT_END = 4400,
-  CYCLE = 5000;
+const TOAST1_END = 1780,
+  TOAST2_END = 4200,
+  LIFT_START = 2680,
+  LIFT_END = 4300,
+  CYCLE = 4900;
 
 // phone waypoints: hover → tap token 1 → tap token 2 → lift away → (loop)
 // Both tokens sit in the same column (see layout below), so the phone only
@@ -70,10 +70,10 @@ const TOAST1_END = 2300,
 const PHONE_PATH = [
   { t: 0, x: 0, y: 0, r: -7 },
   { t: TAP1, x: 46, y: -14, r: -3 },
-  { t: TAP1 + 420, x: 46, y: -14, r: -3 },
-  { t: TAP1 + 1160, x: 46, y: 18, r: -1.4 },
-  { t: TAP2, x: 46, y: 26, r: -1 },
-  { t: LIFT_START, x: 46, y: 26, r: -1 },
+  { t: TAP1 + 120, x: 46, y: -14, r: -3 },
+  { t: TAP2, x: 52, y: 26, r: -1.4 },
+  { t: TAP2 + 240, x: 52, y: 26, r: -1.4 },
+  { t: LIFT_START, x: 52, y: 26, r: -1.4 },
   { t: LIFT_END, x: 10, y: -30, r: -6 },
   { t: CYCLE, x: 0, y: 0, r: -7 },
 ];
@@ -367,8 +367,8 @@ const NfcAnimation = () => {
         dotLit1: tt >= FILL1_START,
         toast1: tt > TOAST1_START && tt < TOAST1_END,
         rowGlow1: tt >= BEAM1_END && tt < BEAM1_END + 450,
-        pressed2: tt > TAP2 - 40 && tt < RIPPLE2_END,
-        rippling2: tt > TAP2 - 20 && tt < RIPPLE2_END + 300,
+        pressed2: tt > TAP2 - 100 && tt < RIPPLE2_END,
+        rippling2: tt > TAP2 - 80 && tt < RIPPLE2_END + 300,
         beamActive2: beam2Opacity > 0.02,
         dotLit2: tt >= FILL2_START,
         toast2: tt > TOAST2_START && tt < TOAST2_END,
