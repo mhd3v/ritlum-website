@@ -405,7 +405,12 @@ const Hero = () => (
       }}
     >
       <Reveal>
-        <Eyebrow>iOS app out now · Ritlum tracker on Kickstarter this summer</Eyebrow>
+        <Eyebrow>
+          <span className="rt-hide-mobile">
+            iOS app out now · Ritlum tracker on Kickstarter this summer
+          </span>
+          <span className="rt-show-mobile">iOS app out now</span>
+        </Eyebrow>
       </Reveal>
       <Reveal delay={60}>
         <h1
@@ -476,6 +481,7 @@ const Hero = () => (
     {/* product studio shot - its own cream background blends into the section */}
     <Reveal delay={240} style={{ marginTop: 56 }}>
       <div
+        className="rt-hero-image"
         style={{
           position: "relative",
           maxWidth: 1080,
