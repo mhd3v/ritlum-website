@@ -597,7 +597,7 @@ const TrackerFeature = ({ title, body, children }) => (
   </div>
 );
 
-const Callout = ({ children, color = T.ink }) => (
+const Callout = ({ children }) => (
   <span
     style={{
       display: "inline-flex",
@@ -606,22 +606,32 @@ const Callout = ({ children, color = T.ink }) => (
       fontSize: 13,
       fontWeight: 600,
       color: T.ink2,
-      background: "rgba(255,255,255,0.72)",
-      border: "1px solid rgba(80,68,48,0.10)",
-      boxShadow: "0 8px 18px -16px rgba(66,52,32,0.35)",
-      padding: "8px 13px",
+      background: "rgba(255,255,255,0.50)",
+      border: "1px solid rgba(20,18,12,0.07)",
+      padding: "10px 15px",
       borderRadius: 99,
+      width: "max-content",
+      maxWidth: "100%",
     }}
   >
     <span
       style={{
-        width: 8,
-        height: 8,
+        width: 21,
+        height: 21,
         borderRadius: 99,
-        background: color,
-        boxShadow: `0 0 8px ${color}`,
+        display: "inline-flex",
+        alignItems: "center",
+        justifyContent: "center",
+        border: "1.5px solid rgba(20,18,12,0.72)",
+        color: T.ink,
+        fontSize: 18,
+        fontWeight: 500,
+        lineHeight: "18px",
+        flexShrink: 0,
       }}
-    />
+    >
+      <span style={{ transform: "translateY(-0.5px)" }}>+</span>
+    </span>
     {children}
   </span>
 );
@@ -661,12 +671,14 @@ const TrackerSection = () => (
     {/* showcase */}
     <Reveal delay={80} style={{ marginTop: 46 }}>
       <div
+        className="rt-tracker-showcase"
         style={{
           position: "relative",
+          minHeight: 500,
           background: "linear-gradient(180deg, #f8f5ee 0%, #ebe4d8 100%)",
           border: `1px solid ${T.border}`,
           borderRadius: 32,
-          padding: "64px 28px",
+          padding: "54px 58px",
           overflow: "hidden",
           boxShadow: "0 34px 80px -54px rgba(66,52,32,0.58)",
         }}
@@ -683,37 +695,45 @@ const TrackerSection = () => (
           }}
         />
         <div
+          className="rt-tracker-showcase-inner"
           style={{
             position: "relative",
             display: "flex",
-            justifyContent: "center",
+            alignItems: "center",
+            justifyContent: "space-between",
+            gap: 42,
+            minHeight: 392,
           }}
         >
+          <div
+            className="rt-tracker-callouts"
+            style={{
+              display: "flex",
+              flexDirection: "column",
+              alignItems: "flex-start",
+              gap: 12,
+              flex: "0 0 min(42%, 420px)",
+              zIndex: 2,
+            }}
+          >
+            <Callout>Up to 8 habits</Callout>
+            <Callout>16 LEDs per row</Callout>
+            <Callout>Frosted diffuser</Callout>
+            <Callout>USB-C powered</Callout>
+          </div>
           <img
+            className="rt-tracker-product"
             src="device.png"
             alt="The Ritlum desk tracker - a frosted triangular panel of soft LEDs"
             style={{
-              width: "min(540px, 88%)",
+              width: "min(560px, 58%)",
               height: "auto",
               display: "block",
-              filter: "drop-shadow(0 38px 56px rgba(66,52,32,0.30))",
+              filter: "drop-shadow(0 42px 56px rgba(66,52,32,0.28))",
+              position: "relative",
+              zIndex: 1,
             }}
           />
-        </div>
-        <div
-          style={{
-            position: "relative",
-            display: "flex",
-            gap: 10,
-            flexWrap: "wrap",
-            justifyContent: "center",
-            marginTop: 40,
-          }}
-        >
-          <Callout color={T.habit.blue}>Up to 8 habits</Callout>
-          <Callout color={T.habit.green}>16 LEDs per row</Callout>
-          <Callout color={T.habit.orange}>Frosted diffuser</Callout>
-          <Callout color={T.habit.pink}>USB-C powered</Callout>
         </div>
       </div>
     </Reveal>

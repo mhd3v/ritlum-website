@@ -587,16 +587,16 @@ Object.assign(window, { NfcAnimation });
 // ──────────────────────────────────────────────────────────────
 
 // Scene timeline (ms) - separate namespace from the NFC scene above.
-const M_TAP = 680,
-  M_RIPPLE_END = 1060;
-const M_TOAST_START = 820;
-const M_BEAM_START = 780,
-  M_BEAM_END = 1320;
-const M_FILL_START = 1240,
-  M_FILL_END = 1900;
-const M_CHECK_END = 900;
-const M_HOLD_END = 2250,
-  M_CYCLE = 3100;
+const M_TAP = 850,
+  M_RIPPLE_END = 1325;
+const M_TOAST_START = 1025;
+const M_BEAM_START = 975,
+  M_BEAM_END = 1650;
+const M_FILL_START = 1550,
+  M_FILL_END = 2375;
+const M_CHECK_END = 1125;
+const M_HOLD_END = 3000,
+  M_CYCLE = 4000;
 
 // Read (orange, tracker row 3) is the habit that completes in the scene.
 
@@ -841,13 +841,13 @@ const MirrorAnimation = () => {
       const tt = elapsed % M_CYCLE;
       const cycleIdx = Math.floor(elapsed / M_CYCLE);
       const loopOpacity = Math.min(
-        smooth(0, 200, tt),
-        1 - smooth(M_CYCLE - 260, M_CYCLE, tt),
+        smooth(0, 260, tt),
+        1 - smooth(M_CYCLE - 360, M_CYCLE, tt),
       );
 
       const beamProgress = smooth(M_BEAM_START, M_BEAM_END, tt);
       const beamOpacity =
-        beamProgress * (1 - smooth(M_BEAM_END + 20, M_BEAM_END + 180, tt));
+        beamProgress * (1 - smooth(M_BEAM_END + 30, M_BEAM_END + 260, tt));
       if (stageRef.current)
         stageRef.current.style.opacity = loopOpacity.toFixed(3);
       if (beamDotRef.current && beamOpacity > 0.02) {
@@ -868,7 +868,7 @@ const MirrorAnimation = () => {
         done: tt > M_CHECK_END,
         toast: tt > M_TOAST_START && tt < M_HOLD_END + 150,
         dotLit: tt >= M_FILL_START,
-        rowGlow: tt >= M_BEAM_END && tt < M_BEAM_END + 260,
+        rowGlow: tt >= M_BEAM_END && tt < M_BEAM_END + 380,
         cycleIdx,
       };
       const prev = phaseRef.current;
