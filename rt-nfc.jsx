@@ -1,11 +1,11 @@
 // ──────────────────────────────────────────────────────────────
-// ritlum — signature moment
+// ritlum - signature moment
 // Tap a habit token → the matching row lights up on the tracker.
 // Auto-loops; respects reduced-motion.
 //
 // Perf note: the continuous per-frame values (phone position, beam
 // travel) are written straight to the DOM via refs inside the rAF
-// loop — they never touch React state, so they never trigger a
+// loop - they never touch React state, so they never trigger a
 // reconciliation. React state is reserved for the handful of
 // discrete flips per cycle (pressed/rippling/done/toast/row-lit),
 // so a ~4.5s loop costs ~8 renders instead of ~270 (at 60fps).
@@ -20,7 +20,7 @@ const smooth = (e0, e1, x) => {
   return t * t * (3 - 2 * t);
 };
 
-// Eases the phone through an ordered list of {t,x,y,r} waypoints —
+// Eases the phone through an ordered list of {t,x,y,r} waypoints -
 // used to choreograph "tap token 1 → tap token 2 → lift away" as one
 // continuous gesture instead of a single approach/retreat pair.
 const keyframe = (t, points) => {
@@ -40,7 +40,7 @@ const keyframe = (t, points) => {
   return { x: last.x, y: last.y, r: last.r };
 };
 
-// Scene timeline (ms) — two taps per loop: Meditate (token 1) then Read (token 2).
+// Scene timeline (ms) - two taps per loop: Meditate (token 1) then Read (token 2).
 const TAP1 = 680,
   RIPPLE1_END = TAP1 + 600,
   BEAM1_START = TAP1 + 320,
@@ -61,11 +61,11 @@ const TOAST1_END = 1780,
 
 // phone waypoints: hover → tap token 1 → tap token 2 → lift away → (loop)
 // Both tokens sit in the same column (see layout below), so the phone only
-// ever leans a small, consistent amount in x — it never has to cross over
+// ever leans a small, consistent amount in x - it never has to cross over
 // the other token's position, which is what caused the phone to visually
 // pass behind/through token 1 on its way to token 2.
 // "Lift away" pulls the phone back toward its resting x (not further past
-// it) — pushing x further right at this stage is what put the phone's
+// it) - pushing x further right at this stage is what put the phone's
 // bounding box directly on top of both tokens.
 const PHONE_PATH = [
   { t: 0, x: 0, y: 0, r: -7 },
@@ -90,7 +90,7 @@ const NFC_ROWS_BASE = [
   { color: LED_COLORS[6], days: "0010100101001000" }, // purple
 ];
 
-// one habit row inside the scene phone — pending state or logged checkmark
+// one habit row inside the scene phone - pending state or logged checkmark
 const NfcHabitRow = ({ color, name, done, pendingSub }) => (
   <div
     style={{
@@ -333,7 +333,7 @@ const NfcAnimation = () => {
       const beam2Opacity =
         beam2Progress * (1 - smooth(BEAM2_END, BEAM2_END + 260, tt));
 
-      // continuous values — straight to the DOM, no React involved
+      // continuous values - straight to the DOM, no React involved
       if (stageRef.current)
         stageRef.current.style.opacity = loopOpacity.toFixed(3);
       if (phoneRef.current)
@@ -359,7 +359,7 @@ const NfcAnimation = () => {
         beam2DotRef.current.style.opacity = "0";
       }
 
-      // discrete values — only commit a render when one actually flips
+      // discrete values - only commit a render when one actually flips
       const next = {
         pressed1: tt > TAP1 - 40 && tt < RIPPLE1_END,
         rippling1: tt > TAP1 - 20 && tt < RIPPLE1_END + 300,
@@ -418,7 +418,7 @@ const NfcAnimation = () => {
   ];
 
   // Once a habit is logged the connecting line should read as a steady,
-  // visible link — not fade back to the same near-invisible idle state
+  // visible link - not fade back to the same near-invisible idle state
   // it had before the tap. Only "never tapped yet" stays barely-there.
   const beam1Alpha = beamActive1 ? "99" : dotLit1 ? "55" : "18";
   const beam2Alpha = beamActive2 ? "99" : dotLit2 ? "55" : "18";
@@ -511,7 +511,7 @@ const NfcAnimation = () => {
             />
           </div>
 
-          {/* NFC tokens — stacked in one column, well clear of the phone's
+          {/* NFC tokens - stacked in one column, well clear of the phone's
               lean range, so the phone never crosses over either token */}
           <div
             key={`${cycleIdx}-1`}
@@ -549,7 +549,7 @@ const NfcAnimation = () => {
             />
           </div>
 
-          {/* phone — rendered last so it always sits above the tokens it taps */}
+          {/* phone - rendered last so it always sits above the tokens it taps */}
           <div
             ref={phoneRef}
             style={{
@@ -579,14 +579,14 @@ const NfcAnimation = () => {
 Object.assign(window, { NfcAnimation });
 
 // ──────────────────────────────────────────────────────────────
-// MirrorAnimation — the sibling signature moment.
+// MirrorAnimation - the sibling signature moment.
 // Mark a habit done in the app → the matching row lights up on the
 // desk tracker. Auto-loops; respects reduced-motion.
 // (Lives visually on a light surface, so its chrome is light-themed.)
-// Same ref-driven approach as NfcAnimation above — see perf note up top.
+// Same ref-driven approach as NfcAnimation above - see perf note up top.
 // ──────────────────────────────────────────────────────────────
 
-// Scene timeline (ms) — separate namespace from the NFC scene above.
+// Scene timeline (ms) - separate namespace from the NFC scene above.
 const M_TAP = 680,
   M_RIPPLE_END = 1060;
 const M_TOAST_START = 820;
@@ -629,7 +629,7 @@ const MirrorScenePhone = React.memo(({ done, rippling, pressed, toast }) => (
       </h2>
     </div>
     <div style={{ padding: "14px 14px 0" }}>
-      {/* Read — the row that completes */}
+      {/* Read - the row that completes */}
       <div
         style={{
           background: T.card,

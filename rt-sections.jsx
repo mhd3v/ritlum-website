@@ -1,5 +1,5 @@
 // ──────────────────────────────────────────────────────────────
-// ritlum — page sections + assembly
+// ritlum - page sections + assembly
 // ──────────────────────────────────────────────────────────────
 
 // ── small shared pieces ───────────────────────────────────────
@@ -137,7 +137,7 @@ const NotifyForm = ({ dark, compact }) => {
           fontSize: 15,
         }}
       >
-        <CheckPill color={T.green} /> You're on the list — we'll email you at
+        <CheckPill color={T.green} /> You're on the list - we'll email you at
         launch.
       </div>
     );
@@ -235,7 +235,7 @@ const Reveal = ({ children, delay = 0, style }) => {
       { threshold: 0.12, rootMargin: "0px 0px -8% 0px" },
     );
     io.observe(el);
-    // safety net — never leave content invisible
+    // safety net - never leave content invisible
     const t = setTimeout(reveal, 2200);
     return () => {
       io.disconnect();
@@ -375,7 +375,7 @@ const Nav = () => {
 };
 
 // ── HERO ──────────────────────────────────────────────────────
-// Realistic per-day patterns — same data the app's dot grid shows.
+// Realistic per-day patterns - same data the app's dot grid shows.
 const HERO_ROWS = TRACKER_ROWS;
 
 const Hero = () => (
@@ -435,7 +435,7 @@ const Hero = () => (
             letterSpacing: -0.2,
           }}
         >
-          A beautifully simple habit app — and{" "}
+          A beautifully simple habit app - and{" "}
           <span style={{ color: T.ink, fontWeight: 600 }}>Ritlum</span>, a
           physical desk tracker that mirrors your progress in glowing light. Tap
           a token, watch your habit light up.
@@ -473,7 +473,7 @@ const Hero = () => (
         </div>
       </Reveal>
     </div>
-    {/* product studio shot — its own cream background blends into the section */}
+    {/* product studio shot - its own cream background blends into the section */}
     <Reveal delay={240} style={{ marginTop: 56 }}>
       <div
         style={{
@@ -543,7 +543,7 @@ const TokensSection = () => (
       >
         Map any habit to a little NFC{" "}
         <span style={{ color: T.ink, fontWeight: 600 }}>habit token</span>{" "}
-        in the app. Keep it by the door, the kettle, your gym bag — tap your
+        in the app. Keep it by the door, the kettle, your gym bag - tap your
         phone to log a completion in under a second. It lights up on your
         tracker instantly.
       </p>
@@ -641,7 +641,7 @@ const TrackerSection = () => (
           color: T.ink,
         }}
       >
-        Ritlum — a tracker that lives on your desk.
+        Ritlum - a tracker that lives on your desk.
       </h2>
       <p
         style={{
@@ -691,7 +691,7 @@ const TrackerSection = () => (
         >
           <img
             src="device.png"
-            alt="The Ritlum desk tracker — a frosted triangular panel of soft LEDs"
+            alt="The Ritlum desk tracker - a frosted triangular panel of soft LEDs"
             style={{
               width: "min(540px, 88%)",
               height: "auto",
@@ -718,7 +718,7 @@ const TrackerSection = () => (
       </div>
     </Reveal>
 
-    {/* mirror moment — mark a habit in the app, it lights up on the desk */}
+    {/* mirror moment - mark a habit in the app, it lights up on the desk */}
     <Reveal delay={100} style={{ marginTop: 64 }}>
       <div
         style={{ textAlign: "center", maxWidth: 560, margin: "0 auto 10px" }}
@@ -745,7 +745,7 @@ const TrackerSection = () => (
           }}
         >
           Complete a habit in the app and the matching row lights up on your
-          desk — no sync button, no waiting.
+          desk - no sync button, no waiting.
         </p>
       </div>
       <MirrorAnimation />
@@ -763,7 +763,7 @@ const TrackerSection = () => (
       >
         <TrackerFeature
           title="Gets better over the air"
-          body="New animations, display modes and features arrive as free OTA firmware updates — straight from the app. The Ritlum on your desk keeps growing."
+          body="New animations, display modes and features arrive as free OTA firmware updates - straight from the app. The Ritlum on your desk keeps growing."
         >
           <div
             style={{
@@ -804,7 +804,7 @@ const TrackerSection = () => (
 
         <TrackerFeature
           title="Clock mode"
-          body="Not tracking right now? The same matrix becomes a soft pixel clock — so Ritlum earns its desk space all day long."
+          body="Not tracking right now? The same matrix becomes a soft pixel clock - so Ritlum earns its desk space all day long."
         >
           <div
             style={{
@@ -827,7 +827,7 @@ const TrackerSection = () => (
 
         <TrackerFeature
           title="Tuned to your room"
-          body="Set brightness, a nightly sleep schedule, LED color theme and the log animation — so it glows just right, day or night."
+          body="Set brightness, a nightly sleep schedule, LED color theme and the log animation - so it glows just right, day or night."
         >
           <div
             style={{
@@ -870,7 +870,7 @@ const APP_SCREENS = [
   {
     key: "today",
     label: "Today",
-    desc: "A 16-day dot grid, a completion count, and your live streak — today’s habits at a single glance.",
+    desc: "A 16-day dot grid, a completion count, and your live streak - today’s habits at a single glance.",
   },
   {
     key: "history",
@@ -885,7 +885,7 @@ const APP_SCREENS = [
   {
     key: "detail-once",
     label: "Detail · Once",
-    desc: "Log a once-daily habit like Meditate — see a 12-week heatmap, streaks, and recent completions.",
+    desc: "Log a once-daily habit like Meditate - see a 12-week heatmap, streaks, and recent completions.",
   },
   {
     key: "detail-count",
@@ -895,7 +895,7 @@ const APP_SCREENS = [
   {
     key: "detail-timer",
     label: "Detail · Timer",
-    desc: "Run a timer habit like Read — set a duration, see ring progress, session history, and monthly minutes.",
+    desc: "Run a timer habit like Read - set a duration, see ring progress, session history, and monthly minutes.",
   },
 ];
 
@@ -1187,7 +1187,7 @@ const AppSection = () => (
         }}
       >
         A calm, considered iOS app where your habits feel good to keep. It works
-        perfectly on its own — and the tracker is the cherry on top.
+        perfectly on its own - and the tracker is the cherry on top.
       </p>
     </Reveal>
     <Reveal delay={80} style={{ marginTop: 52 }}>
@@ -1378,7 +1378,7 @@ const FeaturesSection = () => (
 
         <FeatureCard
           title="Cloud sync, offline-first"
-          body="Log anywhere — subway, plane, airplane mode. It syncs the moment you're back online."
+          body="Log anywhere - subway, plane, airplane mode. It syncs the moment you're back online."
         >
           <div style={{ display: "flex", alignItems: "center", gap: 10 }}>
             <span
@@ -1412,7 +1412,7 @@ const FeaturesSection = () => (
 
         <FeatureCard
           title="Custom reminders"
-          body="Gentle, per-habit nudges at the times that fit your day — never noisy."
+          body="Gentle, per-habit nudges at the times that fit your day - never noisy."
         >
           <div
             style={{
@@ -1465,7 +1465,7 @@ const FeaturesSection = () => (
 
         <FeatureCard
           title="Multi-device"
-          body="iPhone, iPad, and the tracker — all in lockstep. Tap on one, lit on the rest."
+          body="iPhone, iPad, and the tracker - all in lockstep. Tap on one, lit on the rest."
         >
           <div style={{ display: "flex", alignItems: "center", gap: 14 }}>
             <span
@@ -1522,7 +1522,7 @@ const TimelineSection = () => {
     {
       tag: "Available now",
       title: "The app is live",
-      body: "Download the iOS app and start tracking today — completely free.",
+      body: "Download the iOS app and start tracking today - completely free.",
       color: T.habit.blue,
       active: false,
     },
@@ -1536,7 +1536,7 @@ const TimelineSection = () => {
     {
       tag: "Q4 2026",
       title: "Ritlum ships",
-      body: "The desk tracker arrives — pair it, and your habits light up.",
+      body: "The desk tracker arrives - pair it, and your habits light up.",
       color: T.habit.orange,
       active: false,
     },
@@ -1901,11 +1901,11 @@ const PricingSpecsSection = () => (
 const FAQS = [
   {
     q: "Is the app available now?",
-    a: "Yes — the Ritlum iOS app is live today and free to use. The physical desk tracker comes later, funded through the Kickstarter campaign launching this summer.",
+    a: "Yes - the Ritlum iOS app is live today and free to use. The physical desk tracker comes later, funded through the Kickstarter campaign launching this summer.",
   },
   {
     q: "Do I need the tracker to use the app?",
-    a: "Not at all. The app is a complete habit tracker on its own. The desk tracker is an optional companion that mirrors your progress in glowing light — the cherry on top.",
+    a: "Not at all. The app is a complete habit tracker on its own. The desk tracker is an optional companion that mirrors your progress in glowing light - the cherry on top.",
   },
   {
     q: "When does the tracker ship?",
@@ -1913,11 +1913,11 @@ const FAQS = [
   },
   {
     q: "What do I need to use it?",
-    a: "An iPhone running iOS 16 or later. The habit tokens use your phone’s built-in NFC reader, and the tracker pairs over Bluetooth — no hub or extra hardware required.",
+    a: "An iPhone running iOS 16 or later. The habit tokens use your phone’s built-in NFC reader, and the tracker pairs over Bluetooth - no hub or extra hardware required.",
   },
   {
     q: "How do the habit tokens work?",
-    a: "Map any habit to an NFC token in the app, then keep it wherever the habit happens — by the door, the kettle, your gym bag. Tap your phone to it and the completion logs in under a second.",
+    a: "Map any habit to an NFC token in the app, then keep it wherever the habit happens - by the door, the kettle, your gym bag. Tap your phone to it and the completion logs in under a second.",
   },
   {
     q: "Is there a subscription?",

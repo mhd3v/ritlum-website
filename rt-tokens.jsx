@@ -1,5 +1,5 @@
 // ──────────────────────────────────────────────────────────────
-// ritlum — landing site tokens
+// ritlum - landing site tokens
 // Reuses the companion app's design tokens verbatim so the site and
 // product read as one system, then adds a dark "campaign" palette
 // for the hero / NFC / closing moments.
@@ -46,7 +46,7 @@ const T = {
   shadowSoft: "0 1px 2px rgba(20,20,20,0.03)",
 };
 
-// Dark campaign palette — the device-screen black, used full-bleed
+// Dark campaign palette - the device-screen black, used full-bleed
 const RT = {
   dark: "#141217",
   darkPanel: "#1B1920",

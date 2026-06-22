@@ -1,10 +1,10 @@
 // ──────────────────────────────────────────────────────────────
-// ritlum — physical device renders (pure CSS) + small utilities
-//   · TrackerDevice  — light-plastic body + glowing 16-wide LED matrix
-//   · clock mode     — same matrix renders the time as pixels
-//   · NfcToken       — the round "habit token" NFC disc
-//   · Scaler         — fits a fixed design canvas into any width
-//   · useRaf         — looping animation clock
+// ritlum - physical device renders (pure CSS) + small utilities
+//   · TrackerDevice  - light-plastic body + glowing 16-wide LED matrix
+//   · clock mode     - same matrix renders the time as pixels
+//   · NfcToken       - the round "habit token" NFC disc
+//   · Scaler         - fits a fixed design canvas into any width
+//   · useRaf         - looping animation clock
 // ──────────────────────────────────────────────────────────────
 
 const { useState, useEffect, useRef, useCallback } = React;
@@ -120,25 +120,25 @@ function clockMask(time, cols, rowsN) {
   return grid;
 }
 
-// Realistic tracker rows — same 16-char `days` bitstrings the companion
+// Realistic tracker rows - same 16-char `days` bitstrings the companion
 // app's DotGridPreview uses (1 = completed). Rightmost-but-two column is
 // "today". These mirror the mockup data so every tracker render on the
 // site shows believable progress, not a uniform fill.
 const TRACKER_ROWS = [
-  { color: LED_COLORS[0], days: "1110111110111100" }, // Meditate  — done today
-  { color: LED_COLORS[1], days: "1111011110111100" }, // Exercise  — done today
-  { color: LED_COLORS[2], days: "1101111011111100" }, // Read      — done today
-  { color: LED_COLORS[3], days: "1110110111111100" }, // Hydrate   — done today
-  { color: LED_COLORS[4], days: "0111101111011100" }, // Journal   — done today
-  { color: LED_COLORS[5], days: "1110110111110000" }, // No Sugar  — not yet today
+  { color: LED_COLORS[0], days: "1110111110111100" }, // Meditate  - done today
+  { color: LED_COLORS[1], days: "1111011110111100" }, // Exercise  - done today
+  { color: LED_COLORS[2], days: "1101111011111100" }, // Read      - done today
+  { color: LED_COLORS[3], days: "1110110111111100" }, // Hydrate   - done today
+  { color: LED_COLORS[4], days: "0111101111011100" }, // Journal   - done today
+  { color: LED_COLORS[5], days: "1110110111110000" }, // No Sugar  - not yet today
   { color: LED_COLORS[6], days: "1110111101111110" },
 ];
 
 // ── LED matrix ────────────────────────────────────────────────
-// rows: [{ color, days } | { color, lit }]  — habit mode
-//   · `days`  : 16-char bitstring (1 = lit)  — realistic per-day pattern
-//   · `lit`   : count from the left          — simple progressive fill
-// clock: time string                               — clock mode
+// rows: [{ color, days } | { color, lit }]  - habit mode
+//   · `days`  : 16-char bitstring (1 = lit)  - realistic per-day pattern
+//   · `lit`   : count from the left          - simple progressive fill
+// clock: time string                               - clock mode
 const TrackerDeviceBase = ({
   width = 240,
   rows,
@@ -294,7 +294,7 @@ const TrackerDeviceBase = ({
   );
 };
 
-// ── NFC habit token — round disc the phone taps ───────────────
+// ── NFC habit token - round disc the phone taps ───────────────
 // White, to match the physical token; carries the same habit icon
 // the app mockups use (PI from rt-phone.jsx), tinted in the habit's color.
 const NfcToken = ({
@@ -407,7 +407,7 @@ const NfcToken = ({
 // Memoize so the 112-LED matrix only rebuilds when a row's day-pattern
 // actually changes (≈1×/cycle), not on every parent RAF tick (60×/s).
 // The parent always passes a *new* `rows` array, so a shallow memo would
-// never bail — we deep-compare the color/days/lit of each row instead.
+// never bail - we deep-compare the color/days/lit of each row instead.
 const _rowsKey = (rows) =>
   rows
     ? rows.map((r) => `${r.color}|${r.days || ""}|${r.lit || 0}`).join(";")

@@ -1,10 +1,10 @@
 // ──────────────────────────────────────────────────────────────
-// ritlum — companion app mockups (phone frames)
-//   · PhoneFrame    — iOS-style chrome with dynamic island
-//   · PhoneStatus   — status bar (time + signal/wifi/battery)
-//   · TodayPhone    — the real Today screen (16-col dot grid + habit list)
-//   · HistoryPhone  — the real History screen (calendar + summary + month list)
-//   · StatsPhone    — the real Stats · Overview screen (stat cards + chart)
+// ritlum - companion app mockups (phone frames)
+//   · PhoneFrame    - iOS-style chrome with dynamic island
+//   · PhoneStatus   - status bar (time + signal/wifi/battery)
+//   · TodayPhone    - the real Today screen (16-col dot grid + habit list)
+//   · HistoryPhone  - the real History screen (calendar + summary + month list)
+//   · StatsPhone    - the real Stats · Overview screen (stat cards + chart)
 // Faithful static reproductions of the app's actual screens, rendered at a
 // native canvas width and scaled down for display via <PhoneScaler>.
 // Built from the same tokens (T) and the same component patterns as the
@@ -546,7 +546,7 @@ const TabBar = ({ active = "today", deviceDot = false }) => {
   );
 };
 
-// 16×N dot-grid hero — matches the in-app DotGridPreview exactly.
+// 16×N dot-grid hero - matches the in-app DotGridPreview exactly.
 // Days run left→right (oldest→newst); todayCol is highlighted with a
 // column band + day-of-week labels. Each row carries a 16-char `days`
 // bitstring (1 = completed).
@@ -647,7 +647,7 @@ const DotGridPreview = ({
   );
 };
 
-// Today habit row — Habit · Today · Streak columns
+// Today habit row - Habit · Today · Streak columns
 const TodayHabitRow = ({ h, last }) => {
   const status = h.done ? "done" : h.kind === "count" ? "count" : "idle";
   return (
@@ -716,7 +716,7 @@ const TodayHabitRow = ({ h, last }) => {
             {h.count}
           </span>
         ) : (
-          <span style={{ fontSize: 17, color: T.faint }}>—</span>
+          <span style={{ fontSize: 17, color: T.faint }}>-</span>
         )}
       </div>
       <div
@@ -895,7 +895,7 @@ const TodayScreen = () => {
 };
 
 // ════════════════════════════════════════════════════════════
-// HISTORY SCREEN (v2 — filter pills · day strip · day detail · highlights)
+// HISTORY SCREEN (v2 - filter pills · day strip · day detail · highlights)
 // Static port of the app's redesigned History screen.
 // ════════════════════════════════════════════════════════════
 const HIST_HABITS = [
@@ -1385,7 +1385,7 @@ const HistoryScreen = () => {
                           textOverflow: "ellipsis",
                         }}
                       >
-                        {HIST_DETAIL[h.id] || (done ? "done" : "—")}
+                        {HIST_DETAIL[h.id] || (done ? "done" : "-")}
                       </div>
                     </div>
                     {done ? (
@@ -1416,7 +1416,7 @@ const HistoryScreen = () => {
                           fontSize: 14,
                         }}
                       >
-                        —
+                        -
                       </span>
                     )}
                   </div>
@@ -1977,7 +1977,7 @@ const StatsHabitsScreen = () => (
               lineHeight: 1.35,
             }}
           >
-            <strong>Meditate</strong> is your strongest habit right now — 28
+            <strong>Meditate</strong> is your strongest habit right now - 28
             days and counting.
           </span>
         </div>
