@@ -34,7 +34,7 @@ const LogoMark = ({ size = 26 }) => {
   );
 };
 
-const Wordmark = ({ color = RT.darkInk, size = 21 }) => (
+const Wordmark = ({ color = T.ink, size = 21 }) => (
   <span
     style={{
       display: "inline-flex",
@@ -333,7 +333,7 @@ const Nav = () => {
     return () => window.removeEventListener("scroll", on);
   }, []);
   const link = {
-    color: RT.darkMuted,
+    color: T.muted,
     textDecoration: "none",
     fontSize: 14.5,
     fontWeight: 500,
@@ -347,8 +347,10 @@ const Nav = () => {
         left: 0,
         right: 0,
         zIndex: 100,
-        background: solid ? "rgba(20,18,23,0.94)" : "transparent",
-        borderBottom: `1px solid ${solid ? RT.darkLine : "transparent"}`,
+        background: solid ? "rgba(250,248,244,0.82)" : "transparent",
+        backdropFilter: solid ? "saturate(180%) blur(16px)" : "none",
+        WebkitBackdropFilter: solid ? "saturate(180%) blur(16px)" : "none",
+        borderBottom: `1px solid ${solid ? T.border : "transparent"}`,
         transition: "background 240ms ease, border-color 240ms ease",
       }}
     >
@@ -374,20 +376,26 @@ const Nav = () => {
             <a href="#tokens" style={link}>
               Tokens
             </a>
+            <a href="#pricing" style={link}>
+              Pricing
+            </a>
             <a href="#timeline" style={link}>
               Timeline
+            </a>
+            <a href="#faq" style={link}>
+              FAQ
             </a>
           </div>
           <a
             href="#notify"
             style={{
               ...link,
-              color: RT.darkInk,
+              color: T.ink,
               fontWeight: 600,
               padding: "9px 16px",
               borderRadius: 99,
-              background: "rgba(255,255,255,0.08)",
-              border: `1px solid ${RT.darkLine}`,
+              background: T.card,
+              border: `1px solid ${T.borderStrong}`,
             }}
           >
             Notify me
@@ -404,10 +412,9 @@ const HERO_ROWS = TRACKER_ROWS;
 
 const Hero = () => (
   <Section
-    dark
-    style={{ paddingTop: 120, paddingBottom: 96, overflow: "hidden" }}
+    style={{ paddingTop: 120, paddingBottom: 96, overflow: "hidden", background: "#FAF7F3" }}
   >
-    {/* ambient glow */}
+    {/* soft ambient wash */}
     <div
       style={{
         position: "absolute",
@@ -418,7 +425,7 @@ const Hero = () => (
         height: 600,
         pointerEvents: "none",
         background:
-          "radial-gradient(50% 50% at 50% 50%, rgba(91,157,249,0.14), rgba(231,138,174,0.08) 45%, rgba(20,18,23,0) 70%)",
+          "radial-gradient(50% 50% at 50% 50%, rgba(91,157,249,0.07), rgba(231,138,174,0.05) 45%, rgba(250,248,244,0) 70%)",
       }}
     />
     <div
@@ -430,7 +437,7 @@ const Hero = () => (
       }}
     >
       <Reveal>
-        <Eyebrow dark>Now on Kickstarter soon · Ships Q4 2026</Eyebrow>
+        <Eyebrow>iOS app out now · ritlum tracker on Kickstarter this summer</Eyebrow>
       </Reveal>
       <Reveal delay={60}>
         <h1
@@ -441,7 +448,7 @@ const Hero = () => (
             fontSize: "clamp(42px, 7vw, 86px)",
             lineHeight: 1.02,
             letterSpacing: -2.4,
-            color: RT.darkInk,
+            color: T.ink,
           }}
         >
           Your habits,
@@ -456,12 +463,12 @@ const Hero = () => (
             maxWidth: 560,
             fontSize: "clamp(16px, 2.2vw, 19px)",
             lineHeight: 1.55,
-            color: RT.darkMuted,
+            color: T.muted,
             letterSpacing: -0.2,
           }}
         >
           A beautifully simple habit app — and{" "}
-          <span style={{ color: RT.darkInk, fontWeight: 600 }}>ritlum</span>, a
+          <span style={{ color: T.ink, fontWeight: 600 }}>ritlum</span>, a
           physical desk tracker that mirrors your progress in glowing light. Tap
           a token, watch your habit light up.
         </p>
@@ -476,7 +483,7 @@ const Hero = () => (
             marginTop: 34,
           }}
         >
-          <AppStoreButton dark />
+          <AppStoreButton />
           <a
             href="#notify"
             style={{
@@ -488,9 +495,9 @@ const Hero = () => (
               borderRadius: 14,
               fontSize: 16,
               fontWeight: 600,
-              color: RT.darkInk,
-              background: "rgba(255,255,255,0.06)",
-              border: `1px solid ${RT.darkLineStrong}`,
+              color: T.ink,
+              background: T.card,
+              border: `1px solid ${T.borderStrong}`,
             }}
           >
             Notify me on Kickstarter →
@@ -498,10 +505,32 @@ const Hero = () => (
         </div>
       </Reveal>
     </div>
-    {/* glowing device */}
-    <Reveal delay={240} style={{ marginTop: 64 }}>
-      <div style={{ display: "flex", justifyContent: "center" }}>
-        <TrackerDevice width={560} rows={HERO_ROWS} breathe />
+    {/* product studio shot — its own cream background blends into the section */}
+    <Reveal delay={240} style={{ marginTop: 56 }}>
+      <div
+        style={{
+          position: "relative",
+          maxWidth: 1080,
+          margin: "0 auto",
+        }}
+      >
+        <img
+          src="hero-device-v3.png"
+          alt="The ritlum iOS app and the ritlum desk tracker side by side, both showing the same habits"
+          loading="eager"
+          style={{
+            position: "relative",
+            display: "block",
+            width: "100%",
+            height: "auto",
+            WebkitMaskImage:
+              "linear-gradient(to right, transparent 0, #000 11%, #000 89%, transparent 100%), linear-gradient(to bottom, transparent 0, #000 7%, #000 94%, transparent 100%)",
+            maskImage:
+              "linear-gradient(to right, transparent 0, #000 11%, #000 89%, transparent 100%), linear-gradient(to bottom, transparent 0, #000 7%, #000 94%, transparent 100%)",
+            WebkitMaskComposite: "source-in",
+            maskComposite: "intersect",
+          }}
+        />
       </div>
     </Reveal>
   </Section>
@@ -510,18 +539,18 @@ const Hero = () => (
 // ── NFC SECTION ───────────────────────────────────────────────
 const TokensSection = () => (
   <Section
-    dark
+    panel
     id="tokens"
     style={{
       paddingTop: 96,
       paddingBottom: 104,
-      borderTop: `1px solid ${RT.darkLine}`,
+      borderTop: `1px solid ${T.border}`,
     }}
   >
     <Reveal
       style={{ textAlign: "center", maxWidth: 720, margin: "0 auto 8px" }}
     >
-      <SectionLabel dark>Habit tokens · NFC</SectionLabel>
+      <SectionLabel>Habit tokens · NFC</SectionLabel>
       <h2
         style={{
           margin: 0,
@@ -530,7 +559,7 @@ const TokensSection = () => (
           fontSize: "clamp(32px, 5vw, 56px)",
           lineHeight: 1.04,
           letterSpacing: -1.6,
-          color: RT.darkInk,
+          color: T.ink,
         }}
       >
         Tap. Light up. Done.
@@ -541,11 +570,11 @@ const TokensSection = () => (
           maxWidth: 540,
           fontSize: 17,
           lineHeight: 1.55,
-          color: RT.darkMuted,
+          color: T.muted,
         }}
       >
         Map any habit to a little NFC{" "}
-        <span style={{ color: RT.darkInk, fontWeight: 600 }}>habit token</span>{" "}
+        <span style={{ color: T.ink, fontWeight: 600 }}>habit token</span>{" "}
         in the app. Keep it by the door, the kettle, your gym bag — tap your
         phone to log a completion in under a second. It lights up on your
         tracker instantly.
@@ -692,7 +721,16 @@ const TrackerSection = () => (
             justifyContent: "center",
           }}
         >
-          <TrackerDevice width={620} rows={HERO_ROWS} breathe />
+          <img
+            src="device.png"
+            alt="The ritlum desk tracker — a frosted triangular panel of soft LEDs"
+            style={{
+              width: "min(540px, 88%)",
+              height: "auto",
+              display: "block",
+              filter: "drop-shadow(0 38px 56px rgba(66,52,32,0.30))",
+            }}
+          />
         </div>
         <div
           style={{
@@ -1509,9 +1547,9 @@ const FeaturesSection = () => (
 const TimelineSection = () => {
   const nodes = [
     {
-      tag: "Q3 2026",
-      title: "App launches",
-      body: "The iOS companion app ships first — free to start tracking today.",
+      tag: "Available now",
+      title: "The app is live",
+      body: "Download the iOS app and start tracking today — completely free.",
       color: T.habit.blue,
       active: false,
     },
@@ -1531,9 +1569,9 @@ const TimelineSection = () => {
     },
   ];
   return (
-    <Section dark id="timeline" style={{ paddingTop: 100, paddingBottom: 100 }}>
+    <Section id="timeline" style={{ paddingTop: 100, paddingBottom: 100 }}>
       <Reveal style={{ textAlign: "center", maxWidth: 640, margin: "0 auto" }}>
-        <SectionLabel dark>The plan</SectionLabel>
+        <SectionLabel>The plan</SectionLabel>
         <h2
           style={{
             margin: 0,
@@ -1542,7 +1580,7 @@ const TimelineSection = () => {
             fontSize: "clamp(30px, 4.6vw, 50px)",
             lineHeight: 1.05,
             letterSpacing: -1.5,
-            color: RT.darkInk,
+            color: T.ink,
           }}
         >
           App first. Tracker next.
@@ -1566,7 +1604,7 @@ const TimelineSection = () => {
               left: "16%",
               right: "16%",
               height: 2,
-              background: RT.darkLine,
+              background: T.border,
             }}
           />
           {nodes.map((n, i) => (
@@ -1587,7 +1625,7 @@ const TimelineSection = () => {
                   background: n.color,
                   boxShadow: n.active
                     ? `0 0 0 6px ${n.color}33, 0 0 22px ${n.color}`
-                    : `0 0 0 5px ${RT.dark}`,
+                    : `0 0 0 5px ${T.bg}`,
                   position: "relative",
                   zIndex: 2,
                 }}
@@ -1611,7 +1649,7 @@ const TimelineSection = () => {
                   fontSize: 22,
                   fontWeight: 700,
                   letterSpacing: -0.5,
-                  color: RT.darkInk,
+                  color: T.ink,
                 }}
               >
                 {n.title}
@@ -1622,7 +1660,7 @@ const TimelineSection = () => {
                   maxWidth: 260,
                   fontSize: 14.5,
                   lineHeight: 1.5,
-                  color: RT.darkMuted,
+                  color: T.muted,
                 }}
               >
                 {n.body}
@@ -1662,15 +1700,385 @@ const TimelineSection = () => {
   );
 };
 
+// ── PRICING + SPECS ───────────────────────────────────────────
+const SpecRow = ({ k, v, last }) => (
+  <div
+    style={{
+      display: "flex",
+      justifyContent: "space-between",
+      alignItems: "baseline",
+      gap: 16,
+      padding: "13px 0",
+      borderBottom: last ? "none" : `1px solid ${T.divider}`,
+    }}
+  >
+    <span style={{ fontSize: 14.5, color: T.muted, fontWeight: 500 }}>{k}</span>
+    <span
+      style={{
+        fontSize: 14.5,
+        color: T.ink,
+        fontWeight: 600,
+        letterSpacing: -0.2,
+        textAlign: "right",
+      }}
+    >
+      {v}
+    </span>
+  </div>
+);
+
+const IncludedItem = ({ children }) => (
+  <div style={{ display: "flex", alignItems: "center", gap: 10 }}>
+    <CheckPill color={T.green} />
+    <span style={{ fontSize: 15, color: T.ink2, fontWeight: 500 }}>
+      {children}
+    </span>
+  </div>
+);
+
+const PricingSpecsSection = () => (
+  <Section panel id="pricing" style={{ paddingTop: 100, paddingBottom: 100 }}>
+    <Reveal style={{ maxWidth: 700 }}>
+      <SectionLabel>Pricing &amp; specs</SectionLabel>
+      <h2
+        style={{
+          margin: 0,
+          fontFamily: T.fontDisplay,
+          fontWeight: 700,
+          fontSize: "clamp(30px, 4.6vw, 50px)",
+          lineHeight: 1.05,
+          letterSpacing: -1.5,
+          color: T.ink,
+        }}
+      >
+        Back it early, get it first.
+      </h2>
+      <p
+        style={{
+          margin: "16px 0 0",
+          maxWidth: 540,
+          fontSize: 17,
+          lineHeight: 1.55,
+          color: T.muted,
+        }}
+      >
+        The app is free today. When the Kickstarter opens this summer, early
+        backers lock in the best price on the tracker.
+      </p>
+    </Reveal>
+
+    <Reveal delay={80} style={{ marginTop: 44 }}>
+      <div
+        className="rt-pricing"
+        style={{
+          display: "grid",
+          gridTemplateColumns: "1fr 1fr",
+          gap: 20,
+          alignItems: "stretch",
+        }}
+      >
+        {/* pledge card */}
+        <div
+          style={{
+            background: T.card,
+            borderRadius: 24,
+            padding: "30px 28px",
+            border: `1px solid ${T.borderStrong}`,
+            boxShadow: T.shadow,
+            display: "flex",
+            flexDirection: "column",
+            gap: 18,
+          }}
+        >
+          <div
+            style={{
+              display: "flex",
+              alignItems: "center",
+              justifyContent: "space-between",
+              gap: 12,
+            }}
+          >
+            <span
+              style={{
+                fontSize: 12.5,
+                fontWeight: 700,
+                letterSpacing: 1.2,
+                textTransform: "uppercase",
+                color: T.faint,
+              }}
+            >
+              Kickstarter early-bird
+            </span>
+            <span
+              style={{
+                fontSize: 12.5,
+                fontWeight: 700,
+                color: T.green,
+                background: T.greenSoft,
+                padding: "6px 11px",
+                borderRadius: 99,
+              }}
+            >
+              Save 30%
+            </span>
+          </div>
+          <div style={{ display: "flex", alignItems: "baseline", gap: 11 }}>
+            <span
+              style={{
+                fontFamily: T.fontDisplay,
+                fontSize: 54,
+                fontWeight: 700,
+                letterSpacing: -2.4,
+                color: T.ink,
+                lineHeight: 1,
+              }}
+            >
+              $89
+            </span>
+            <span
+              style={{
+                fontSize: 18,
+                color: T.faint,
+                textDecoration: "line-through",
+                fontWeight: 600,
+              }}
+            >
+              $129
+            </span>
+            <span style={{ fontSize: 14, color: T.muted }}>est. retail</span>
+          </div>
+          <div
+            style={{
+              display: "flex",
+              flexDirection: "column",
+              gap: 11,
+              padding: "4px 0 2px",
+            }}
+          >
+            <IncludedItem>One ritlum desk tracker</IncludedItem>
+            <IncludedItem>Starter set of 4 habit tokens</IncludedItem>
+            <IncludedItem>USB-C cable</IncludedItem>
+            <IncludedItem>Free lifetime firmware updates</IncludedItem>
+            <IncludedItem>1-year warranty</IncludedItem>
+          </div>
+          <a
+            href="#notify"
+            style={{
+              display: "inline-flex",
+              alignItems: "center",
+              justifyContent: "center",
+              gap: 8,
+              textDecoration: "none",
+              padding: "14px 22px",
+              borderRadius: 14,
+              fontSize: 15,
+              fontWeight: 600,
+              color: "#fff",
+              background: T.green,
+              marginTop: 2,
+            }}
+          >
+            Notify me on Kickstarter →
+          </a>
+          <div style={{ fontSize: 12.5, color: T.faint, lineHeight: 1.5 }}>
+            Indicative early-bird pricing · ships Q4 2026 · no charge until the
+            campaign launches.
+          </div>
+        </div>
+
+        {/* spec sheet */}
+        <div
+          style={{
+            background: T.card,
+            borderRadius: 24,
+            padding: "30px 28px",
+            border: `1px solid ${T.border}`,
+            boxShadow: T.shadow,
+            display: "flex",
+            flexDirection: "column",
+          }}
+        >
+          <h3
+            style={{
+              margin: "0 0 6px",
+              fontFamily: T.fontDisplay,
+              fontSize: 20,
+              fontWeight: 700,
+              letterSpacing: -0.4,
+              color: T.ink,
+            }}
+          >
+            Tech specs
+          </h3>
+          <SpecRow k="Display" v="128 soft LEDs · 8 × 16" />
+          <SpecRow k="Habits" v="Up to 8, one per row" />
+          <SpecRow k="Size" v="120 × 70 mm wedge" />
+          <SpecRow k="Materials" v="Matte shell, frosted acrylic" />
+          <SpecRow k="Power" v="USB-C, always-on" />
+          <SpecRow k="Connectivity" v="NFC tokens · Bluetooth LE" />
+          <SpecRow k="Software" v="Free OTA updates" />
+          <SpecRow k="In the box" v="Tracker, 4 tokens, cable" last />
+        </div>
+      </div>
+    </Reveal>
+  </Section>
+);
+
+// ── FAQ ───────────────────────────────────────────────────────
+const FAQS = [
+  {
+    q: "Is the app available now?",
+    a: "Yes — the ritlum iOS app is live today and free to use. The physical desk tracker comes later, funded through the Kickstarter campaign launching this summer.",
+  },
+  {
+    q: "Do I need the tracker to use the app?",
+    a: "Not at all. The app is a complete habit tracker on its own. The desk tracker is an optional companion that mirrors your progress in glowing light — the cherry on top.",
+  },
+  {
+    q: "When does the tracker ship?",
+    a: "The Kickstarter goes live this summer, and trackers ship to backers in Q4 2026. Back early to lock in the best price and an early slot in line.",
+  },
+  {
+    q: "What do I need to use it?",
+    a: "An iPhone running iOS 16 or later. The habit tokens use your phone’s built-in NFC reader, and the tracker pairs over Bluetooth — no hub or extra hardware required.",
+  },
+  {
+    q: "How do the habit tokens work?",
+    a: "Map any habit to an NFC token in the app, then keep it wherever the habit happens — by the door, the kettle, your gym bag. Tap your phone to it and the completion logs in under a second.",
+  },
+  {
+    q: "Is there a subscription?",
+    a: "No. Core habit tracking and firmware updates are free, forever. We may add an optional premium tier later, but everything shown here is included.",
+  },
+];
+
+const FaqItem = ({ q, a, open, onClick }) => (
+  <div style={{ borderBottom: `1px solid ${T.border}` }}>
+    <button
+      onClick={onClick}
+      aria-expanded={open}
+      style={{
+        width: "100%",
+        display: "flex",
+        justifyContent: "space-between",
+        alignItems: "center",
+        gap: 18,
+        padding: "22px 2px",
+        background: "none",
+        border: "none",
+        cursor: "pointer",
+        textAlign: "left",
+        fontFamily: T.font,
+      }}
+    >
+      <span
+        style={{
+          fontSize: 18,
+          fontWeight: 600,
+          color: T.ink,
+          letterSpacing: -0.3,
+        }}
+      >
+        {q}
+      </span>
+      <span
+        style={{
+          flexShrink: 0,
+          width: 26,
+          height: 26,
+          display: "flex",
+          alignItems: "center",
+          justifyContent: "center",
+          fontSize: 22,
+          fontWeight: 300,
+          color: T.muted,
+          transform: open ? "rotate(45deg)" : "rotate(0deg)",
+          transition: "transform 260ms cubic-bezier(.2,.8,.2,1)",
+          lineHeight: 1,
+        }}
+      >
+        +
+      </span>
+    </button>
+    <div
+      style={{
+        overflow: "hidden",
+        maxHeight: open ? 260 : 0,
+        opacity: open ? 1 : 0,
+        transition:
+          "max-height 320ms cubic-bezier(.2,.8,.2,1), opacity 240ms ease",
+      }}
+    >
+      <p
+        style={{
+          margin: 0,
+          padding: "0 2px 24px",
+          maxWidth: 660,
+          fontSize: 15.5,
+          lineHeight: 1.6,
+          color: T.muted,
+          letterSpacing: -0.1,
+        }}
+      >
+        {a}
+      </p>
+    </div>
+  </div>
+);
+
+const FaqSection = () => {
+  const [open, setOpen] = useState(0);
+  return (
+    <Section id="faq" style={{ paddingTop: 100, paddingBottom: 100 }}>
+      <div
+        style={{
+          maxWidth: 820,
+          margin: "0 auto",
+        }}
+      >
+        <Reveal>
+          <SectionLabel>FAQ</SectionLabel>
+          <h2
+            style={{
+              margin: 0,
+              fontFamily: T.fontDisplay,
+              fontWeight: 700,
+              fontSize: "clamp(30px, 4.6vw, 48px)",
+              lineHeight: 1.05,
+              letterSpacing: -1.5,
+              color: T.ink,
+            }}
+          >
+            Good questions.
+          </h2>
+        </Reveal>
+        <Reveal delay={70} style={{ marginTop: 30 }}>
+          <div>
+            {FAQS.map((f, i) => (
+              <FaqItem
+                key={i}
+                q={f.q}
+                a={f.a}
+                open={open === i}
+                onClick={() => setOpen(open === i ? -1 : i)}
+              />
+            ))}
+          </div>
+        </Reveal>
+      </div>
+    </Section>
+  );
+};
+
 // ── CLOSING CTA ───────────────────────────────────────────────
 const CtaSection = () => (
   <Section
-    dark
+    panel
     id="notify"
     style={{
       paddingTop: 104,
       paddingBottom: 104,
-      borderTop: `1px solid ${RT.darkLine}`,
+      borderTop: `1px solid ${T.border}`,
     }}
   >
     <div
@@ -1683,7 +2091,7 @@ const CtaSection = () => (
         height: 700,
         pointerEvents: "none",
         background:
-          "radial-gradient(50% 50% at 50% 50%, rgba(231,138,174,0.12), rgba(91,157,249,0.08) 45%, rgba(20,18,23,0) 72%)",
+          "radial-gradient(50% 50% at 50% 50%, rgba(231,138,174,0.08), rgba(91,157,249,0.05) 45%, rgba(242,239,234,0) 72%)",
       }}
     />
     <div
@@ -1703,7 +2111,7 @@ const CtaSection = () => (
             fontSize: "clamp(34px, 5.4vw, 64px)",
             lineHeight: 1.03,
             letterSpacing: -2,
-            color: RT.darkInk,
+            color: T.ink,
           }}
         >
           Start the app today.
@@ -1718,7 +2126,7 @@ const CtaSection = () => (
             maxWidth: 520,
             fontSize: 18,
             lineHeight: 1.55,
-            color: RT.darkMuted,
+            color: T.muted,
           }}
         >
           Download the app to begin, and get notified the moment the ritlum
@@ -1729,14 +2137,14 @@ const CtaSection = () => (
         <div
           style={{ display: "flex", justifyContent: "center", marginTop: 30 }}
         >
-          <AppStoreButton dark />
+          <AppStoreButton />
         </div>
         <div
           style={{ display: "flex", justifyContent: "center", marginTop: 18 }}
         >
-          <NotifyForm dark />
+          <NotifyForm />
         </div>
-        <div style={{ marginTop: 14, fontSize: 13, color: RT.darkFaint }}>
+        <div style={{ marginTop: 14, fontSize: 13, color: T.faint }}>
           No spam. One email at launch.
         </div>
       </Reveal>
@@ -1748,9 +2156,9 @@ const CtaSection = () => (
 const Footer = () => (
   <footer
     style={{
-      background: RT.dark,
-      color: RT.darkMuted,
-      borderTop: `1px solid ${RT.darkLine}`,
+      background: T.bgAlt,
+      color: T.muted,
+      borderTop: `1px solid ${T.border}`,
     }}
   >
     <div
@@ -1767,36 +2175,38 @@ const Footer = () => (
     >
       <div>
         <Wordmark />
-        <div style={{ fontSize: 12.5, color: RT.darkFaint, marginTop: 10 }}>
+        <div style={{ fontSize: 12.5, color: T.faint, marginTop: 10 }}>
           “ritlum” is a working name and may change before launch.
         </div>
       </div>
       <div style={{ display: "flex", gap: 24, fontSize: 14 }}>
-        {["Tracker", "App", "Tokens", "Timeline"].map((l) => (
+        {["Tracker", "App", "Tokens", "Pricing", "Timeline", "FAQ"].map((l) => (
           <a
             key={l}
             href={`#${l.toLowerCase()}`}
-            style={{ color: RT.darkMuted, textDecoration: "none" }}
+            style={{ color: T.muted, textDecoration: "none" }}
           >
             {l}
           </a>
         ))}
       </div>
-      <div style={{ fontSize: 13, color: RT.darkFaint }}>© 2026 ritlum</div>
+      <div style={{ fontSize: 13, color: T.faint }}>© 2026 ritlum</div>
     </div>
   </footer>
 );
 
 // ── PAGE ──────────────────────────────────────────────────────
 const RitlumPage = () => (
-  <div style={{ fontFamily: T.font, background: RT.dark }}>
+  <div style={{ fontFamily: T.font, background: T.bg }}>
     <Nav />
     <Hero />
     <TrackerSection />
     <AppSection />
     <TokensSection />
     <FeaturesSection />
+    <PricingSpecsSection />
     <TimelineSection />
+    <FaqSection />
     <CtaSection />
     <Footer />
   </div>

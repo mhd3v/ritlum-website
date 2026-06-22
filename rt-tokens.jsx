@@ -52,8 +52,8 @@ const RT = {
   darkPanel: "#1B1920",
   darkCard: "#211F27",
   darkInk: "#F7F5F1",
-  darkMuted: "rgba(247,245,241,0.58)",
-  darkFaint: "rgba(247,245,241,0.34)",
+  darkMuted: "rgba(247,245,241,0.66)",
+  darkFaint: "rgba(247,245,241,0.40)",
   darkLine: "rgba(255,255,255,0.09)",
   darkLineStrong: "rgba(255,255,255,0.16)",
 };

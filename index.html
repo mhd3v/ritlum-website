@@ -14,7 +14,7 @@
             body {
                 margin: 0;
                 padding: 0;
-                background: #141217;
+                background: #faf8f4;
             }
             * {
                 box-sizing: border-box;
@@ -135,6 +135,11 @@
                 }
                 .rt-features > * {
                     grid-column: span 1 !important;
+                }
+            }
+            @media (max-width: 860px) {
+                .rt-pricing {
+                    grid-template-columns: 1fr !important;
                 }
             }
             @media (max-width: 720px) {
