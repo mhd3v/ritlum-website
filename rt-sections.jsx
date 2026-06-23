@@ -1365,10 +1365,10 @@ const GoalChip = ({ label, color, children }) => (
   </div>
 );
 
-const FeatureCard = ({ title, body, span, dark, children }) => (
+const FeatureCard = ({ title, body, span = 1, dark, children }) => (
   <div
     style={{
-      gridColumn: span ? "span 2" : "span 1",
+      gridColumn: `span ${span}`,
       background: dark ? RT.darkCard : T.card,
       borderRadius: 24,
       padding: 26,
@@ -1411,6 +1411,54 @@ const FeatureCard = ({ title, body, span, dark, children }) => (
   </div>
 );
 
+const WIDGET_TODAY_COLUMN = 13;
+const WIDGET_TODAY_WEEKDAY = 5;
+const WIDGET_DAY_LABELS = ["S", "M", "T", "W", "T", "F", "S"];
+const WIDGET_DAY_LABEL_ROW = Array.from({ length: 16 }, (_, c) => {
+  const offset = c - WIDGET_TODAY_COLUMN;
+  return WIDGET_DAY_LABELS[(WIDGET_TODAY_WEEKDAY + offset + 700) % 7];
+});
+
+const FlameIcon = () => (
+  <svg
+    width="11"
+    height="13"
+    viewBox="0 0 12 14"
+    fill="none"
+    aria-hidden="true"
+    style={{ flexShrink: 0, marginTop: -1 }}
+  >
+    <path
+      d="M6 0.5 C 5.6 2.8, 8.6 3.2, 8.8 7.2 C 9 10.4, 7 12.4, 6 12.4 C 5 12.4, 3 10.4, 3.2 7.2 C 3.4 5.4, 4.8 4.6, 4.6 2.6 C 5.2 3.6, 5.8 3.4, 6 0.5 Z"
+      fill="#D9743E"
+    />
+  </svg>
+);
+
+const StreakBadge = ({ days }) => (
+  <span
+    style={{
+      display: "inline-flex",
+      alignItems: "center",
+      gap: 4,
+      background: "#FDEFE0",
+      padding: "4px 8px",
+      borderRadius: 99,
+    }}
+  >
+    <FlameIcon />
+    <span
+      style={{
+        fontSize: 11,
+        fontWeight: 600,
+        color: "#B26528",
+      }}
+    >
+      {days}d streak
+    </span>
+  </span>
+);
+
 const FeaturesSection = () => (
   <Section style={{ paddingTop: 100, paddingBottom: 100 }}>
     <Reveal style={{ maxWidth: 700 }}>
@@ -1439,7 +1487,7 @@ const FeaturesSection = () => (
         }}
       >
         <FeatureCard
-          span
+          span={2}
           title="Every kind of habit"
           body="Check it off once, count toward a target, or run a timer. Ritlum shapes itself to how you actually build the habit."
         >
@@ -1509,36 +1557,205 @@ const FeaturesSection = () => (
         </FeatureCard>
 
         <FeatureCard
+          title="Home Screen widgets."
+          body="Glance at your streak and today's progress."
+        >
+          <div
+            style={{
+              display: "flex",
+              justifyContent: "center",
+              width: "100%",
+              padding: "4px 0 0",
+            }}
+          >
+            <div
+              style={{
+                background: "#FFFFFF",
+                borderRadius: 22,
+                padding: 14,
+                width: 280,
+                border: `1px solid ${T.border}`,
+                boxShadow:
+                  "0 14px 36px rgba(20,18,12,0.14), 0 2px 6px rgba(20,18,12,0.06)",
+              }}
+            >
+              <div
+                style={{
+                  display: "grid",
+                  gridTemplateColumns: "repeat(16, 1fr)",
+                  gap: 3.5,
+                  marginBottom: 4,
+                }}
+              >
+                {WIDGET_DAY_LABEL_ROW.map((l, i) => {
+                  const isToday = i === WIDGET_TODAY_COLUMN;
+                  return (
+                    <div
+                      key={i}
+                      style={{
+                        textAlign: "center",
+                        fontSize: 8,
+                        fontWeight: isToday ? 700 : 500,
+                        color: isToday ? T.ink : T.faint,
+                        lineHeight: "10px",
+                      }}
+                    >
+                      {l}
+                    </div>
+                  );
+                })}
+              </div>
+              <div style={{ position: "relative" }}>
+                <div
+                  style={{
+                    display: "grid",
+                    gridTemplateColumns: "repeat(16, 1fr)",
+                    gridTemplateRows: "repeat(5, 1fr)",
+                    gap: 3.5,
+                  }}
+                >
+                  {TRACKER_ROWS.slice(0, 5).map((row, ri) =>
+                    row.days.split("").map((d, ci) => {
+                      const isFuture = ci > WIDGET_TODAY_COLUMN;
+                      return (
+                        <div
+                          key={`${ri}-${ci}`}
+                          style={{
+                            aspectRatio: "1",
+                            borderRadius: 99,
+                            background: d === "1"
+                              ? row.color
+                              : isFuture
+                                ? "rgba(0,0,0,0.06)"
+                                : "rgba(0,0,0,0.08)",
+                          }}
+                        />
+                      );
+                    }),
+                  )}
+                </div>
+                <div
+                  style={{
+                    position: "absolute",
+                    top: -3,
+                    bottom: -3,
+                    left: `calc(${(WIDGET_TODAY_COLUMN * 100) / 16}% + ${(WIDGET_TODAY_COLUMN * 3.5) / 16 - 2.5}px)`,
+                    width: `calc(${100 / 16}% + ${5 - (15 * 3.5) / 16}px)`,
+                    background: "rgba(0,0,0,0.045)",
+                    borderRadius: 6,
+                    pointerEvents: "none",
+                  }}
+                />
+              </div>
+              <div
+                style={{
+                  display: "flex",
+                  alignItems: "center",
+                  justifyContent: "space-between",
+                  marginTop: 10,
+                }}
+              >
+                <div
+                  style={{ display: "flex", alignItems: "baseline", gap: 6 }}
+                >
+                  <span
+                    style={{
+                      fontSize: 16,
+                      fontWeight: 700,
+                      color: T.ink,
+                      fontVariantNumeric: "tabular-nums",
+                      letterSpacing: -0.4,
+                    }}
+                  >
+                      5 / 6
+                  </span>
+                  <span
+                    style={{
+                      fontSize: 12,
+                      color: T.muted,
+                      fontWeight: 500,
+                    }}
+                  >
+                    completed today
+                  </span>
+                </div>
+                <StreakBadge days={7} />
+              </div>
+            </div>
+          </div>
+        </FeatureCard>
+
+        <FeatureCard
           title="Cloud sync, offline-first"
           body="Log anywhere - subway, plane, airplane mode. It syncs the moment you're back online."
         >
-          <div style={{ display: "flex", alignItems: "center", gap: 10 }}>
-            <span
+          <div
+            style={{
+              display: "flex",
+              flexDirection: "column",
+              gap: 8,
+              width: "100%",
+            }}
+          >
+            <div
               style={{
-                display: "inline-flex",
+                display: "flex",
                 alignItems: "center",
-                gap: 7,
-                fontSize: 13,
-                fontWeight: 600,
-                color: T.green,
+                gap: 10,
+                padding: "10px 14px",
                 background: T.greenSoft,
-                padding: "8px 12px",
-                borderRadius: 99,
+                borderRadius: 12,
               }}
             >
               <span
                 style={{
-                  width: 7,
-                  height: 7,
+                  width: 8,
+                  height: 8,
                   borderRadius: 99,
                   background: T.green,
+                  boxShadow: `0 0 8px ${T.green}`,
+                  flexShrink: 0,
                 }}
-              />{" "}
-              Synced
-            </span>
-            <span style={{ fontSize: 13, color: T.muted }}>
-              · works offline
-            </span>
+              />
+              <span
+                style={{
+                  fontSize: 13,
+                  fontWeight: 600,
+                  color: T.green,
+                }}
+              >
+                Synced across devices
+              </span>
+            </div>
+            <div
+              style={{
+                display: "flex",
+                alignItems: "center",
+                gap: 10,
+                padding: "10px 14px",
+                background: T.bgAlt,
+                borderRadius: 12,
+              }}
+            >
+              <span
+                style={{
+                  width: 8,
+                  height: 8,
+                  borderRadius: 99,
+                  background: T.muted,
+                  flexShrink: 0,
+                }}
+              />
+              <span
+                style={{
+                  fontSize: 13,
+                  fontWeight: 600,
+                  color: T.ink2,
+                }}
+              >
+                Works offline, syncs later
+              </span>
+            </div>
           </div>
         </FeatureCard>
 
@@ -1599,48 +1816,280 @@ const FeaturesSection = () => (
           title="Multi-device"
           body="iPhone, iPad, and the tracker - all in lockstep. Tap on one, lit on the rest."
         >
-          <div style={{ display: "flex", alignItems: "center", gap: 14 }}>
-            <span
+          <div
+            style={{
+              display: "flex",
+              alignItems: "center",
+              justifyContent: "center",
+              gap: 10,
+              width: "100%",
+            }}
+          >
+            <div
               style={{
-                width: 30,
-                height: 44,
-                borderRadius: 7,
+                width: 46,
+                height: 84,
+                borderRadius: 9,
                 border: `2px solid ${T.borderStrong}`,
-                background: T.bgAlt,
-              }}
-            />
-            <span
-              style={{
-                width: 44,
-                height: 34,
-                borderRadius: 6,
-                border: `2px solid ${T.borderStrong}`,
-                background: T.bgAlt,
-              }}
-            />
-            <span
-              style={{
-                width: 50,
-                height: 31,
-                borderRadius: 6,
-                background: "#16151a",
-                display: "grid",
-                gridTemplateColumns: "repeat(6,1fr)",
-                gap: 2.5,
-                padding: 5,
+                background: "#FFFFFF",
+                padding: 4,
+                display: "flex",
+                flexDirection: "column",
+                boxShadow: "0 4px 10px rgba(20,18,12,0.06)",
               }}
             >
-              {Array.from({ length: 12 }).map((_, i) => (
-                <span
-                  key={i}
+              <div
+                style={{
+                  width: 14,
+                  height: 3,
+                  borderRadius: 99,
+                  background: T.ink,
+                  alignSelf: "center",
+                  marginBottom: 4,
+                }}
+              />
+              <div
+                style={{
+                  fontSize: 5,
+                  fontWeight: 700,
+                  color: T.muted,
+                  letterSpacing: 0.3,
+                  textTransform: "uppercase",
+                  marginBottom: 3,
+                }}
+              >
+                Today
+              </div>
+              <div
+                style={{
+                  display: "flex",
+                  flexDirection: "column",
+                  gap: 3,
+                  flex: 1,
+                }}
+              >
+                {[
+                  { color: LED_COLORS[0], done: true },
+                  { color: LED_COLORS[1], done: true },
+                  { color: LED_COLORS[2], done: false },
+                ].map((h, i) => (
+                  <div
+                    key={i}
+                    style={{
+                      display: "flex",
+                      alignItems: "center",
+                      gap: 3,
+                      flex: 1,
+                    }}
+                  >
+                    <div
+                      style={{
+                        width: 5,
+                        height: 5,
+                        borderRadius: 99,
+                        background: h.color,
+                        flexShrink: 0,
+                      }}
+                    />
+                    <div
+                      style={{
+                        flex: 1,
+                        height: 2,
+                        borderRadius: 1,
+                        background: T.border,
+                      }}
+                    />
+                    <div
+                      style={{
+                        width: 8,
+                        height: 8,
+                        borderRadius: 99,
+                        background: h.done ? T.green : "transparent",
+                        border: h.done ? "none" : `1px solid ${T.border}`,
+                        display: "flex",
+                        alignItems: "center",
+                        justifyContent: "center",
+                        flexShrink: 0,
+                      }}
+                    >
+                      {h.done && (
+                        <span
+                          style={{
+                            color: "#fff",
+                            fontSize: 5,
+                            fontWeight: 700,
+                            lineHeight: 1,
+                          }}
+                        >
+                          ✓
+                        </span>
+                      )}
+                    </div>
+                  </div>
+                ))}
+              </div>
+            </div>
+            <div
+              style={{
+                color: T.faint,
+                fontSize: 16,
+                fontWeight: 300,
+                flexShrink: 0,
+              }}
+            >
+              ⇄
+            </div>
+            <div
+              style={{
+                width: 72,
+                height: 54,
+                borderRadius: 6,
+                border: `2px solid ${T.borderStrong}`,
+                background: "#FFFFFF",
+                padding: 5,
+                display: "flex",
+                flexDirection: "column",
+                boxShadow: "0 4px 10px rgba(20,18,12,0.06)",
+              }}
+            >
+              <div
+                style={{
+                  fontSize: 5,
+                  fontWeight: 700,
+                  color: T.muted,
+                  letterSpacing: 0.3,
+                  textTransform: "uppercase",
+                  marginBottom: 3,
+                }}
+              >
+                Today
+              </div>
+              <div
+                style={{
+                  display: "flex",
+                  flexDirection: "column",
+                  gap: 2.5,
+                  flex: 1,
+                }}
+              >
+                {[
+                  { color: LED_COLORS[0], done: true },
+                  { color: LED_COLORS[1], done: true },
+                  { color: LED_COLORS[2], done: false },
+                ].map((h, i) => (
+                  <div
+                    key={i}
+                    style={{
+                      display: "flex",
+                      alignItems: "center",
+                      gap: 3,
+                      flex: 1,
+                    }}
+                  >
+                    <div
+                      style={{
+                        width: 4,
+                        height: 4,
+                        borderRadius: 99,
+                        background: h.color,
+                        flexShrink: 0,
+                      }}
+                    />
+                    <div
+                      style={{
+                        flex: 1,
+                        height: 2,
+                        borderRadius: 1,
+                        background: T.border,
+                      }}
+                    />
+                    <div
+                      style={{
+                        width: 6,
+                        height: 6,
+                        borderRadius: 99,
+                        background: h.done ? T.green : "transparent",
+                        border: h.done ? "none" : `1px solid ${T.border}`,
+                        display: "flex",
+                        alignItems: "center",
+                        justifyContent: "center",
+                        flexShrink: 0,
+                      }}
+                    >
+                      {h.done && (
+                        <span
+                          style={{
+                            color: "#fff",
+                            fontSize: 4,
+                            fontWeight: 700,
+                            lineHeight: 1,
+                          }}
+                        >
+                          ✓
+                        </span>
+                      )}
+                    </div>
+                  </div>
+                ))}
+              </div>
+            </div>
+            <div
+              style={{
+                color: T.faint,
+                fontSize: 16,
+                fontWeight: 300,
+                flexShrink: 0,
+              }}
+            >
+              ⇄
+            </div>
+            <div
+              style={{
+                width: 72,
+                height: 46,
+                borderRadius: 6,
+                background: "#16151a",
+                padding: 5,
+                display: "flex",
+                flexDirection: "column",
+                gap: 2,
+                boxShadow: "0 4px 12px rgba(20,18,12,0.15)",
+                overflow: "hidden",
+              }}
+            >
+              {[
+                [1, 1, 1, 1, 1, 1, 1, 1],
+                [1, 1, 1, 1, 1, 0, 0, 0],
+                [1, 1, 1, 0, 0, 0, 0, 0],
+              ].map((row, ri) => (
+                <div
+                  key={ri}
                   style={{
-                    borderRadius: 99,
-                    background: LED_COLORS[i % LED_COLORS.length],
-                    opacity: i % 3 ? 1 : 0.3,
+                    display: "flex",
+                    gap: 2,
+                    flex: 1,
                   }}
-                />
+                >
+                  {row.map((lit, ci) => (
+                    <div
+                      key={ci}
+                      style={{
+                        flex: 1,
+                        aspectRatio: "1",
+                        alignSelf: "center",
+                        borderRadius: 99,
+                        background: lit
+                          ? LED_COLORS[ri]
+                          : "rgba(255,255,255,0.08)",
+                        boxShadow: lit
+                          ? `0 0 2px ${LED_COLORS[ri]}`
+                          : "none",
+                      }}
+                    />
+                  ))}
+                </div>
               ))}
-            </span>
+            </div>
           </div>
         </FeatureCard>
       </div>
