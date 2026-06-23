@@ -1,0 +1,17 @@
+{
+  "applinks": {
+    "details": [
+      {
+        "appIDs": [
+          "FLLEHH7F86.com.mhd3v.ritlum"
+        ],
+        "components": [
+          {
+            "/": "/nfc/*",
+            "comment": "Open Habit Tracker NFC links in the iOS app."
+          }
+        ]
+      }
+    ]
+  }
+}
