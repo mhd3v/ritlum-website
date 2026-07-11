@@ -2729,7 +2729,9 @@ const Footer = () => (
       <div>
         <Wordmark />
       </div>
-      <div style={{ display: "flex", gap: 24, fontSize: 14 }}>
+      <div
+        style={{ display: "flex", gap: 24, fontSize: 14, flexWrap: "wrap" }}
+      >
         {["Tracker", "App", "Tokens", "Pricing", "Timeline", "FAQ"].map((l) => (
           <a
             key={l}
@@ -2739,6 +2741,9 @@ const Footer = () => (
             {l}
           </a>
         ))}
+        <a href="/privacy/" style={{ color: T.muted, textDecoration: "none" }}>
+          Privacy
+        </a>
       </div>
       <div style={{ fontSize: 13, color: T.faint }}>© 2026 Ritlum</div>
     </div>

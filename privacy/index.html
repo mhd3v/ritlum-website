@@ -1,0 +1,420 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <link rel="icon" type="image/svg+xml" href="../assets/favicon.svg" />
+    <title>Privacy Policy — Ritlum</title>
+    <meta
+      name="description"
+      content="How Ritlum handles information in the app and on the Ritlum website."
+    />
+    <style>
+      :root {
+        color-scheme: light;
+        --bg: #faf8f4;
+        --bg-alt: #f2efea;
+        --card: #ffffff;
+        --ink: #0a0a0a;
+        --ink-2: #3a3a3a;
+        --muted: #7a7570;
+        --faint: #aaa49c;
+        --border: rgba(15, 15, 15, 0.08);
+        --blue: #3d7bf7;
+      }
+
+      * { box-sizing: border-box; }
+
+      html { scroll-behavior: smooth; }
+
+      body {
+        margin: 0;
+        background: var(--bg);
+        color: var(--ink);
+        font-family: -apple-system, BlinkMacSystemFont, "SF Pro Text", "SF Pro", system-ui, sans-serif;
+        -webkit-font-smoothing: antialiased;
+        text-rendering: optimizeLegibility;
+      }
+
+      a { color: inherit; text-underline-offset: 3px; }
+
+      ::selection { background: rgba(91, 157, 249, 0.3); }
+
+      .nav {
+        position: sticky;
+        top: 0;
+        z-index: 10;
+        background: rgba(250, 248, 244, 0.88);
+        border-bottom: 1px solid var(--border);
+        backdrop-filter: saturate(180%) blur(16px);
+        -webkit-backdrop-filter: saturate(180%) blur(16px);
+      }
+
+      .nav-inner,
+      .footer-inner {
+        width: min(100% - 40px, 1040px);
+        margin: 0 auto;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 20px;
+      }
+
+      .nav-inner { min-height: 68px; }
+
+      .wordmark {
+        display: inline-flex;
+        align-items: center;
+        gap: 9px;
+        color: var(--ink);
+        font-size: 21px;
+        font-weight: 650;
+        letter-spacing: -0.6px;
+        text-decoration: none;
+      }
+
+      .logo {
+        width: 27px;
+        height: 27px;
+        padding: 5px;
+        display: grid;
+        grid-template-columns: repeat(3, 1fr);
+        gap: 2px;
+        border-radius: 6.5px;
+        background: #16151a;
+      }
+
+      .logo i { border-radius: 50%; }
+      .logo i:nth-child(1), .logo i:nth-child(9) { background: #5b9df9; }
+      .logo i:nth-child(2) { background: #62c089; }
+      .logo i:nth-child(4) { background: #f0a05a; }
+      .logo i:nth-child(5) { background: #e78aae; }
+      .logo i:nth-child(6) { background: #6fc8d6; }
+      .logo i:nth-child(8) { background: #a893db; }
+      .logo i:nth-child(3), .logo i:nth-child(7) { background: rgba(255, 255, 255, 0.1); }
+
+      .back-link {
+        color: var(--muted);
+        font-size: 14px;
+        font-weight: 550;
+        text-decoration: none;
+      }
+
+      main {
+        width: min(100% - 40px, 760px);
+        margin: 0 auto;
+        padding: 88px 0 100px;
+      }
+
+      .eyebrow {
+        margin: 0 0 18px;
+        color: var(--faint);
+        font-size: 12px;
+        font-weight: 700;
+        letter-spacing: 1.4px;
+        text-transform: uppercase;
+      }
+
+      h1 {
+        margin: 0;
+        font-size: clamp(42px, 8vw, 68px);
+        line-height: 0.98;
+        letter-spacing: -2.6px;
+      }
+
+      .intro {
+        max-width: 650px;
+        margin: 24px 0 0;
+        color: var(--muted);
+        font-size: 18px;
+        line-height: 1.6;
+        letter-spacing: -0.15px;
+      }
+
+      .updated {
+        margin: 16px 0 0;
+        color: var(--faint);
+        font-size: 13px;
+      }
+
+      .summary {
+        margin: 44px 0 60px;
+        padding: 24px 26px;
+        background: var(--card);
+        border: 1px solid var(--border);
+        border-radius: 20px;
+        box-shadow: 0 1px 2px rgba(20, 20, 20, 0.03), 0 12px 36px rgba(20, 20, 20, 0.04);
+      }
+
+      .summary strong {
+        display: block;
+        margin-bottom: 7px;
+        font-size: 15px;
+      }
+
+      .summary p { margin: 0; color: var(--ink-2); }
+
+      section { margin-top: 48px; scroll-margin-top: 94px; }
+
+      h2 {
+        margin: 0 0 15px;
+        font-size: 25px;
+        line-height: 1.2;
+        letter-spacing: -0.7px;
+      }
+
+      h3 {
+        margin: 28px 0 8px;
+        font-size: 16px;
+        letter-spacing: -0.2px;
+      }
+
+      p,
+      li {
+        color: var(--ink-2);
+        font-size: 15.5px;
+        line-height: 1.72;
+      }
+
+      p { margin: 0 0 14px; }
+
+      ul {
+        margin: 12px 0 18px;
+        padding-left: 22px;
+      }
+
+      li { padding-left: 4px; margin: 8px 0; }
+
+      .contact {
+        margin-top: 58px;
+        padding: 28px;
+        border-radius: 22px;
+        background: #16151a;
+        color: #f7f5f1;
+      }
+
+      .contact h2,
+      .contact p { color: inherit; }
+      .contact p { color: rgba(247, 245, 241, 0.68); }
+      .contact a { color: #ffffff; font-weight: 600; }
+
+      footer {
+        background: var(--bg-alt);
+        border-top: 1px solid var(--border);
+      }
+
+      .footer-inner {
+        min-height: 100px;
+        color: var(--muted);
+        font-size: 13px;
+        flex-wrap: wrap;
+      }
+
+      .footer-links { display: flex; gap: 22px; }
+      .footer-links a { text-decoration: none; }
+
+      @media (max-width: 600px) {
+        .nav-inner,
+        .footer-inner,
+        main { width: min(100% - 32px, 760px); }
+        main { padding: 62px 0 74px; }
+        .back-link { font-size: 13px; }
+        h1 { letter-spacing: -2px; }
+        .summary { margin-top: 34px; padding: 21px; }
+        section { margin-top: 40px; }
+        .footer-inner { padding: 26px 0; align-items: flex-start; flex-direction: column; }
+      }
+    </style>
+  </head>
+  <body>
+    <nav class="nav" aria-label="Main navigation">
+      <div class="nav-inner">
+        <a class="wordmark" href="../" aria-label="Ritlum home">
+          <span class="logo" aria-hidden="true">
+            <i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i>
+          </span>
+          <span>Ritlum</span>
+        </a>
+        <a class="back-link" href="../">Back to ritlum.com</a>
+      </div>
+    </nav>
+
+    <main>
+      <header>
+        <p class="eyebrow">Your data, in plain language</p>
+        <h1>Privacy Policy</h1>
+        <p class="intro">
+          Ritlum is designed to work without an account. Your habit data stays on your device unless you choose to sign in and enable cloud sync.
+        </p>
+        <p class="updated">Effective and last updated: July 11, 2026</p>
+      </header>
+
+      <div class="summary">
+        <strong>The short version</strong>
+        <p>
+          We do not sell your personal data, show ads, or use third-party advertising trackers. Cloud sync, notifications, NFC, Bluetooth, and the website waitlist are optional.
+        </p>
+      </div>
+
+      <section id="scope">
+        <h2>1. Who this policy covers</h2>
+        <p>
+          This policy explains how Ritlum ("Ritlum," "we," "us," or "our") handles information when you use the Ritlum iOS app, the Ritlum widget, a Ritlum desk tracker, or ritlum.com. Ritlum is the controller of personal data described in this policy. You can contact us at <a href="mailto:contact@ritlum.com">contact@ritlum.com</a>.
+        </p>
+      </section>
+
+      <section id="data">
+        <h2>2. Information we handle</h2>
+
+        <h3>Data stored on your device</h3>
+        <p>The app may store:</p>
+        <ul>
+          <li>Habit names, icons, colors, goals, schedules, reminders, streaks, and completion history, including counts, durations, and timestamps.</li>
+          <li>NFC tag identifiers and the habits you link to them.</li>
+          <li>Paired Ritlum tracker information and preferences, such as its device identifier, name, firmware version, brightness, display configuration, and recent connection status.</li>
+          <li>App preferences and a limited habit-progress snapshot shared with the Ritlum home-screen widget through Apple's App Group storage.</li>
+        </ul>
+        <p>
+          This information is stored using Apple's on-device storage technologies. Local reminders are scheduled through Apple's notification system. Ritlum does not receive the content of a notification merely because it appears on your device.
+        </p>
+
+        <h3>Account and cloud-sync data</h3>
+        <p>
+          You can use Ritlum without an account. If you choose Apple or Google sign-in, we receive an account identifier, your chosen sign-in provider, and any account information that provider makes available for authentication, which may include your email address and name. Authentication sessions are stored securely in your device Keychain.
+        </p>
+        <p>
+          While you are signed in, your habit data, completion history, NFC links, and Ritlum tracker settings are associated with your account identifier and synced through Supabase so they can appear on your other devices.
+        </p>
+
+        <h3>Purchases</h3>
+        <p>
+          Purchases are processed by Apple through StoreKit. We do not receive your full payment-card details. The app receives product, entitlement, and transaction-status information needed to provide and restore paid features.
+        </p>
+
+        <h3>Website and waitlist data</h3>
+        <p>
+          If you join the waitlist on ritlum.com, we collect the email address you submit so we can send the promised launch message. Our hosting and infrastructure providers may also process ordinary technical request data such as IP address, browser type, requested page, and timestamp for delivery, security, and reliability. Ritlum does not currently use the website or app for behavioral advertising or cross-site tracking.
+        </p>
+      </section>
+
+      <section id="uses">
+        <h2>3. Why we use information</h2>
+        <p>We use information only as needed to:</p>
+        <ul>
+          <li>Provide habit tracking, history, statistics, reminders, widgets, NFC check-ins, and Ritlum tracker features.</li>
+          <li>Authenticate you and sync your selected app data across devices.</li>
+          <li>Process and restore purchases.</li>
+          <li>Send the waitlist launch email you requested.</li>
+          <li>Maintain security, prevent abuse, troubleshoot problems, and meet legal obligations.</li>
+        </ul>
+        <p>
+          We do not sell or rent personal data. We do not use it for third-party advertising, data-broker profiling, or automated decisions that produce legal or similarly significant effects.
+        </p>
+      </section>
+
+      <section id="legal-bases">
+        <h2>4. Legal bases in the EEA and UK</h2>
+        <p>Where data-protection law requires a legal basis, we rely on:</p>
+        <ul>
+          <li><strong>Performance of a contract</strong> to provide the app, sync, account, hardware, and purchase features you request.</li>
+          <li><strong>Consent</strong> for optional permissions and communications, such as notifications and the launch waitlist. You may withdraw consent at any time.</li>
+          <li><strong>Legitimate interests</strong> in keeping Ritlum secure, reliable, and free from abuse, where those interests are not overridden by your rights.</li>
+          <li><strong>Legal obligations</strong> where we must retain or disclose information under applicable law.</li>
+        </ul>
+      </section>
+
+      <section id="sharing">
+        <h2>5. Service providers and sharing</h2>
+        <p>We share data only where needed to operate the relevant feature:</p>
+        <ul>
+          <li><strong>Apple</strong> for Sign in with Apple, StoreKit purchases, notifications, widgets, and platform services.</li>
+          <li><strong>Google</strong> if you choose Google sign-in.</li>
+          <li><strong>Supabase</strong> for authentication, cloud storage, realtime sync, and waitlist storage.</li>
+          <li><strong>GitHub Pages</strong> to host ritlum.com, and <strong>unpkg</strong> to deliver code used by the main website.</li>
+        </ul>
+        <p>
+          These providers process data under their own terms and privacy notices and are expected to provide protections consistent with applicable law. We may also disclose information if required by law, to protect rights or safety, or as part of a business transfer subject to appropriate safeguards. We do not permit service providers to use app data for their own advertising.
+        </p>
+        <p>
+          Some providers may process data outside your country, including outside the EEA or UK. Where required, those transfers rely on an adequacy decision, standard contractual clauses, or another lawful transfer mechanism.
+        </p>
+      </section>
+
+      <section id="retention">
+        <h2>6. Retention and deletion</h2>
+        <ul>
+          <li><strong>On-device data</strong> remains until you delete it in the app or remove the app and its data from your device.</li>
+          <li><strong>Cloud-sync and account data</strong> is kept while your account is active and until it is deleted or no longer needed to provide the service. Signing out stops sync on that device but does not delete cloud data.</li>
+          <li><strong>Waitlist email addresses</strong> are kept until the launch message has been sent, you ask us to remove the address, or the waitlist is discontinued.</li>
+          <li><strong>Security and infrastructure logs</strong> are retained according to the service provider's normal schedule and only as long as reasonably needed for security, reliability, or legal obligations.</li>
+        </ul>
+        <p>
+          To request deletion of your account and associated cloud data, email <a href="mailto:contact@ritlum.com?subject=Ritlum%20account%20deletion">contact@ritlum.com</a> from the address connected to your account, or include enough information for us to verify the request. We will remove data from active systems without undue delay, unless retention is required by law. Residual copies may remain temporarily in backups until those backups are overwritten.
+        </p>
+      </section>
+
+      <section id="choices">
+        <h2>7. Your choices and controls</h2>
+        <ul>
+          <li>Use the app without signing in to keep habit data local to your device.</li>
+          <li>Sign out to stop cloud sync on that device. Contact us to delete the cloud account and data.</li>
+          <li>Change notification permission in iOS Settings and reminder settings in the app.</li>
+          <li>Unlink NFC tags or disconnect a Ritlum tracker in the app. NFC and Bluetooth access is used only when you choose related features.</li>
+          <li>Ask us to remove your waitlist email at any time.</li>
+        </ul>
+      </section>
+
+      <section id="rights">
+        <h2>8. Your privacy rights</h2>
+        <p>
+          Depending on where you live, you may have rights to access, correct, delete, restrict, or object to processing of your personal data, and to receive a portable copy. Where processing is based on consent, you may withdraw that consent. You may also have the right to complain to your local data-protection authority.
+        </p>
+        <p>
+          Email <a href="mailto:contact@ritlum.com?subject=Ritlum%20privacy%20request">contact@ritlum.com</a> to exercise a right. We may need to verify your identity before completing a request.
+        </p>
+      </section>
+
+      <section id="security">
+        <h2>9. Security</h2>
+        <p>
+          We use reasonable technical and organizational safeguards designed to protect information, including platform security, encrypted network connections, access controls, and account-scoped cloud permissions. No system is completely secure, so we cannot guarantee absolute security.
+        </p>
+      </section>
+
+      <section id="children">
+        <h2>10. Children</h2>
+        <p>
+          Ritlum is not directed to children under 13, and we do not knowingly collect personal data from children under 13. If you believe a child has provided personal data, contact us so we can review and delete it where appropriate. Higher minimum ages may apply in some countries for account-based features.
+        </p>
+      </section>
+
+      <section id="changes">
+        <h2>11. Changes to this policy</h2>
+        <p>
+          We may update this policy as Ritlum changes. We will post the revised version here and update the effective date. If a change materially affects how we use personal data, we will provide additional notice where required.
+        </p>
+      </section>
+
+      <section class="contact" id="contact">
+        <h2>Questions or requests?</h2>
+        <p>Contact Ritlum at <a href="mailto:contact@ritlum.com">contact@ritlum.com</a>.</p>
+      </section>
+    </main>
+
+    <footer>
+      <div class="footer-inner">
+        <a class="wordmark" href="../" aria-label="Ritlum home">
+          <span class="logo" aria-hidden="true">
+            <i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i>
+          </span>
+          <span>Ritlum</span>
+        </a>
+        <div class="footer-links">
+          <a href="../">Home</a>
+          <a href="./" aria-current="page">Privacy</a>
+        </div>
+        <span>© 2026 Ritlum</span>
+      </div>
+    </footer>
+  </body>
+</html>
