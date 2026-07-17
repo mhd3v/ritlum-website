@@ -92,20 +92,21 @@ const Eyebrow = ({ children, dark }) => (
 
 const AppStoreButton = () => (
   <a
-    href="#"
-    onClick={(e) => e.preventDefault()}
+    href="https://testflight.apple.com/join/Z6FS9jDE"
+    target="_blank"
+    rel="noopener noreferrer"
     style={{
       display: "inline-flex",
       alignItems: "center",
       textDecoration: "none",
-      width: 164,
+      width: 176,
       height: "auto",
       cursor: "pointer",
     }}
   >
     <img
-      src="assets/download-on-app-store.svg"
-      alt="Download on the App Store"
+      src="assets/testflight-badge.png"
+      alt="Available on TestFlight"
       style={{ display: "block", width: "100%", height: "auto" }}
     />
   </a>
