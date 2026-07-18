@@ -207,7 +207,7 @@ const NotifyForm = ({ dark, compact }) => {
           whiteSpace: "nowrap",
         }}
       >
-        Notify me on Kickstarter
+        Notify me
       </button>
       {error && (
         <div style={{ color: "#d14343", fontSize: 13 }}>
@@ -321,7 +321,7 @@ const NAV_LINKS = [
   { href: "#tracker", label: "Tracker" },
   { href: "#app", label: "App" },
   { href: "#tokens", label: "Tokens" },
-  { href: "#pricing", label: "Pricing" },
+  { href: "#kit", label: "DIY Kit" },
   { href: "#timeline", label: "Timeline" },
   { href: "#faq", label: "FAQ" },
 ];
@@ -375,7 +375,12 @@ const Nav = () => {
           justifyContent: "space-between",
         }}
       >
-        <Wordmark />
+        <a
+          href="#"
+          style={{ display: "inline-flex", textDecoration: "none" }}
+        >
+          <Wordmark />
+        </a>
         <div style={{ display: "flex", alignItems: "center", gap: 28 }}>
           <div className="rt-navlinks" style={{ display: "flex", gap: 26 }}>
             {NAV_LINKS.map((l) => (
@@ -580,7 +585,7 @@ const Hero = () => (
               border: `1px solid ${T.borderStrong}`,
             }}
           >
-            Notify me on Kickstarter →
+            Notify me →
           </a>
         </div>
       </Reveal>
@@ -2104,14 +2109,14 @@ const TimelineSection = () => {
     {
       tag: "Available now",
       title: "The app is live",
-      body: "Download the iOS app and start tracking today - completely free.",
+      body: "Download the iOS app and start tracking today.",
       color: T.habit.blue,
       active: false,
     },
     {
       tag: "Summer 2026",
       title: "Kickstarter goes live",
-      body: "Back Ritlum and lock in early-bird pricing on the tracker + tokens.",
+      body: "Back Ritlum and lock in early-bird access to the tracker + tokens.",
       color: T.green,
       active: true,
     },
@@ -2292,9 +2297,9 @@ const IncludedItem = ({ children }) => (
 );
 
 const PricingSpecsSection = () => (
-  <Section panel id="pricing" style={{ paddingTop: 100, paddingBottom: 100 }}>
+  <Section panel id="kit" style={{ paddingTop: 100, paddingBottom: 100 }}>
     <Reveal style={{ maxWidth: 700 }}>
-      <SectionLabel>Pricing &amp; specs</SectionLabel>
+      <SectionLabel>Specs &amp; DIY kit</SectionLabel>
       <h2
         style={{
           margin: 0,
@@ -2306,7 +2311,7 @@ const PricingSpecsSection = () => (
           color: T.ink,
         }}
       >
-        Back it early, get it first.
+        Buy it built. Or build it yourself.
       </h2>
       <p
         style={{
@@ -2317,8 +2322,10 @@ const PricingSpecsSection = () => (
           color: T.muted,
         }}
       >
-        The app is free today. When the Kickstarter opens this summer, early
-        backers lock in the best price on the tracker.
+        Download the app today, and the finished tracker ships via
+        Kickstarter this summer. We're also weighing a DIY kit for makers
+        who'd rather assemble one from parts — pricing across the board is
+        still being worked out.
       </p>
     </Reveal>
 
@@ -2332,7 +2339,7 @@ const PricingSpecsSection = () => (
           alignItems: "stretch",
         }}
       >
-        {/* pledge card */}
+        {/* DIY kit card */}
         <div
           style={{
             background: T.card,
@@ -2362,46 +2369,50 @@ const PricingSpecsSection = () => (
                 color: T.faint,
               }}
             >
-              Kickstarter early-bird
+              DIY kit
             </span>
             <span
               style={{
+                display: "inline-flex",
+                alignItems: "center",
+                gap: 7,
                 fontSize: 12.5,
                 fontWeight: 700,
-                color: T.green,
-                background: T.greenSoft,
-                padding: "6px 11px",
+                color: T.blue,
+                background: "rgba(61,123,247,0.12)",
+                padding: "6px 12px",
                 borderRadius: 99,
               }}
             >
-              Save 30%
+              <span
+                style={{
+                  width: 7,
+                  height: 7,
+                  borderRadius: 99,
+                  background: T.blue,
+                  boxShadow: `0 0 8px ${T.blue}`,
+                }}
+              />
+              Coming soon
             </span>
           </div>
-          <div style={{ display: "flex", alignItems: "baseline", gap: 11 }}>
-            <span
-              style={{
-                fontFamily: T.fontDisplay,
-                fontSize: 54,
-                fontWeight: 700,
-                letterSpacing: -2.4,
-                color: T.ink,
-                lineHeight: 1,
-              }}
-            >
-              $89
-            </span>
-            <span
-              style={{
-                fontSize: 18,
-                color: T.faint,
-                textDecoration: "line-through",
-                fontWeight: 600,
-              }}
-            >
-              $129
-            </span>
-            <span style={{ fontSize: 14, color: T.muted }}>est. retail</span>
+          <div
+            style={{
+              fontFamily: T.fontDisplay,
+              fontSize: 30,
+              fontWeight: 700,
+              letterSpacing: -1,
+              color: T.ink,
+              lineHeight: 1.15,
+            }}
+          >
+            Build your own.
           </div>
+          <p style={{ margin: 0, fontSize: 15, lineHeight: 1.55, color: T.muted }}>
+            A parts kit for makers: the 3D-printed enclosure, LED matrix
+            panels, and an ESP32 pre-flashed with Ritlum firmware. No
+            soldering required.
+          </p>
           <div
             style={{
               display: "flex",
@@ -2410,11 +2421,10 @@ const PricingSpecsSection = () => (
               padding: "4px 0 2px",
             }}
           >
-            <IncludedItem>One Ritlum desk tracker</IncludedItem>
-            <IncludedItem>Starter set of 4 habit tokens</IncludedItem>
-            <IncludedItem>USB-C cable</IncludedItem>
-            <IncludedItem>Free lifetime firmware updates</IncludedItem>
-            <IncludedItem>1-year warranty</IncludedItem>
+            <IncludedItem>3D-printed enclosure</IncludedItem>
+            <IncludedItem>LED matrix panels</IncludedItem>
+            <IncludedItem>ESP32, firmware pre-flashed</IncludedItem>
+            <IncludedItem>Wiring &amp; assembly guide</IncludedItem>
           </div>
           <a
             href="#notify"
@@ -2433,11 +2443,11 @@ const PricingSpecsSection = () => (
               marginTop: 2,
             }}
           >
-            Notify me on Kickstarter →
+            I'm interested →
           </a>
           <div style={{ fontSize: 12.5, color: T.faint, lineHeight: 1.5 }}>
-            Indicative early-bird pricing · ships Q4 2026 · no charge until the
-            campaign launches.
+            Concept stage · pricing not yet set · only happens if enough of
+            you want it.
           </div>
         </div>
 
@@ -2483,7 +2493,7 @@ const PricingSpecsSection = () => (
 const FAQS = [
   {
     q: "Is the app available now?",
-    a: "Yes - the Ritlum iOS app is live today and free to use. The physical desk tracker comes later, funded through the Kickstarter campaign launching this summer.",
+    a: "Yes - the Ritlum iOS app is live today, free to download. The physical desk tracker comes later, funded through the Kickstarter campaign launching this summer.",
   },
   {
     q: "Do I need the tracker to use the app?",
@@ -2491,7 +2501,7 @@ const FAQS = [
   },
   {
     q: "When does the tracker ship?",
-    a: "The Kickstarter goes live this summer, and trackers ship to backers in Q4 2026. Back early to lock in the best price and an early slot in line.",
+    a: "The Kickstarter goes live this summer, and trackers ship to backers in Q4 2026. Back early to lock in your spot in line.",
   },
   {
     q: "What do I need to use it?",
@@ -2502,8 +2512,12 @@ const FAQS = [
     a: "Map any habit to an NFC token in the app, then keep it wherever the habit happens - by the door, the kettle, your gym bag. Tap your phone to it and the completion logs in under a second.",
   },
   {
+    q: "What's the DIY kit?",
+    a: "A parts kit for makers who'd rather build than buy: the 3D-printed enclosure, LED matrix panels, and an ESP32 pre-flashed with Ritlum firmware. It's still a concept - whether it happens depends on interest, so join the list if you'd want one.",
+  },
+  {
     q: "Is there a subscription?",
-    a: "No. Core habit tracking and firmware updates are free, forever. We may add an optional premium tier later, but everything shown here is included.",
+    a: "The app is free to download. A monthly or yearly plan unlocks unlimited habits and NFC tokens, plus the ability to connect to the Ritlum tracker. Firmware updates for the physical tracker are free, forever.",
   },
 ];
 
@@ -2733,10 +2747,17 @@ const Footer = () => (
       <div
         style={{ display: "flex", gap: 24, fontSize: 14, flexWrap: "wrap" }}
       >
-        {["Tracker", "App", "Tokens", "Pricing", "Timeline", "FAQ"].map((l) => (
+        {[
+          { l: "Tracker", href: "#tracker" },
+          { l: "App", href: "#app" },
+          { l: "Tokens", href: "#tokens" },
+          { l: "DIY Kit", href: "#kit" },
+          { l: "Timeline", href: "#timeline" },
+          { l: "FAQ", href: "#faq" },
+        ].map(({ l, href }) => (
           <a
             key={l}
-            href={`#${l.toLowerCase()}`}
+            href={href}
             style={{ color: T.muted, textDecoration: "none" }}
           >
             {l}
