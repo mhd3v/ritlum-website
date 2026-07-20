@@ -1,0 +1,177 @@
+---
+import BaseLayout from "./BaseLayout.astro";
+
+interface Props {
+  title: string;
+  description: string;
+  pubDate: Date;
+  youtubeId?: string;
+}
+
+const { title, description, pubDate, youtubeId } = Astro.props;
+
+const formattedDate = pubDate.toLocaleDateString("en-US", {
+  year: "numeric",
+  month: "long",
+  day: "numeric",
+});
+
+const canonicalURL = new URL(Astro.url.pathname, Astro.site);
+
+const jsonLd = {
+  "@context": "https://schema.org",
+  "@type": "Article",
+  headline: title,
+  description,
+  datePublished: pubDate.toISOString(),
+  url: canonicalURL.toString(),
+  author: { "@type": "Organization", name: "Ritlum" },
+  publisher: { "@type": "Organization", name: "Ritlum" },
+  mainEntityOfPage: canonicalURL.toString(),
+};
+---
+
+<BaseLayout
+  title={`${title} — Ritlum Blog`}
+  description={description}
+  ogType="article"
+>
+  <Fragment slot="head">
+    <script type="application/ld+json" set:html={JSON.stringify(jsonLd)} />
+  </Fragment>
+  <main>
+    <article>
+      <header>
+        <p class="eyebrow">Ritlum Blog</p>
+        <h1>{title}</h1>
+        <p class="updated">{formattedDate}</p>
+      </header>
+
+      {
+        youtubeId && (
+          <div class="video-wrap">
+            <iframe
+              src={`https://www.youtube-nocookie.com/embed/${youtubeId}`}
+              title={title}
+              loading="lazy"
+              allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+              allowfullscreen
+            />
+          </div>
+        )
+      }
+
+      <div class="prose">
+        <slot />
+      </div>
+    </article>
+  </main>
+</BaseLayout>
+
+<style>
+  main {
+    width: min(100% - 40px, 760px);
+    margin: 0 auto;
+    padding: 88px 0 100px;
+  }
+
+  .eyebrow {
+    margin: 0 0 18px;
+    color: var(--faint);
+    font-size: 12px;
+    font-weight: 700;
+    letter-spacing: 1.4px;
+    text-transform: uppercase;
+  }
+
+  h1 {
+    margin: 0;
+    font-size: clamp(36px, 7vw, 54px);
+    line-height: 1.04;
+    letter-spacing: -2px;
+  }
+
+  .updated {
+    margin: 16px 0 0;
+    color: var(--faint);
+    font-size: 13px;
+  }
+
+  .video-wrap {
+    position: relative;
+    width: 100%;
+    aspect-ratio: 16 / 9;
+    margin: 40px 0 8px;
+    border-radius: 20px;
+    overflow: hidden;
+    background: #16151a;
+    box-shadow:
+      0 1px 2px rgba(20, 20, 20, 0.03),
+      0 12px 36px rgba(20, 20, 20, 0.06);
+  }
+
+  .video-wrap iframe {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    border: 0;
+  }
+
+  .prose {
+    margin-top: 40px;
+  }
+
+  .prose :global(p),
+  .prose :global(li) {
+    color: var(--ink-2);
+    font-size: 17px;
+    line-height: 1.72;
+  }
+
+  .prose :global(p) {
+    margin: 0 0 20px;
+  }
+
+  .prose :global(h2) {
+    margin: 44px 0 14px;
+    font-size: 25px;
+    line-height: 1.2;
+    letter-spacing: -0.7px;
+  }
+
+  .prose :global(h3) {
+    margin: 30px 0 8px;
+    font-size: 18px;
+    letter-spacing: -0.2px;
+  }
+
+  .prose :global(ul) {
+    margin: 12px 0 20px;
+    padding-left: 22px;
+  }
+
+  .prose :global(li) {
+    padding-left: 4px;
+    margin: 8px 0;
+  }
+
+  .prose :global(a) {
+    color: var(--blue);
+    font-weight: 550;
+  }
+
+  .prose :global(strong) {
+    color: var(--ink);
+  }
+
+  @media (max-width: 600px) {
+    main {
+      width: min(100% - 32px, 760px);
+      padding: 62px 0 74px;
+    }
+    h1 {
+      letter-spacing: -1.4px;
+    }
+  }
+</style>

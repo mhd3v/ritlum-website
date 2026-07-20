@@ -9,6 +9,21 @@
       name="description"
       content="How Ritlum handles information in the app and on the Ritlum website."
     />
+
+    <!-- Google tag (gtag.js) -->
+    <script
+      async
+      src="https://www.googletagmanager.com/gtag/js?id=G-TZEBVLWPWQ"
+    ></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag() {
+        dataLayer.push(arguments);
+      }
+      gtag("js", new Date());
+      gtag("config", "G-TZEBVLWPWQ");
+    </script>
+
     <style>
       :root {
         color-scheme: light;
@@ -246,7 +261,7 @@
         <p class="intro">
           Ritlum is designed to work without an account. Your habit data stays on your device unless you choose to sign in and enable cloud sync.
         </p>
-        <p class="updated">Effective and last updated: July 11, 2026</p>
+        <p class="updated">Effective and last updated: July 20, 2026</p>
       </header>
 
       <div class="summary">
@@ -293,7 +308,10 @@
 
         <h3>Website and waitlist data</h3>
         <p>
-          If you join the waitlist on ritlum.com, we collect the email address you submit so we can send the promised launch message. Our hosting and infrastructure providers may also process ordinary technical request data such as IP address, browser type, requested page, and timestamp for delivery, security, and reliability. Ritlum does not currently use the website or app for behavioral advertising or cross-site tracking.
+          If you join the waitlist on ritlum.com, we collect the email address you submit so we can send the promised launch message. Our hosting and infrastructure providers may also process ordinary technical request data such as IP address, browser type, requested page, and timestamp for delivery, security, and reliability.
+        </p>
+        <p>
+          We use Google Analytics on ritlum.com to understand how visitors find and use the site. Google Analytics sets cookies and processes information such as your IP address, browser and device type, pages viewed, and how you arrived at the site. We have not enabled Google Signals or ad personalization, so this data is not used to build cross-site advertising profiles. Ritlum does not currently use the website or app for behavioral advertising or cross-site tracking.
         </p>
       </section>
 
@@ -328,7 +346,7 @@
         <p>We share data only where needed to operate the relevant feature:</p>
         <ul>
           <li><strong>Apple</strong> for Sign in with Apple, StoreKit purchases, notifications, widgets, and platform services.</li>
-          <li><strong>Google</strong> if you choose Google sign-in.</li>
+          <li><strong>Google</strong>, for Google sign-in (if you choose it) and Google Analytics to measure website traffic on ritlum.com.</li>
           <li><strong>Supabase</strong> for authentication, cloud storage, realtime sync, and waitlist storage.</li>
           <li><strong>GitHub Pages</strong> to host ritlum.com, and <strong>unpkg</strong> to deliver code used by the main website.</li>
         </ul>
@@ -361,6 +379,7 @@
           <li>Change notification permission in iOS Settings and reminder settings in the app.</li>
           <li>Unlink NFC tags or disconnect a Ritlum tracker in the app. NFC and Bluetooth access is used only when you choose related features.</li>
           <li>Ask us to remove your waitlist email at any time.</li>
+          <li>Opt out of Google Analytics using <a href="https://tools.google.com/dlpage/gaoptout" target="_blank" rel="noopener">Google's browser opt-out add-on</a>, or by blocking cookies in your browser settings.</li>
         </ul>
       </section>
 
@@ -411,6 +430,7 @@
         </a>
         <div class="footer-links">
           <a href="../">Home</a>
+          <a href="../blog/">Blog</a>
           <a href="./" aria-current="page">Privacy</a>
         </div>
         <span>© 2026 Ritlum</span>

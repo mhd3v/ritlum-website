@@ -2763,6 +2763,9 @@ const Footer = () => (
             {l}
           </a>
         ))}
+        <a href="/blog/" style={{ color: T.muted, textDecoration: "none" }}>
+          Blog
+        </a>
         <a href="/privacy/" style={{ color: T.muted, textDecoration: "none" }}>
           Privacy
         </a>

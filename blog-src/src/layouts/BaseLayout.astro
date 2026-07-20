@@ -1,0 +1,265 @@
+---
+interface Props {
+  title: string;
+  description: string;
+  ogType?: "website" | "article";
+  ogImage?: string;
+}
+
+const {
+  title,
+  description,
+  ogType = "website",
+  ogImage = "https://ritlum.com/hero-device-v3.png",
+} = Astro.props;
+
+const canonicalURL = new URL(Astro.url.pathname, Astro.site);
+---
+
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <link rel="icon" type="image/svg+xml" href="/assets/favicon.svg" />
+    <link rel="canonical" href={canonicalURL} />
+    <title>{title}</title>
+    <meta name="description" content={description} />
+
+    <meta property="og:type" content={ogType} />
+    <meta property="og:site_name" content="Ritlum" />
+    <meta property="og:title" content={title} />
+    <meta property="og:description" content={description} />
+    <meta property="og:url" content={canonicalURL} />
+    <meta property="og:image" content={ogImage} />
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content={title} />
+    <meta name="twitter:description" content={description} />
+    <meta name="twitter:image" content={ogImage} />
+
+    <slot name="head" />
+
+    <!-- Google tag (gtag.js) -->
+    <script
+      async
+      src="https://www.googletagmanager.com/gtag/js?id=G-TZEBVLWPWQ"
+    ></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag() {
+        dataLayer.push(arguments);
+      }
+      gtag("js", new Date());
+      gtag("config", "G-TZEBVLWPWQ");
+    </script>
+
+    <style>
+      :root {
+        color-scheme: light;
+        --bg: #faf8f4;
+        --bg-alt: #f2efea;
+        --card: #ffffff;
+        --ink: #0a0a0a;
+        --ink-2: #3a3a3a;
+        --muted: #7a7570;
+        --faint: #aaa49c;
+        --border: rgba(15, 15, 15, 0.08);
+        --blue: #3d7bf7;
+      }
+
+      * {
+        box-sizing: border-box;
+      }
+
+      html {
+        scroll-behavior: smooth;
+        height: 100%;
+      }
+
+      body {
+        margin: 0;
+        min-height: 100%;
+        display: flex;
+        flex-direction: column;
+        background: var(--bg);
+        color: var(--ink);
+        font-family:
+          -apple-system,
+          BlinkMacSystemFont,
+          "SF Pro Text",
+          "SF Pro",
+          system-ui,
+          sans-serif;
+        -webkit-font-smoothing: antialiased;
+        text-rendering: optimizeLegibility;
+      }
+
+      a {
+        color: inherit;
+        text-underline-offset: 3px;
+      }
+
+      ::selection {
+        background: rgba(91, 157, 249, 0.3);
+      }
+
+      .nav {
+        position: sticky;
+        top: 0;
+        z-index: 10;
+        background: rgba(250, 248, 244, 0.88);
+        border-bottom: 1px solid var(--border);
+        backdrop-filter: saturate(180%) blur(16px);
+        -webkit-backdrop-filter: saturate(180%) blur(16px);
+      }
+
+      .nav-inner,
+      .footer-inner {
+        width: min(100% - 40px, 1040px);
+        margin: 0 auto;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 20px;
+      }
+
+      .nav-inner {
+        min-height: 68px;
+      }
+
+      .wordmark {
+        display: inline-flex;
+        align-items: center;
+        gap: 9px;
+        color: var(--ink);
+        font-size: 21px;
+        font-weight: 650;
+        letter-spacing: -0.6px;
+        text-decoration: none;
+      }
+
+      .logo {
+        width: 27px;
+        height: 27px;
+        padding: 5px;
+        display: grid;
+        grid-template-columns: repeat(3, 1fr);
+        gap: 2px;
+        border-radius: 6.5px;
+        background: #16151a;
+      }
+
+      .logo i {
+        border-radius: 50%;
+      }
+      .logo i:nth-child(1),
+      .logo i:nth-child(9) {
+        background: #5b9df9;
+      }
+      .logo i:nth-child(2) {
+        background: #62c089;
+      }
+      .logo i:nth-child(4) {
+        background: #f0a05a;
+      }
+      .logo i:nth-child(5) {
+        background: #e78aae;
+      }
+      .logo i:nth-child(6) {
+        background: #6fc8d6;
+      }
+      .logo i:nth-child(8) {
+        background: #a893db;
+      }
+      .logo i:nth-child(3),
+      .logo i:nth-child(7) {
+        background: rgba(255, 255, 255, 0.1);
+      }
+
+      .back-link {
+        color: var(--muted);
+        font-size: 14px;
+        font-weight: 550;
+        text-decoration: none;
+      }
+
+      footer {
+        background: var(--bg-alt);
+        border-top: 1px solid var(--border);
+      }
+
+      .footer-inner {
+        min-height: 100px;
+        color: var(--muted);
+        font-size: 13px;
+        flex-wrap: wrap;
+      }
+
+      .footer-links {
+        display: flex;
+        gap: 22px;
+      }
+      .footer-links a {
+        text-decoration: none;
+      }
+
+      .nav {
+        flex-shrink: 0;
+      }
+
+      :global(main) {
+        flex: 1 0 auto;
+      }
+
+      footer {
+        flex-shrink: 0;
+      }
+
+      @media (max-width: 600px) {
+        .nav-inner,
+        .footer-inner {
+          width: min(100% - 32px, 760px);
+        }
+        .footer-inner {
+          padding: 26px 0;
+          align-items: flex-start;
+          flex-direction: column;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <nav class="nav" aria-label="Main navigation">
+      <div class="nav-inner">
+        <a class="wordmark" href="/" aria-label="Ritlum home">
+          <span class="logo" aria-hidden="true">
+            <i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i
+            ></i>
+          </span>
+          <span>Ritlum</span>
+        </a>
+        <a class="back-link" href="/">Back to ritlum.com</a>
+      </div>
+    </nav>
+
+    <slot />
+
+    <footer>
+      <div class="footer-inner">
+        <a class="wordmark" href="/" aria-label="Ritlum home">
+          <span class="logo" aria-hidden="true">
+            <i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i
+            ></i>
+          </span>
+          <span>Ritlum</span>
+        </a>
+        <div class="footer-links">
+          <a href="/">Home</a>
+          <a href="/blog/" aria-current="page">Blog</a>
+          <a href="/privacy/">Privacy</a>
+        </div>
+        <span>© 2026 Ritlum</span>
+      </div>
+    </footer>
+  </body>
+</html>
