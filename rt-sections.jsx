@@ -92,7 +92,7 @@ const Eyebrow = ({ children, dark }) => (
 
 const AppStoreButton = () => (
   <a
-    href="https://testflight.apple.com/join/Z6FS9jDE"
+    href="https://apps.apple.com/us/app/ritlum-habit-tracker/id6788856420"
     target="_blank"
     rel="noopener noreferrer"
     style={{
@@ -105,8 +105,8 @@ const AppStoreButton = () => (
     }}
   >
     <img
-      src="assets/testflight-badge.png"
-      alt="Available on TestFlight"
+      src="assets/download-on-app-store.svg"
+      alt="Download on the App Store"
       style={{ display: "block", width: "100%", height: "auto" }}
     />
   </a>
