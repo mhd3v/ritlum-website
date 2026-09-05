@@ -745,8 +745,22 @@ const TODAY_GRID = [
   { color: T.habit.cyan, days: "0111101111011100" }, // done today
 ];
 
-const TodayScreen = () => {
-  const habits = HABITS;
+const TodayScreen = ({ completedIds = null, activeHabitId = null }) => {
+  const animated = Array.isArray(completedIds);
+  const completedSet = animated ? new Set(completedIds) : null;
+  const habits = animated
+    ? HABITS.map((habit) => ({
+        ...habit,
+        done: completedSet.has(habit.id),
+        justCompleted: habit.id === activeHabitId,
+      }))
+    : HABITS;
+  const todayRows = animated
+    ? TODAY_GRID.map((row, index) => ({
+        ...row,
+        days: `${row.days.slice(0, 13)}${habits[index]?.done ? "1" : "0"}${row.days.slice(14)}`,
+      }))
+    : TODAY_GRID;
   const completed = habits.filter((h) => h.done).length;
   return (
     <div
@@ -778,7 +792,7 @@ const TodayScreen = () => {
         {/* hero summary card */}
         <div style={{ padding: "0 18px 16px" }}>
           <Card padding={18} style={{ background: T.card }}>
-            <DotGridPreview rows={TODAY_GRID} />
+            <DotGridPreview rows={todayRows} />
             <div
               style={{
                 paddingTop: 14,
@@ -797,6 +811,7 @@ const TodayScreen = () => {
                 }}
               >
                 <span
+                  key={completed}
                   style={{
                     fontSize: 24,
                     color: T.ink,
@@ -804,6 +819,9 @@ const TodayScreen = () => {
                     fontWeight: 700,
                     fontVariantNumeric: "tabular-nums",
                     lineHeight: 1,
+                    animation: animated
+                      ? "rtHabitCountIn 380ms cubic-bezier(.2,.8,.2,1)"
+                      : undefined,
                   }}
                 >
                   {completed} / {habits.length}
@@ -855,7 +873,17 @@ const TodayScreen = () => {
           </div>
           <Card>
             {habits.map((h, i) => (
-              <TodayHabitRow key={h.id} h={h} last={i === habits.length - 1} />
+              <div
+                key={h.id}
+                style={{
+                  background: h.justCompleted
+                    ? "rgba(47,180,99,0.09)"
+                    : "transparent",
+                  transition: "background 280ms ease",
+                }}
+              >
+                <TodayHabitRow h={h} last={i === habits.length - 1} />
+              </div>
             ))}
           </Card>
           <div

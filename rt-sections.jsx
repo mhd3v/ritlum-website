@@ -318,6 +318,7 @@ const SectionLabel = ({ children, dark }) => (
 
 // ── NAV ───────────────────────────────────────────────────────
 const NAV_LINKS = [
+  { href: "mini/", label: "Mini" },
   { href: "#tracker", label: "Tracker" },
   { href: "#app", label: "App" },
   { href: "#tokens", label: "Tokens" },
