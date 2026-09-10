@@ -1,8 +1,8 @@
 """Render matched front views for the Ritlum mini sync animation.
 
 Run with the single-matrix Blender scene. KEEP_LEDS accepts a comma-separated
-list of row-major LED object indices. This makes it possible to render two
-coherent history states that differ by exactly one completion.
+list of row-major LED object indices. ``SYNC_STATE=0..5`` renders the six
+coherent frames used while today's five habits fill from top to bottom.
 The standard product-shot renderer then supplies the exact same camera and
 lighting for both frames.
 """
@@ -16,7 +16,7 @@ import bpy
 
 sync_state = os.environ.get("SYNC_STATE")
 if sync_state is not None:
-    state = max(0, min(3, int(sync_state)))
+    state = max(0, min(5, int(sync_state)))
     # TodayScreen columns 6–13, with its current-day column initially open.
     latest_eight = ["11101110", "11101110", "10111110", "01111110", "11110110"]
     completed_rows = set(range(state))
@@ -53,6 +53,17 @@ for obj in bpy.data.objects:
     if obj.name.startswith(("LED_", "HALO_")):
         prefix, _, suffix = obj.name.partition("_")
         obj.hide_render = not suffix.isdigit() or int(suffix) not in keep_leds
+
+# The shared renderer configures LED materials after this script starts, so
+# pass the state through its pattern interface as well. That keeps both the
+# emissive cores and their halo sprites off in every uncompleted cell.
+os.environ["LED_PATTERN"] = "/".join(
+    "".join(
+        "1" if row * 8 + (7 - column) in keep_leds else "0"
+        for column in range(8)
+    )
+    for row in range(8)
+)
 
 design_root = Path(
     os.environ.get("RITLUM_DESIGN_ROOT", "/Users/mhd3v/habit-tracker-design")

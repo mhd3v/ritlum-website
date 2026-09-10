@@ -1,7 +1,7 @@
 const galleryViews = [
-  {src:'../assets/mini/front.webp?v=soft-led-1', label:'Front'},
-  {src:'../assets/mini/front-left.webp?v=soft-led-1', label:'Front left'},
-  {src:'../assets/mini/front-right.webp?v=soft-led-1', label:'Front right'},
+  {src:'../assets/mini/front.webp?v=neutral-white-1', label:'Front'},
+  {src:'../assets/mini/front-left.webp?v=neutral-white-1', label:'Front left'},
+  {src:'../assets/mini/front-right.webp?v=neutral-white-1', label:'Front right'},
 ];
 const heroVideo = document.querySelector('.hero-video');
 const desktopMotion = matchMedia('(min-width: 1001px)');

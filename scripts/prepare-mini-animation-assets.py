@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Crop four true Blender states to one stable, pixel-aligned square canvas."""
+"""Crop six true Blender states to one stable, pixel-aligned square canvas."""
 
 from pathlib import Path
 
@@ -10,7 +10,7 @@ ROOT = Path(__file__).resolve().parents[1]
 ANIMATION_DIR = ROOT / "assets" / "mini" / "animation"
 sources = [
     Image.open(ANIMATION_DIR / f"state-{index}" / "01-front.webp").convert("RGBA")
-    for index in range(4)
+    for index in range(6)
 ]
 boxes = [image.getchannel("A").getbbox() for image in sources]
 if any(box is None for box in boxes):
