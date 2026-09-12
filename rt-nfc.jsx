@@ -281,7 +281,7 @@ const NFC_PHASE_REDUCED = {
   cycleIdx: 0,
 };
 
-const NfcAnimation = () => {
+const NfcAnimation = ({ mini = false }) => {
   const reduced =
     typeof window !== "undefined" &&
     window.matchMedia &&
@@ -404,18 +404,41 @@ const NfcAnimation = () => {
   const highlightRow = rowGlow1 ? 0 : rowGlow2 ? 3 : null;
 
   // Meditate & Read rows: realistic per-day patterns; only today's dot
-  // (index 13) lights on completion of its respective tap.
-  const meditateDays = dotLit1 ? "1110111110111100" : "1110111110111000";
-  const readDays = dotLit2 ? "1110110111111100" : "1110110111111000";
-  const rows = [
-    { color: T.habit.blue, days: meditateDays },
-    NFC_ROWS_BASE[0],
-    NFC_ROWS_BASE[1],
-    { color: T.habit.orange, days: readDays },
-    NFC_ROWS_BASE[2],
-    NFC_ROWS_BASE[3],
-    NFC_ROWS_BASE[4],
-  ];
+  // lights on completion of its respective tap.
+  const meditateDays = mini
+    ? dotLit1
+      ? "10101111"
+      : "10101110"
+    : dotLit1
+      ? "1110111110111100"
+      : "1110111110111000";
+  const readDays = mini
+    ? dotLit2
+      ? "01110111"
+      : "01110110"
+    : dotLit2
+      ? "1110110111111100"
+      : "1110110111111000";
+  const rows = mini
+    ? [
+        { color: T.habit.blue, days: meditateDays },
+        { color: T.habit.green, days: "11101110" },
+        { color: T.habit.yellow, days: "10111110" },
+        { color: T.habit.orange, days: readDays },
+        { color: T.habit.pink, days: "11010110" },
+        { color: T.habit.cyan, days: "01101010" },
+        { color: T.habit.purple, days: "10110110" },
+        { color: T.habit.blue, days: "01011010" },
+      ]
+    : [
+        { color: T.habit.blue, days: meditateDays },
+        NFC_ROWS_BASE[0],
+        NFC_ROWS_BASE[1],
+        { color: T.habit.orange, days: readDays },
+        NFC_ROWS_BASE[2],
+        NFC_ROWS_BASE[3],
+        NFC_ROWS_BASE[4],
+      ];
 
   // Once a habit is logged the connecting line should read as a steady,
   // visible link - not fade back to the same near-invisible idle state
@@ -520,7 +543,7 @@ const NfcAnimation = () => {
             <NfcToken
               size={88}
               color={T.habit.blue}
-              icon="leaf"
+              icon={mini ? "nfc" : "leaf"}
               label="Meditate"
               rippling={rippling1}
               pressed={pressed1}
@@ -533,7 +556,7 @@ const NfcAnimation = () => {
             <NfcToken
               size={88}
               color={T.habit.orange}
-              icon="book"
+              icon={mini ? "nfc" : "book"}
               label="Read"
               rippling={rippling2}
               pressed={pressed2}
@@ -541,10 +564,18 @@ const NfcAnimation = () => {
           </div>
 
           {/* tracker */}
-          <div style={{ position: "absolute", left: 520, top: 170 }}>
+          <div
+            style={{
+              position: "absolute",
+              left: 520,
+              top: mini ? 100 : 170,
+            }}
+          >
             <TrackerDevice
-              width={372}
+              width={mini ? 340 : 372}
               rows={rows}
+              cols={mini ? 8 : 16}
+              aspect={mini ? 1 : 1.62}
               highlightRow={highlightRow}
             />
           </div>
@@ -577,6 +608,10 @@ const NfcAnimation = () => {
 };
 
 Object.assign(window, { NfcAnimation });
+const miniNfcMount = document.querySelector("#mini-nfc-animation");
+if (miniNfcMount) {
+  ReactDOM.createRoot(miniNfcMount).render(<NfcAnimation mini />);
+}
 
 // ──────────────────────────────────────────────────────────────
 // MirrorAnimation - the sibling signature moment.

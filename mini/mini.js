@@ -4,10 +4,9 @@ const galleryViews = [
   {src:'../assets/mini/front-right.webp?v=neutral-white-1', label:'Front right'},
 ];
 const heroVideo = document.querySelector('.hero-video');
-const desktopMotion = matchMedia('(min-width: 1001px)');
 const reducedMotion = matchMedia('(prefers-reduced-motion: reduce)');
-if (heroVideo && desktopMotion.matches && !reducedMotion.matches) {
-  heroVideo.addEventListener('canplay', () => heroVideo.classList.add('is-ready'), {once:true});
+if (heroVideo && !reducedMotion.matches) {
+  heroVideo.addEventListener('playing', () => heroVideo.classList.add('is-ready'), {once:true});
   heroVideo.src = heroVideo.dataset.src;
   heroVideo.play().catch(() => {});
   new IntersectionObserver(entries => {
@@ -65,14 +64,12 @@ const phoneSource = document.querySelector('.phone-source');
 const sizePhone = () => phoneSource.style.transform = `scale(${phoneShell.clientWidth / 400})`;
 new ResizeObserver(sizePhone).observe(phoneShell);
 sizePhone();
-// Keep the action available after the hero, then clear it when the actual
-// request form is on screen. Native anchors also work without JavaScript.
+// Keep the checkout action available after the hero.
 const bar = document.querySelector('.request-bar');
 const hero = document.querySelector('.hero');
-const buy = document.querySelector('#buy');
 let queued = false;
 function updateBar() {
-  bar.hidden = hero.getBoundingClientRect().bottom > 0 || buy.getBoundingClientRect().top < innerHeight;
+  bar.hidden = hero.getBoundingClientRect().bottom > 0;
   queued = false;
 }
 addEventListener('scroll', () => {
@@ -80,3 +77,5 @@ addEventListener('scroll', () => {
 }, {passive:true});
 addEventListener('resize', updateBar);
 updateBar();
+
+document.querySelector("#year").textContent = new Date().getFullYear();

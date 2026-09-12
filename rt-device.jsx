@@ -1,6 +1,6 @@
 // ──────────────────────────────────────────────────────────────
 // ritlum - physical device renders (pure CSS) + small utilities
-//   · TrackerDevice  - light-plastic body + glowing 16-wide LED matrix
+//   · TrackerDevice  - light-plastic body + configurable LED matrix
 //   · clock mode     - same matrix renders the time as pixels
 //   · NfcToken       - the round "habit token" NFC disc
 //   · Scaler         - fits a fixed design canvas into any width
@@ -136,13 +136,14 @@ const TRACKER_ROWS = [
 
 // ── LED matrix ────────────────────────────────────────────────
 // rows: [{ color, days } | { color, lit }]  - habit mode
-//   · `days`  : 16-char bitstring (1 = lit)  - realistic per-day pattern
+//   · `days`  : one bit per displayed column (1 = lit)
 //   · `lit`   : count from the left          - simple progressive fill
 // clock: time string                               - clock mode
 const TrackerDeviceBase = ({
   width = 240,
   rows,
   cols = 16,
+  aspect = 1.62,
   mode = "habits",
   clock = "9:41",
   clockColor = "#FCE9C8",
@@ -152,7 +153,6 @@ const TrackerDeviceBase = ({
   dim = false,
 }) => {
   const rowsN = mode === "clock" ? 7 : rows.length;
-  const aspect = 1.62;
   const bodyH = width / aspect;
   const padX = width * 0.058;
   const padTop = width * 0.05;
@@ -305,7 +305,7 @@ const NfcToken = ({
   rippling = false,
   pressed = false,
 }) => {
-  const Icon = PI[icon];
+  const Icon = icon === "nfc" ? null : PI[icon];
   return (
     <div
       style={{
@@ -363,7 +363,22 @@ const NfcToken = ({
             transition: "box-shadow 160ms ease",
           }}
         >
-          {Icon ? (
+          {icon === "nfc" ? (
+            <svg
+              width={size * 0.34}
+              height={size * 0.34}
+              viewBox="0 0 32 32"
+              fill="none"
+              aria-hidden="true"
+            >
+              <path
+                d="M10 11.5c2.6 2.6 2.6 6.4 0 9M15 7.5c5 4.9 5 12.1 0 17M20 4c7.2 7 7.2 17 0 24"
+                stroke={color}
+                strokeWidth="2.4"
+                strokeLinecap="round"
+              />
+            </svg>
+          ) : Icon ? (
             <Icon size={size * 0.3} color={color} sw={1.9} />
           ) : (
             <span
@@ -404,7 +419,7 @@ const NfcToken = ({
   );
 };
 
-// Memoize so the 112-LED matrix only rebuilds when a row's day-pattern
+// Memoize so the LED matrix only rebuilds when a row's day-pattern
 // actually changes (≈1×/cycle), not on every parent RAF tick (60×/s).
 // The parent always passes a *new* `rows` array, so a shallow memo would
 // never bail - we deep-compare the color/days/lit of each row instead.
@@ -417,6 +432,7 @@ const TrackerDevice = React.memo(
   (a, b) =>
     a.width === b.width &&
     a.cols === b.cols &&
+    a.aspect === b.aspect &&
     a.mode === b.mode &&
     a.clock === b.clock &&
     a.clockColor === b.clockColor &&
