@@ -6,10 +6,12 @@ const MiniSyncDemo = () => {
   const visible = React.useRef(false);
   React.useEffect(() => {
     let timer;
+    let framesReady = false;
+    let disposed = false;
     const motion = matchMedia('(prefers-reduced-motion: reduce)');
     const schedule = (delay = 1050) => {
       clearTimeout(timer);
-      if (!visible.current || motion.matches) return;
+      if (!visible.current || !framesReady || motion.matches) return;
       timer = setTimeout(() => {
         stepRef.current = stepRef.current === 5 ? 0 : stepRef.current + 1;
         setStep(stepRef.current);
@@ -18,15 +20,33 @@ const MiniSyncDemo = () => {
     };
     const observer = new IntersectionObserver(entries => {
       visible.current = entries[0].isIntersecting;
-      if (visible.current) schedule(800);
+      if (visible.current && framesReady) schedule(800);
       else clearTimeout(timer);
     }, {threshold: .55});
     observer.observe(document.querySelector('.app-visual'));
+    const trackerFrames = [...document.querySelectorAll('.tracker-sync img')];
+    const prepareFrame = image => {
+      if (typeof image.decode === 'function') return image.decode();
+      if (image.complete) {
+        return image.naturalWidth ? Promise.resolve() : Promise.reject();
+      }
+      return new Promise((resolve, reject) => {
+        image.addEventListener('load', resolve, {once: true});
+        image.addEventListener('error', reject, {once: true});
+      });
+    };
+    Promise.all(trackerFrames.map(prepareFrame))
+      .then(() => {
+        if (disposed) return;
+        framesReady = true;
+        if (visible.current) schedule(800);
+      })
+      .catch(() => {});
     if (motion.matches) {
       stepRef.current = 5;
       setStep(5);
     }
-    return () => {clearTimeout(timer); observer.disconnect();};
+    return () => {disposed = true; clearTimeout(timer); observer.disconnect();};
   }, []);
   React.useEffect(() => {
     document.querySelector('.tracker-sync').dataset.state = String(step);
