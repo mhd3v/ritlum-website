@@ -52,3 +52,33 @@ footer{padding-bottom:110px}
   .intro h2,.clock-copy h2,.connection h2,.nfc h2,.detail h2 { font-size:clamp(36px,10.5vw,46px); }
   .facts li { grid-template-columns:80px minmax(0,1fr); gap:12px; }
 }
+
+/* Light centered hero: the film is a plain paper-coloured plate, so the
+   product and the centred headline sit on the page without a seam. */
+.hero { display:flex; flex-direction:column; align-items:center; justify-content:center; height:auto; min-height:min(100svh,880px); padding:118px var(--pad) 56px; gap:clamp(10px,1.8vh,24px); text-align:center; background:var(--paper); color:var(--ink); }
+.hero:after { display:none; }
+.hero-media-space { display:none; }
+.hero-video { position:relative; inset:auto; z-index:0; width:min(100%,820px); height:clamp(240px,38vh,380px); aspect-ratio:auto; transform:none; object-fit:cover; object-position:center; mask:none; -webkit-mask:none; opacity:0; background:var(--paper); }
+.hero-video.is-ready { opacity:1; }
+.hero-copy { width:auto; max-width:680px; padding:0; margin:0 auto; }
+.hero .label { max-width:none; font-size:12px; color:var(--muted); }
+.hero h1 { margin:16px 0 18px; font-size:clamp(46px,5.4vw,84px); }
+.hero p { max-width:470px; margin:0 auto; color:var(--muted); }
+.hero-actions { justify-content:center; gap:20px; margin-top:22px; }
+.hero .hero-note { max-width:none; margin-top:18px; color:var(--muted); }
+.hero .button { background:var(--ink); color:var(--paper); border-color:var(--ink); }
+.hero .button:hover { background:#343138; }
+.nav { border-bottom:1px solid var(--line); }
+.nav .mark { background:var(--dark); }
+.navlinks a { color:var(--muted); }
+.navlinks a:hover { color:var(--ink); }
+.navlinks .buylink { border-bottom-color:var(--ink); }
+.edition { color:var(--muted); }
+@media (max-width:1000px) {
+  .hero { padding:92px var(--pad) 52px; gap:8px; }
+  .hero-video { width:100%; max-width:none; height:auto; aspect-ratio:1; max-height:min(56vh,420px); }
+  .hero .label { font-size:11px; }
+  .hero h1 { margin:14px 0 18px; font-size:clamp(40px,12.5vw,74px); letter-spacing:-.05em; }
+  .hero p { max-width:360px; font-size:16px; }
+  .hero-actions { margin-top:20px; }
+}
