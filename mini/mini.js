@@ -26,6 +26,18 @@ if (clockVideo && !reducedMotion.matches) {
   }, {rootMargin:'180px 0px', threshold:.05});
   clockObserver.observe(clockVideo);
 }
+const weekVideo = document.querySelector('.week-video');
+if (weekVideo && !reducedMotion.matches) {
+  weekVideo.addEventListener('playing', () => weekVideo.classList.add('is-ready'), {once:true});
+  new IntersectionObserver(entries => {
+    if (entries[0].isIntersecting) {
+      if (!weekVideo.src) weekVideo.src = weekVideo.dataset.src;
+      weekVideo.play().catch(() => {});
+    } else {
+      weekVideo.pause();
+    }
+  }, {rootMargin:'160px 0px', threshold:.05}).observe(weekVideo);
+}
 const gallery = document.querySelector('#gallery');
 const galleryImage = document.querySelector('#gallery-image');
 const galleryDots = document.querySelector('#gallery-dots');
@@ -36,7 +48,6 @@ function showGalleryView(index) {
   galleryImage.src = view.src;
   galleryImage.alt = `${view.label} view of Ritlum mini`;
   document.querySelector('#gallery-label').textContent = view.label;
-  document.querySelector('#gallery-index').textContent = `${String(galleryPosition + 1).padStart(2,'0')} / ${String(galleryViews.length).padStart(2,'0')}`;
   galleryDots.querySelectorAll('button').forEach((dot, i) => {
     dot.classList.toggle('active', i === galleryPosition);
     dot.setAttribute('aria-pressed', String(i === galleryPosition));
