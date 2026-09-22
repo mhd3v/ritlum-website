@@ -55,10 +55,10 @@ footer{padding-bottom:110px}
 
 /* Light centered hero: the film is a plain paper-coloured plate, so the
    product and the centred headline sit on the page without a seam. */
-.hero { display:flex; flex-direction:column; align-items:center; justify-content:center; height:auto; min-height:min(100svh,880px); padding:118px var(--pad) 56px; gap:clamp(10px,1.8vh,24px); text-align:center; background:var(--paper); color:var(--ink); }
+.hero { display:flex; flex-direction:column; align-items:center; justify-content:center; height:auto; min-height:min(100svh,880px); padding:104px var(--pad) 56px; gap:clamp(10px,1.8vh,24px); text-align:center; background:var(--paper); color:var(--ink); }
 .hero:after { display:none; }
 .hero-media-space { display:none; }
-.hero-video { position:relative; inset:auto; z-index:0; width:min(100%,820px); height:clamp(240px,38vh,380px); aspect-ratio:auto; transform:none; object-fit:cover; object-position:center; mask:none; -webkit-mask:none; opacity:0; background:var(--paper); }
+.hero-video { position:relative; inset:auto; z-index:0; width:min(100%,820px); height:clamp(330px,38vh,400px); aspect-ratio:auto; transform:none; object-fit:cover; object-position:center; mask:none; -webkit-mask:none; opacity:0; background:var(--paper); }
 .hero-video.is-ready { opacity:1; }
 .hero-copy { width:auto; max-width:680px; padding:0; margin:0 auto; }
 .hero .label { max-width:none; font-size:12px; color:var(--muted); }
@@ -73,7 +73,6 @@ footer{padding-bottom:110px}
 .navlinks a { color:var(--muted); }
 .navlinks a:hover { color:var(--ink); }
 .navlinks .buylink { border-bottom-color:var(--ink); }
-.edition { color:var(--muted); }
 @media (max-width:1000px) {
   .hero { padding:92px var(--pad) 52px; gap:8px; }
   .hero-video { width:100%; max-width:none; height:auto; aspect-ratio:1; max-height:min(56vh,420px); }
