@@ -38,6 +38,18 @@ if (weekVideo && !reducedMotion.matches) {
     }
   }, {rootMargin:'160px 0px', threshold:.05}).observe(weekVideo);
 }
+const nfcVideo = document.querySelector('.nfc-video');
+if (nfcVideo && !reducedMotion.matches) {
+  nfcVideo.addEventListener('playing', () => nfcVideo.classList.add('is-ready'), {once:true});
+  new IntersectionObserver(entries => {
+    if (entries[0].isIntersecting) {
+      if (!nfcVideo.src) nfcVideo.src = nfcVideo.dataset.src;
+      nfcVideo.play().catch(() => {});
+    } else {
+      nfcVideo.pause();
+    }
+  }, {rootMargin:'180px 0px', threshold:.05}).observe(nfcVideo);
+}
 const gallery = document.querySelector('#gallery');
 const galleryImage = document.querySelector('#gallery-image');
 const galleryDots = document.querySelector('#gallery-dots');

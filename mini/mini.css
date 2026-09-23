@@ -128,3 +128,27 @@ footer{padding-bottom:110px}
   .finishes-scene { aspect-ratio:1; }
 }
 
+/* "Tap. Done." — the clip is the section and the copy overlays the empty
+   top-left of the render. Text is sized in container units so it stays locked
+   to the composition at any frame width. */
+.nfc { display:block; padding:0; background:#f6f6f6; }
+.nfc-scene { position:relative; container-type:inline-size; width:100%; overflow:hidden; }
+.nfc-video { display:block; width:100%; height:auto; aspect-ratio:16/9; object-fit:cover; opacity:0; transition:opacity 600ms ease; }
+.nfc-video.is-ready { opacity:1; }
+.nfc-copy { position:absolute; left:5.5%; top:5%; width:33%; max-width:none; padding:0; }
+.nfc-copy .label { font-size:clamp(9px,1.25cqw,16px); color:var(--muted); }
+.nfc-copy h2 { font-size:clamp(26px,4.4cqw,74px); margin:.3em 0 .28em; }
+.nfc-copy>p { max-width:none; font-size:clamp(11px,1.45cqw,20px); line-height:1.6; color:#504d49; }
+.nfc-copy .nfc-note { font-size:clamp(9px,1.05cqw,14px); color:var(--muted); margin-top:1.2em; }
+@media (prefers-reduced-motion: reduce) { .nfc-video { opacity:1; } }
+@media (max-width:1000px) {
+  .nfc { padding:56px 0 0; }
+  .nfc-scene { display:flex; flex-direction:column-reverse; }
+  .nfc-copy { position:static; width:auto; max-width:520px; padding:0 var(--pad); margin-inline:auto; }
+  .nfc-copy .label { font-size:11px; }
+  .nfc-copy h2 { font-size:clamp(36px,10.5vw,46px); }
+  .nfc-copy>p { font-size:16px; }
+  .nfc-copy .nfc-note { font-size:13px; }
+  .nfc-video { margin-top:26px; }
+}
+

@@ -13,7 +13,7 @@
   <link rel="preload" as="image" href="../assets/mini/animation/state-3/front-square.webp?v=neutral-white-2">
   <link rel="preload" as="image" href="../assets/mini/animation/state-4/front-square.webp?v=neutral-white-2">
   <link rel="preload" as="image" href="../assets/mini/animation/state-5/front-square.webp?v=neutral-white-2">
-  <link rel="stylesheet" href="mini.css?v=hero-light-12">
+  <link rel="stylesheet" href="mini.css?v=nfc-video-1">
 </head>
 <body>
 <a class="skip-link" href="#app">Skip to how it works</a>
@@ -55,19 +55,19 @@
   </div>
 </section>
 <section class="nfc" aria-labelledby="nfc-title">
-  <div class="nfc-copy"><div class="label">A physical way to finish</div><h2 id="nfc-title">Tap. Done.</h2><p>Stick an NFC tag onto something you already use. Tap it with your iPhone to log the habit. Mini lights up automatically.</p><p class="nfc-note">The tag is read by your iPhone. Mini becomes the quiet, visible reward.</p></div>
-  <div class="nfc-animation" id="mini-nfc-animation" role="img" aria-label="An iPhone taps two NFC habit tokens. Each completion appears in Ritlum and lights the matching row on the 8 by 8 Ritlum mini."></div>
+  <div class="nfc-scene">
+    <video class="nfc-video" muted loop playsinline preload="none" poster="../assets/mini/nfc-poster.webp?v=1" data-src="../assets/mini/nfc-loop.mp4?v=1" aria-label="An iPhone taps an NFC tag, the Ritlum app logs the habit, and the matching row lights up on the 8 by 8 Ritlum mini"></video>
+    <div class="nfc-copy"><div class="label">A physical way to finish</div><h2 id="nfc-title">Tap. Done.</h2><p>Stick an NFC tag onto something you already use. Tap it with your iPhone to log the habit. Mini lights up automatically.</p><p class="nfc-note">The tag is read by your iPhone. Mini becomes the quiet, visible reward.</p></div>
+  </div>
 </section>
 <section class="product-scene" id="gallery" aria-label="Ritlum mini product gallery"><div class="gallery-label" id="gallery-label">Front</div><button class="gallery-arrow prev" type="button" aria-label="Previous product view">←</button><img class="gallery-image" id="gallery-image" src="../assets/mini/front.webp?v=neutral-white-1" alt="Front view of Ritlum mini" width="5760" height="3240" loading="lazy"><button class="gallery-arrow next" type="button" aria-label="Next product view">→</button><div class="gallery-dots" id="gallery-dots" aria-label="Choose a product view"></div></section><section class="detail" id="details"><div class="detail-copy reveal"><div><div class="label">A small first run</div><h2>Small batch.<br>Human hands.</h2><p>This first batch is intentionally small. Ten PLA cases are 3D printed and every unit is assembled by hand—a useful object with the honest character of a small production run.</p></div><ul class="facts"><li><span>Case</span><strong>3D printed PLA</strong></li><li><span>Display</span><strong>64 full-color lights</strong></li><li><span>Modes</span><strong>Habits + clock</strong></li><li><span>Connection</span><strong>Local Bluetooth</strong></li><li><span>Power</span><strong>USB-C powered</strong></li><li><span>Size</span><strong>93 × 101 × 101 mm</strong></li><li><span>Assembly</span><strong>Germany</strong></li></ul></div></section>
 </main><footer><a class="brand" href="../"><span class="mark" aria-hidden="true"><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i></span>Ritlum</a><span>© <span id="year"></span> · <a href="../privacy/">Privacy</a> · <a href="mailto:iam@mhd3v.com">Contact</a></span></footer>
 <aside class="request-bar" aria-label="Buy Ritlum mini" hidden><div><strong>Ritlum mini</strong><span>First batch</span></div><a class="button" href="/mini/checkout/">Buy <span aria-hidden="true">↗</span></a></aside>
-<script src="mini.js?v=week-grid-3" defer></script>
+<script src="mini.js?v=nfc-video-1" defer></script>
 <script src="https://unpkg.com/react@18.3.1/umd/react.production.min.js" crossorigin="anonymous"></script>
 <script src="https://unpkg.com/react-dom@18.3.1/umd/react-dom.production.min.js" crossorigin="anonymous"></script>
 <script src="https://unpkg.com/@babel/standalone@7.29.0/babel.min.js" integrity="sha384-m08KidiNqLdpJqLq95G/LEi8Qvjl/xUYll3QILypMoQ65QorJ9Lvtp2RXYGBFj1y" crossorigin="anonymous"></script>
 <script type="text/babel" src="../rt-tokens.jsx"></script>
-<script type="text/babel" src="../rt-device.jsx"></script>
 <script type="text/babel" src="../rt-phone.jsx?v=mini-sync-2"></script>
-<script type="text/babel" src="../rt-nfc.jsx?v=mini-8x8-2"></script>
 <script type="text/babel" src="mini-demo.jsx?v=preloaded-states-2"></script>
 </body></html>
