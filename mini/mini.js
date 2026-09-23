@@ -1,8 +1,13 @@
 const galleryViews = [
-  {src:'../assets/mini/front.webp?v=neutral-white-1', label:'Front'},
-  {src:'../assets/mini/front-left.webp?v=neutral-white-1', label:'Front left'},
-  {src:'../assets/mini/front-right.webp?v=neutral-white-1', label:'Front right'},
+  {stem:'front', label:'Front'},
+  {stem:'front-left', label:'Front left'},
+  {stem:'front-right', label:'Front right'},
 ];
+const galleryFinishes = {
+  white: {label:'White', path:'../assets/mini/'},
+  sakura: {label:'Sakura', path:'../assets/mini/sakura/'},
+  'blue-grey': {label:'Blue Grey', path:'../assets/mini/blue-grey/'},
+};
 const heroVideo = document.querySelector('.hero-video');
 const reducedMotion = matchMedia('(prefers-reduced-motion: reduce)');
 if (heroVideo && !reducedMotion.matches) {
@@ -50,21 +55,34 @@ if (nfcVideo && !reducedMotion.matches) {
     }
   }, {rootMargin:'180px 0px', threshold:.05}).observe(nfcVideo);
 }
-const gallery = document.querySelector('#gallery');
+const gallery = document.querySelector('.product-scene');
 const galleryImage = document.querySelector('#gallery-image');
 const galleryDots = document.querySelector('#gallery-dots');
 let galleryPosition = 0;
+let selectedFinish = 'white';
 function showGalleryView(index) {
   galleryPosition = (index + galleryViews.length) % galleryViews.length;
   const view = galleryViews[galleryPosition];
-  galleryImage.src = view.src;
-  galleryImage.alt = `${view.label} view of Ritlum mini`;
+  const finish = galleryFinishes[selectedFinish];
+  galleryImage.src = `${finish.path}${view.stem}.webp`;
+  galleryImage.alt = `${view.label} view of Ritlum mini in ${finish.label}`;
   document.querySelector('#gallery-label').textContent = view.label;
   galleryDots.querySelectorAll('button').forEach((dot, i) => {
     dot.classList.toggle('active', i === galleryPosition);
     dot.setAttribute('aria-pressed', String(i === galleryPosition));
   });
 }
+document.querySelectorAll('.finish-option').forEach(button => {
+  button.addEventListener('click', () => {
+    selectedFinish = button.dataset.finish;
+    document.querySelectorAll('.finish-option').forEach(option => {
+      const active = option === button;
+      option.classList.toggle('is-active', active);
+      option.setAttribute('aria-pressed', String(active));
+    });
+    showGalleryView(galleryPosition);
+  });
+});
 galleryViews.forEach((view,index) => {
   const button = document.createElement('button');
   button.type = 'button';
