@@ -128,7 +128,7 @@ h3{font-size:var(--fs-h3);line-height:1.25;letter-spacing:-.02em}
 .sync-phone .stack{filter:drop-shadow(0 24px 30px rgba(30,24,16,.16))}
 /* The front-on render leaves wide floor margins; scale it so the device
    matches the phone. The feathered edge spills softly into the stage. */
-.sync-device .stack img{transform:scale(1.45);-webkit-mask-image:radial-gradient(closest-side,#000 60%,transparent 100%);mask-image:radial-gradient(closest-side,#000 60%,transparent 100%)}
+.sync-device .stack img{transform:scale(1.45);transform-origin:50% 62%;-webkit-mask-image:radial-gradient(ellipse 48% 48% at 50% 62%,#000 86%,transparent 100%);mask-image:radial-gradient(ellipse 48% 48% at 50% 62%,#000 86%,transparent 100%)}
 .sync-device .stack{margin-block:18%}
 .sync-device figcaption{position:relative;margin-top:0}
 .sync-stage[data-state="0"] [data-step="0"],.sync-stage[data-state="1"] [data-step="1"],.sync-stage[data-state="2"] [data-step="2"],.sync-stage[data-state="3"] [data-step="3"],.sync-stage[data-state="4"] [data-step="4"],.sync-stage[data-state="5"] [data-step="5"]{opacity:1}
