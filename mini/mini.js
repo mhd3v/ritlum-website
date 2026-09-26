@@ -165,12 +165,15 @@ const views = [
   {stem:'front-left', label:'Left'},
   {stem:'front-right', label:'Right'},
 ];
-const finishes = {
-  white: {label:'White', path:'../assets/mini/'},
-  sakura: {label:'Sakura', path:'../assets/mini/sakura/'},
-  'blue-grey': {label:'Blue grey', path:'../assets/mini/blue-grey/'},
-};
 const galleryImage = document.querySelector('#gallery-image');
+// The asset folder comes from the markup, so the viewer works wherever the
+// page is served from.
+const galleryBase = galleryImage.dataset.base;
+const finishes = {
+  white: {label:'White', path:galleryBase},
+  sakura: {label:'Sakura', path:`${galleryBase}sakura/`},
+  'blue-grey': {label:'Blue grey', path:`${galleryBase}blue-grey/`},
+};
 const viewOptions = document.querySelector('#view-options');
 let viewIndex = 0;
 let finish = 'white';

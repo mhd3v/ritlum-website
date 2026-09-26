@@ -116,16 +116,17 @@ h3{font-size:var(--fs-h3);line-height:1.25;letter-spacing:-.02em}
 .week-habits span{display:flex;align-items:center;justify-content:flex-end;font-size:clamp(9px,3cqw,12px);line-height:1;color:var(--muted);white-space:nowrap}
 .week-axis{position:absolute;font:600 clamp(8px,2.6cqw,10px)/1 var(--mono);letter-spacing:.14em;text-transform:uppercase;white-space:nowrap}
 .week-axis b{font-weight:400}
-.week-axis-x{right:0;bottom:calc(100% + 29.4%)}
-.week-axis-y{right:calc(100% + 13%);top:-29.4%}
+/* "Days" sits just above the first day label, "Habits" just above the first habit. */
+.week-axis-x{left:calc(6.25% - .3em);bottom:calc(100% + 29.4%)}
+.week-axis-y{right:calc(100% + 13%);bottom:calc(100% + 3%)}
 
 /* Sync demo */
-.sync-stage{position:relative;display:grid;grid-template-columns:minmax(0,260px) 96px minmax(0,440px);justify-content:center;align-items:center;gap:clamp(8px,2vw,32px);padding:clamp(40px,5vw,72px) clamp(16px,4vw,56px) clamp(28px,3vw,40px);border-radius:var(--r-lg);background:var(--stage)}
+.sync-stage{position:relative;display:grid;grid-template-columns:minmax(0,260px) 96px minmax(0,460px);justify-content:center;align-items:center;gap:clamp(8px,2vw,32px);padding:clamp(40px,5vw,72px) clamp(16px,4vw,56px) clamp(28px,3vw,40px);border-radius:var(--r-lg);background:var(--stage)}
 .sync-stage figure{margin:0;min-width:0}
 .stack{display:grid}
 .stack img{grid-area:1/1;width:100%;opacity:0;transition:opacity .45s ease}
 .sync-phone .stack{filter:drop-shadow(0 24px 30px rgba(30,24,16,.16))}
-.sync-device .stack img{-webkit-mask-image:radial-gradient(closest-side,#000 62%,transparent 100%);mask-image:radial-gradient(closest-side,#000 62%,transparent 100%)}
+.sync-device .stack img{-webkit-mask-image:radial-gradient(closest-side,#000 76%,transparent 100%);mask-image:radial-gradient(closest-side,#000 76%,transparent 100%)}
 .sync-stage[data-state="0"] [data-step="0"],.sync-stage[data-state="1"] [data-step="1"],.sync-stage[data-state="2"] [data-step="2"],.sync-stage[data-state="3"] [data-step="3"],.sync-stage[data-state="4"] [data-step="4"],.sync-stage[data-state="5"] [data-step="5"]{opacity:1}
 .sync-stage figcaption{margin-top:20px;text-align:center;font:500 12px/1.4 var(--mono);letter-spacing:.08em;text-transform:uppercase;color:var(--muted)}
 .sync-link{display:flex;justify-content:center;gap:10px}
@@ -290,7 +291,9 @@ footer .brand{color:var(--ink);font-size:18px}
   .hero-video{object-fit:cover;object-position:50% 60%;-webkit-mask-image:radial-gradient(ellipse 70% 58% at 50% 56%,#000 50%,transparent 100%);mask-image:radial-gradient(ellipse 70% 58% at 50% 56%,#000 50%,transparent 100%)}
   .hero-stats{grid-template-columns:repeat(2,1fr);gap:0 16px;margin-top:-24px}
   .actions .button{flex:1 1 auto}
-  .sync-stage{grid-template-columns:minmax(0,1fr) minmax(0,1.15fr);gap:12px;padding:32px 16px 24px}
+  /* Phones: the device takes the larger share so its grid stays readable. */
+  .sync-stage{grid-template-columns:minmax(0,.78fr) minmax(0,1.22fr);gap:6px;padding:28px 10px 20px}
+  .sync-device{margin-inline:-6px}
   .sync-link{display:none}
   .sync-stage figcaption{font-size:10px}
   .bento,.features,.setup-steps{grid-template-columns:1fr}
