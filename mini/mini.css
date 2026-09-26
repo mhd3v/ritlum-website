@@ -126,11 +126,11 @@ h3{font-size:var(--fs-h3);line-height:1.25;letter-spacing:-.02em}
 .stack{display:grid}
 .stack img{grid-area:1/1;width:100%;opacity:0;transition:opacity .45s ease}
 .sync-phone .stack{filter:drop-shadow(0 24px 30px rgba(30,24,16,.16))}
-/* The front-on render leaves wide floor margins; scale it so the device
-   matches the phone. The feathered edge spills softly into the stage. */
-.sync-device .stack img{transform:scale(1.45);transform-origin:50% 62%;-webkit-mask-image:radial-gradient(ellipse 48% 48% at 50% 62%,#000 86%,transparent 100%);mask-image:radial-gradient(ellipse 48% 48% at 50% 62%,#000 86%,transparent 100%)}
-.sync-device .stack{margin-block:18%}
-.sync-device figcaption{position:relative;margin-top:0}
+/* The render is flattened onto --stage; a light fade only softens the frame
+   edge. The phone stays above it. */
+.sync-phone{position:relative;z-index:1}
+.sync-device .stack{transform:scale(1.2);margin-block:10%}
+.sync-device .stack img{-webkit-mask-image:radial-gradient(ellipse 50% 50% at 50% 55%,#000 88%,transparent 100%);mask-image:radial-gradient(ellipse 50% 50% at 50% 55%,#000 88%,transparent 100%)}
 .sync-stage[data-state="0"] [data-step="0"],.sync-stage[data-state="1"] [data-step="1"],.sync-stage[data-state="2"] [data-step="2"],.sync-stage[data-state="3"] [data-step="3"],.sync-stage[data-state="4"] [data-step="4"],.sync-stage[data-state="5"] [data-step="5"]{opacity:1}
 .sync-stage figcaption{margin-top:20px;text-align:center;font:500 12px/1.4 var(--mono);letter-spacing:.08em;text-transform:uppercase;color:var(--muted)}
 .sync-link{display:flex;justify-content:center;gap:10px}
@@ -282,6 +282,7 @@ footer .brand{color:var(--ink);font-size:18px}
   /* Phones: the device takes the larger share so its grid stays readable. */
   .sync-stage{grid-template-columns:minmax(0,.78fr) minmax(0,1.22fr);gap:6px;padding:28px 10px 20px}
   .sync-device{margin-inline:-6px}
+  .sync-device .stack{transform:none;margin-block:0}
   .sync-link{display:none}
   .sync-stage figcaption{font-size:10px}
   .bento,.features,.setup-steps{grid-template-columns:1fr}
