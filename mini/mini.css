@@ -89,8 +89,7 @@ h3{font-size:var(--fs-h3);line-height:1.25;letter-spacing:-.02em}
 /* The film is flattened onto --stage; the soft mask blends its edges into
    the hero gradient, so the product sits in the page, not in a rectangle. */
 .hero-video{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;background:var(--stage);
-  -webkit-mask-image:radial-gradient(closest-side,#000 42%,transparent 100%),linear-gradient(180deg,transparent 12%,#000 34%);-webkit-mask-composite:source-in;
-  mask-image:radial-gradient(closest-side,#000 42%,transparent 100%),linear-gradient(180deg,transparent 12%,#000 34%);mask-composite:intersect}
+  -webkit-mask-image:radial-gradient(closest-side,#000 72%,transparent 100%);mask-image:radial-gradient(closest-side,#000 72%,transparent 100%)}
 .hero-stats{list-style:none;margin:clamp(-40px,-3vw,-16px) auto 0;padding:0 var(--pad) clamp(56px,7vw,96px);max-width:calc(1000px + var(--pad) * 2);display:grid;grid-template-columns:repeat(4,1fr);gap:16px;position:relative}
 .hero-stats li{display:flex;flex-direction:column;gap:4px;padding:18px 8px;border-top:1px solid var(--line-strong)}
 .hero-stats strong{font-size:clamp(24px,2.4vw,34px);font-weight:600;letter-spacing:-.04em;line-height:1.1}
@@ -126,7 +125,9 @@ h3{font-size:var(--fs-h3);line-height:1.25;letter-spacing:-.02em}
 .stack{display:grid}
 .stack img{grid-area:1/1;width:100%;opacity:0;transition:opacity .45s ease}
 .sync-phone .stack{filter:drop-shadow(0 24px 30px rgba(30,24,16,.16))}
-/* Sync stills are transparent catalog renders; the phone stays above. */
+/* Sync stills are transparent catalog renders, scaled so the device matches
+   the phone; the phone stays above. */
+.sync-device .stack{transform:scale(1.3);margin-block:12%}
 .sync-phone{position:relative;z-index:1}
 .sync-stage[data-state="0"] [data-step="0"],.sync-stage[data-state="1"] [data-step="1"],.sync-stage[data-state="2"] [data-step="2"],.sync-stage[data-state="3"] [data-step="3"],.sync-stage[data-state="4"] [data-step="4"],.sync-stage[data-state="5"] [data-step="5"]{opacity:1}
 .sync-stage figcaption{margin-top:20px;text-align:center;font:500 12px/1.4 var(--mono);letter-spacing:.08em;text-transform:uppercase;color:var(--muted)}
@@ -152,6 +153,7 @@ h3{font-size:var(--fs-h3);line-height:1.25;letter-spacing:-.02em}
 .modes-stage{position:relative;aspect-ratio:1600/1280}
 /* Evening stills are transparent; the clock film is flattened onto --dark. */
 .mode-visual{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;opacity:0;transition:opacity .8s var(--ease)}
+.mode-visual{transform:scale(1.15)}
 .modes-stage[data-mode="habits"] .mode-visual[data-mode="habits"],.modes-stage[data-mode="clock"] .mode-visual[data-mode="clock"],.modes-stage[data-mode="dim"] .mode-visual[data-mode="dim"],.modes-stage[data-mode="sleep"] .mode-visual[data-mode="sleep"]{opacity:1}
 .mode-clock{position:absolute;left:50%;top:6%;transform:translateX(-50%);font:500 13px/1 var(--mono);letter-spacing:.08em;color:var(--dark-muted);padding:8px 12px;border-radius:999px;background:rgba(255,255,255,.06);box-shadow:inset 0 0 0 1px var(--dark-line)}
 .mode-tabs{display:flex;flex-direction:column}
@@ -275,6 +277,7 @@ footer .brand{color:var(--ink);font-size:18px}
   /* Phones: the device takes the larger share so its grid stays readable. */
   .sync-stage{grid-template-columns:minmax(0,.78fr) minmax(0,1.22fr);gap:6px;padding:28px 10px 20px}
   .sync-device{margin-inline:-6px}
+  .sync-device .stack{transform:scale(1.15);margin-block:6%}
   .sync-link{display:none}
   .sync-stage figcaption{font-size:10px}
   .bento,.features,.setup-steps{grid-template-columns:1fr}
