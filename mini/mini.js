@@ -149,7 +149,6 @@ const hero = document.querySelector('.hero');
 const heroActions = document.querySelector('.hero .actions');
 const navLinks = [...document.querySelectorAll('.navlinks a')];
 const navTargets = navLinks.map(a => document.querySelector(a.getAttribute('href')));
-let lastY = scrollY;
 let frameQueued = false;
 
 function onFrame() {
@@ -164,10 +163,6 @@ function onFrame() {
     }
   }
   header.classList.toggle('is-scrolled', y > 8);
-  // Tuck the header away while reading down; bring it back on any scroll up.
-  header.classList.toggle('is-hidden', y > innerHeight && y > lastY + 2);
-  if (y < lastY - 2 || y <= innerHeight) header.classList.remove('is-hidden');
-  lastY = y;
   // The floating buy bar appears once the hero's buttons have gone.
   const heroGone = hero.classList.contains('has-seq')
     ? pinProgress(hero) > .3 || hero.getBoundingClientRect().bottom < innerHeight
