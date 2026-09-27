@@ -7,8 +7,11 @@
   <title>Ritlum mini — your habits, in plain sight</title>
   <meta name="description" content="Ritlum mini keeps eight days of habits in view, syncs locally over Bluetooth, becomes a pixel clock, dims and sleeps on schedule, and responds to NFC habit check-ins. Hand assembled in Germany. First batch of ten, €60.">
   <meta name="theme-color" content="#faf8f4">
-  <link rel="preload" as="image" href="../assets/mini/hero-poster.webp?v=stage-3">
-  <link rel="stylesheet" href="mini.css?v=redesign-12">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Geist:wght@400..700&family=Geist+Mono:wght@400..600&display=swap">
+  <link rel="preload" as="fetch" href="../assets/mini/turn/turn.json" crossorigin>
+  <link rel="stylesheet" href="mini.css?v=motion-1">
 </head>
 <body>
 <a class="skip-link" href="#week">Skip to the grid</a>
@@ -28,28 +31,36 @@
 </header>
 
 <main>
-<section class="hero" aria-labelledby="hero-title">
-  <div class="hero-head">
-    <p class="label reveal">Ritlum mini · First batch of ten</p>
-    <h1 id="hero-title" class="reveal" style="--d:1">Your habits,<br>in plain sight.</h1>
-    <p class="lead reveal" style="--d:2">A small desk display that turns your last eight days into light, so you can see how you’re doing without picking up your phone.</p>
-    <div class="actions reveal" style="--d:3"><a class="button" href="/mini/checkout/">Buy · €60</a><a class="button button-ghost" href="#week">See how it works</a></div>
+<section class="hero" id="top" aria-labelledby="hero-title" data-pin>
+  <div class="hero-sticky">
+    <div class="hero-head">
+      <p class="label reveal">Ritlum mini · First batch of ten</p>
+      <h1 id="hero-title" class="reveal split" style="--d:1">Your habits,<br>in plain sight.</h1>
+      <p class="lead reveal" style="--d:3">A small desk display that turns your last eight days into light, so you can see how you’re doing without picking up your phone.</p>
+      <div class="actions reveal" style="--d:4"><a class="button" href="/mini/checkout/">Buy · €60</a><a class="button button-ghost" href="#week">See how it works</a></div>
+    </div>
+    <div class="hero-stage">
+      <canvas class="seq hero-seq" data-seq="../assets/mini/turn/turn" aria-hidden="true"></canvas>
+      <video class="hero-video lazy-video" muted loop playsinline preload="none" poster="../assets/mini/hero-poster.webp?v=stage-3" data-src="../assets/mini/hero-loop.mp4?v=stage-4" data-eager aria-label="Ritlum mini powers on with a sweep of colour, then fills today’s column one habit at a time"></video>
+    </div>
+    <ul class="hero-stats" aria-label="At a glance">
+      <li><strong data-count="64">64</strong><span>full-colour lights</span></li>
+      <li><strong>8 × 8</strong><span>habits × days</span></li>
+      <li><strong data-count="0">0</strong><span>accounts, Wi-Fi or cloud</span></li>
+      <li><strong>USB-C</strong><span>powered, hand assembled</span></li>
+    </ul>
   </div>
-  <div class="hero-stage">
-    <video class="hero-video lazy-video" muted loop playsinline preload="none" poster="../assets/mini/hero-poster.webp?v=stage-3" data-src="../assets/mini/hero-loop.mp4?v=stage-4" data-eager aria-label="Ritlum mini powers on with a sweep of colour, then fills today’s column one habit at a time"></video>
-  </div>
-  <ul class="hero-stats" aria-label="At a glance">
-    <li class="reveal"><strong>64</strong><span>full-colour lights</span></li>
-    <li class="reveal" style="--d:1"><strong>8 × 8</strong><span>habits × days</span></li>
-    <li class="reveal" style="--d:2"><strong>0</strong><span>accounts, Wi-Fi or cloud</span></li>
-    <li class="reveal" style="--d:3"><strong>USB-C</strong><span>powered, hand assembled</span></li>
-  </ul>
 </section>
+
+<div class="ticker" aria-hidden="true"><div class="ticker-track">
+  <span>64 full-colour lights</span><span>8 habits × 8 days</span><span>Bluetooth, no cloud</span><span>Clock mode</span><span>Sleep schedule</span><span>NFC check-ins</span><span>USB-C</span><span>Hand assembled in Germany</span>
+  <span>64 full-colour lights</span><span>8 habits × 8 days</span><span>Bluetooth, no cloud</span><span>Clock mode</span><span>Sleep schedule</span><span>NFC check-ins</span><span>USB-C</span><span>Hand assembled in Germany</span>
+</div></div>
 
 <section class="section week" id="week" aria-labelledby="week-title">
   <div class="week-copy">
     <p class="label reveal">The grid, decoded</p>
-    <h2 id="week-title" class="reveal" style="--d:1">Your week,<br>at a glance.</h2>
+    <h2 id="week-title" class="reveal split" style="--d:1">Your week,<br>at a glance.</h2>
     <p class="lead reveal" style="--d:2">Each light is a day you showed up. One look tells you what’s on track and what’s slipping.</p>
     <dl class="key reveal" style="--d:3">
       <div><dt>Rows</dt><dd>Up to eight habits you choose</dd></div>
@@ -69,7 +80,7 @@
 <section class="section sync" id="sync" aria-labelledby="sync-title">
   <div class="section-head">
     <p class="label reveal">From a small action to a little light</p>
-    <h2 id="sync-title" class="reveal" style="--d:1">Done for today.<br>There to see tomorrow.</h2>
+    <h2 id="sync-title" class="reveal split" style="--d:1">Done for today.<br>There to see tomorrow.</h2>
     <p class="lead reveal" style="--d:2">Log a habit in the Ritlum app and the light appears on mini a moment later, then stays in view long after you’ve put your phone down.</p>
   </div>
   <div class="sync-stage reveal" style="--d:2" data-state="0">
@@ -103,7 +114,7 @@
 <section class="section nfc" id="nfc" aria-labelledby="nfc-title">
   <div class="nfc-copy">
     <p class="label reveal">A physical way to finish</p>
-    <h2 id="nfc-title" class="reveal" style="--d:1">Tap. Done.</h2>
+    <h2 id="nfc-title" class="reveal split" style="--d:1">Tap. Done.</h2>
     <p class="lead reveal" style="--d:2">Stick an NFC tag on something you already use: the kettle, your running shoes, the book on your nightstand. Tap it with your iPhone to log the habit, and mini lights up. Five tags come in the box.</p>
     <ol class="steps-inline reveal" style="--d:3">
       <li><span>1</span>Link a tag to a habit in the app</li>
@@ -111,30 +122,37 @@
       <li><span>3</span>The row lights up on mini</li>
     </ol>
   </div>
-  <div class="media-card nfc-card reveal" style="--d:2">
-    <video class="lazy-video" muted loop playsinline preload="none" poster="../assets/mini/nfc-poster.webp?v=1" data-src="../assets/mini/nfc-loop.mp4?v=1" aria-label="An iPhone taps an NFC tag, the Ritlum app logs the habit, and the matching row lights up on Ritlum mini"></video>
+  <div class="media-card nfc-card reveal" style="--d:2" data-scroll>
+    <video class="lazy-video" muted loop playsinline preload="none" poster="../assets/mini/nfc-poster.webp?v=3" data-src="../assets/mini/nfc-loop.mp4?v=3" aria-label="An iPhone taps an NFC tag, the Ritlum app logs the habit, and the matching row lights up on Ritlum mini"></video>
   </div>
 </section>
 
-<section class="modes" id="modes" aria-labelledby="modes-title">
-  <div class="section-head">
-    <p class="label reveal">Morning to midnight</p>
-    <h2 id="modes-title" class="reveal" style="--d:1">Bright when you need it.<br>Dark when you don’t.</h2>
-    <p class="lead reveal" style="--d:2">Mini fits the rhythm of your day. Show your habits or the time, turn it down for the evening, and let it switch itself off while you sleep.</p>
-  </div>
-  <div class="modes-body">
-    <div class="modes-stage reveal" style="--d:2" data-mode="habits">
-      <img class="mode-visual" data-mode="habits" src="../assets/mini/night-habits.webp?v=4" alt="Ritlum mini showing eight days of habits in colour" width="3200" height="2560" loading="lazy">
-      <video class="mode-visual" data-mode="clock" muted loop playsinline preload="none" poster="../assets/mini/clock-poster.webp?v=5" data-src="../assets/mini/clock-loop.mp4?v=night-5" aria-label="Ritlum mini scrolling the time across its display in soft blue pixels"></video>
-      <img class="mode-visual" data-mode="dim" src="../assets/mini/night-dim.webp?v=4" alt="Ritlum mini at a lower brightness for the evening" width="3200" height="2560" loading="lazy">
-      <img class="mode-visual" data-mode="sleep" src="../assets/mini/night-off.webp?v=4" alt="Ritlum mini dark during its sleep schedule" width="3200" height="2560" loading="lazy">
-      <span class="mode-clock" aria-hidden="true">08:00</span>
+<section class="day" id="modes" aria-labelledby="modes-title">
+  <div class="day-sticky">
+    <div class="day-copy">
+      <p class="label">Morning to midnight</p>
+      <h2 id="modes-title" class="reveal split">Bright when you need it.<br>Dark when you don’t.</h2>
+      <p class="day-now" aria-hidden="true"><i></i><b>08:00</b></p>
+      <div class="day-panels" aria-live="polite">
+        <article class="day-panel is-active" data-mode="habits" data-time="08:00"><h3>Habits</h3><p>Your last eight days, each row in its habit’s colour. One look over coffee tells you where the week stands.</p></article>
+        <article class="day-panel" data-mode="clock" data-time="13:00"><h3>Clock mode</h3><p>Switch to a white pixel clock. The time scrolls across the grid and keeps running on mini once it’s synced.</p></article>
+        <article class="day-panel" data-mode="dim" data-time="21:00"><h3>Brightness</h3><p>Turn it down for the evening with a slider in the app. Mini remembers the setting.</p></article>
+        <article class="day-panel" data-mode="sleep" data-time="23:00"><h3>Sleep schedule</h3><p>Pick when it dims and when it wakes. Mini goes fully dark overnight and comes back on by itself, even with your phone in another room.</p></article>
+      </div>
     </div>
-    <div class="mode-tabs" role="tablist" aria-label="Mini through the day">
-      <button class="mode-tab is-active" role="tab" aria-selected="true" data-mode="habits" data-time="08:00"><span class="mode-time">08:00</span><strong>Habits</strong><span class="mode-text">Your last eight days, each row in its habit’s colour.</span><i class="mode-progress" aria-hidden="true"></i></button>
-      <button class="mode-tab" role="tab" aria-selected="false" data-mode="clock" data-time="13:00"><span class="mode-time">13:00</span><strong>Clock mode</strong><span class="mode-text">Switch to a soft blue pixel clock. The time scrolls across the grid and keeps running on mini once it’s synced.</span><i class="mode-progress" aria-hidden="true"></i></button>
-      <button class="mode-tab" role="tab" aria-selected="false" data-mode="dim" data-time="21:00"><span class="mode-time">21:00</span><strong>Brightness</strong><span class="mode-text">Turn it down for the evening with a slider in the app. Mini remembers the setting.</span><i class="mode-progress" aria-hidden="true"></i></button>
-      <button class="mode-tab" role="tab" aria-selected="false" data-mode="sleep" data-time="23:00"><span class="mode-time">23:00</span><strong>Sleep schedule</strong><span class="mode-text">Pick when it dims and when it wakes. Mini goes fully dark overnight and comes back on by itself, even with your phone in another room.</span><i class="mode-progress" aria-hidden="true"></i></button>
+    <div class="day-stage" data-mode="habits">
+      <div class="day-glow" aria-hidden="true"></div>
+      <img class="mode-visual" data-mode="habits" src="../assets/mini/day/habits.webp" data-fallback="../assets/mini/night-habits.webp?v=4" alt="Ritlum mini showing eight days of habits in colour" width="1800" height="1800" loading="lazy">
+      <img class="mode-visual" data-mode="clock" src="../assets/mini/day/clock-00.webp" data-fallback="../assets/mini/clock-poster.webp?v=5" alt="Ritlum mini scrolling the time across its display in white pixels" width="1800" height="1800" loading="lazy">
+      <img class="mode-visual" data-mode="dim" src="../assets/mini/day/dim.webp" data-fallback="../assets/mini/night-dim.webp?v=4" alt="Ritlum mini at a lower brightness for the evening" width="1800" height="1800" loading="lazy">
+      <img class="mode-visual" data-mode="sleep" src="../assets/mini/day/off.webp" data-fallback="../assets/mini/night-off.webp?v=4" alt="Ritlum mini dark during its sleep schedule" width="1800" height="1800" loading="lazy">
+    </div>
+    <div class="day-rail" role="tablist" aria-label="Mini through the day">
+      <i class="day-rail-fill" aria-hidden="true"></i>
+      <button class="day-stop is-active" role="tab" aria-selected="true" data-mode="habits" type="button"><span>08:00</span>Habits</button>
+      <button class="day-stop" role="tab" aria-selected="false" data-mode="clock" type="button"><span>13:00</span>Clock</button>
+      <button class="day-stop" role="tab" aria-selected="false" data-mode="dim" type="button"><span>21:00</span>Dimmed</button>
+      <button class="day-stop" role="tab" aria-selected="false" data-mode="sleep" type="button"><span>23:00</span>Asleep</button>
     </div>
   </div>
 </section>
@@ -142,7 +160,7 @@
 <section class="section app" id="app" aria-labelledby="app-title">
   <div class="section-head">
     <p class="label reveal">The Ritlum app</p>
-    <h2 id="app-title" class="reveal" style="--d:1">You decide<br>what it shows.</h2>
+    <h2 id="app-title" class="reveal split" style="--d:1">You decide<br>what it shows.</h2>
     <p class="lead reveal" style="--d:2">Mini is set up from the Ritlum app for iPhone. Pick the habits it tracks, and it takes care of the rest.</p>
   </div>
   <div class="bento">
@@ -167,7 +185,7 @@
 
 <section class="section connection" aria-labelledby="connection-title">
   <div class="section-head section-head-split">
-    <div><p class="label reveal">Connected without the cloud</p><h2 id="connection-title" class="reveal" style="--d:1">Nearby is enough.</h2></div>
+    <div><p class="label reveal">Connected without the cloud</p><h2 id="connection-title" class="reveal split" style="--d:1">Nearby is enough.</h2></div>
     <p class="lead reveal" style="--d:2">Mini talks directly to the Ritlum app on your iPhone. It doesn’t need its own account, Wi-Fi network or cloud service to do its job.</p>
   </div>
   <div class="features">
@@ -181,10 +199,10 @@
 <section class="section finishes" id="finishes" aria-labelledby="finishes-title">
   <div class="section-head">
     <p class="label reveal">Three finishes</p>
-    <h2 id="finishes-title" class="reveal" style="--d:1">White. Sakura.<br>Blue grey.</h2>
+    <h2 id="finishes-title" class="reveal split" style="--d:1">White. Sakura.<br>Blue grey.</h2>
     <p class="lead reveal" style="--d:2">Each case is 3D printed in matte PLA and assembled by hand, so every unit keeps a little of its own character. Pick the one that suits your desk.</p>
   </div>
-  <figure class="media-card lineup reveal" style="--d:2"><img src="../assets/mini/finishes-lineup.webp?v=2" alt="Three Ritlum mini units in white, sakura pink and blue grey, each on a white cylindrical riser" width="2400" height="1600" loading="lazy"></figure>
+  <figure class="media-card lineup reveal" style="--d:2" data-scroll><img src="../assets/mini/finishes-lineup.webp?v=2" alt="Three Ritlum mini units in white, sakura pink and blue grey, each on a white cylindrical riser" width="2400" height="1600" loading="lazy"></figure>
   <div class="viewer reveal">
     <div class="viewer-bar">
       <div class="finish-options" role="group" aria-label="Choose a finish">
@@ -205,7 +223,7 @@
 <section class="section setup" aria-labelledby="setup-title">
   <div class="section-head">
     <p class="label reveal">Setup</p>
-    <h2 id="setup-title" class="reveal" style="--d:1">On your desk<br>in a minute.</h2>
+    <h2 id="setup-title" class="reveal split" style="--d:1">On your desk<br>in a minute.</h2>
   </div>
   <ol class="setup-steps">
     <li class="reveal"><span class="step-no">01</span><h3>Plug it in</h3><p>Connect USB-C. Mini says hello with a sweep of colour across its middle rows.</p></li>
@@ -217,7 +235,7 @@
 <section class="section specs" id="specs" aria-labelledby="specs-title">
   <div class="specs-head">
     <p class="label reveal">Tech specs</p>
-    <h2 id="specs-title" class="reveal" style="--d:1">Small batch.<br>Human hands.</h2>
+    <h2 id="specs-title" class="reveal split" style="--d:1">Small batch.<br>Human hands.</h2>
     <p class="lead reveal" style="--d:2">The first run is intentionally small: ten cases, printed and assembled by hand in Germany.</p>
   </div>
   <dl class="spec-list reveal" style="--d:1">
@@ -237,7 +255,7 @@
 <section class="section faq" aria-labelledby="faq-title">
   <div class="specs-head">
     <p class="label reveal">Questions</p>
-    <h2 id="faq-title" class="reveal" style="--d:1">Good to know.</h2>
+    <h2 id="faq-title" class="reveal split" style="--d:1">Good to know.</h2>
   </div>
   <div class="faq-list reveal" style="--d:1">
     <details><summary>Does mini need Wi-Fi or an account?</summary><p>No. Mini connects to the Ritlum app on your iPhone over Bluetooth. It has no Wi-Fi and no account of its own.</p></details>
@@ -251,10 +269,10 @@
   </div>
 </section>
 
-<section class="closing" aria-labelledby="closing-title">
+<section class="closing" aria-labelledby="closing-title" data-scroll>
   <img class="closing-visual" src="../assets/mini/night-habits.webp?v=4" alt="" width="3200" height="2560" loading="lazy">
   <div class="closing-copy">
-    <h2 id="closing-title" class="reveal">A little progress.<br>In plain sight.</h2>
+    <h2 id="closing-title" class="reveal split">A little progress.<br>In plain sight.</h2>
     <p class="reveal" style="--d:1">First batch of ten, hand assembled in Germany.</p>
     <div class="actions reveal" style="--d:2"><a class="button button-light" href="/mini/checkout/">Buy · €60</a></div>
   </div>
@@ -263,5 +281,5 @@
 
 <footer><a class="brand" href="../"><span class="mark" aria-hidden="true"><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i></span>Ritlum</a><span>© <span id="year"></span> · <a href="../privacy/">Privacy</a> · <a href="mailto:iam@mhd3v.com">Contact</a></span></footer>
 <aside class="request-bar" aria-label="Buy Ritlum mini"><div><strong>Ritlum mini</strong><span>€60 · First batch of ten</span></div><a class="button button-small" href="/mini/checkout/">Buy</a></aside>
-<script src="mini.js?v=redesign-2" defer></script>
+<script src="mini.js?v=motion-1" defer></script>
 </body></html>
