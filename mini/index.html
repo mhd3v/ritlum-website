@@ -127,26 +127,33 @@
   </div>
 </section>
 
-<section class="day" id="modes" aria-labelledby="modes-title" data-scroll>
-  <div class="section-head day-head">
-    <p class="label reveal">Morning to midnight</p>
-    <h2 id="modes-title" class="reveal split" style="--d:1">Bright when you need it.<br>Dark when you don’t.</h2>
-    <p class="lead reveal" style="--d:2">Mini fits the rhythm of your day. Show your habits or the time, turn it down for the evening, and let it switch itself off while you sleep.</p>
-  </div>
-  <div class="day-body">
-    <div class="day-stage" data-mode="habits">
-      <img class="mode-visual" data-mode="habits" src="../assets/mini/day/habits.webp" data-fallback="../assets/mini/night-habits.webp?v=4" alt="Ritlum mini showing eight days of habits in colour" width="2000" height="1600" loading="lazy">
-      <img class="mode-visual" data-mode="clock" src="../assets/mini/day/clock-00.webp" data-fallback="../assets/mini/clock-poster.webp?v=5" alt="Ritlum mini scrolling the time across its display in soft blue pixels" width="2000" height="1600" loading="lazy">
-      <img class="mode-visual" data-mode="dim" src="../assets/mini/day/dim.webp" data-fallback="../assets/mini/night-dim.webp?v=4" alt="Ritlum mini at a lower brightness for the evening" width="2000" height="1600" loading="lazy">
-      <img class="mode-visual" data-mode="sleep" src="../assets/mini/day/off.webp" data-fallback="../assets/mini/night-off.webp?v=4" alt="Ritlum mini dark during its sleep schedule" width="2000" height="1600" loading="lazy">
-      <span class="mode-clock" aria-hidden="true"><i></i><b>08:00</b></span>
+<section class="day" id="modes" aria-labelledby="modes-title">
+  <div class="day-sticky">
+    <div class="day-copy">
+      <p class="label">Morning to midnight</p>
+      <h2 id="modes-title" class="reveal split">Bright when you need it.<br>Dark when you don’t.</h2>
+      <p class="day-now" aria-hidden="true"><i></i><b>08:00</b></p>
+      <div class="day-panels" aria-live="polite">
+        <article class="day-panel is-active" data-mode="habits" data-time="08:00"><h3>Habits</h3><p>Your last eight days, each row in its habit’s colour. One look over coffee tells you where the week stands.</p></article>
+        <article class="day-panel" data-mode="clock" data-time="13:00"><h3>Clock mode</h3><p>Switch to a white pixel clock. The time scrolls across the grid and keeps running on mini once it’s synced.</p></article>
+        <article class="day-panel" data-mode="dim" data-time="21:00"><h3>Brightness</h3><p>Turn it down for the evening with a slider in the app. Mini remembers the setting.</p></article>
+        <article class="day-panel" data-mode="sleep" data-time="23:00"><h3>Sleep schedule</h3><p>Pick when it dims and when it wakes. Mini goes fully dark overnight and comes back on by itself, even with your phone in another room.</p></article>
+      </div>
     </div>
-    <ol class="day-steps">
-      <li class="day-step is-active" data-mode="habits" data-time="08:00"><span class="mode-time">08:00</span><h3>Habits</h3><p>Your last eight days, each row in its habit’s colour. One look over coffee tells you where the week stands.</p></li>
-      <li class="day-step" data-mode="clock" data-time="13:00"><span class="mode-time">13:00</span><h3>Clock mode</h3><p>Switch to a soft blue pixel clock. The time scrolls across the grid and keeps running on mini once it’s synced.</p></li>
-      <li class="day-step" data-mode="dim" data-time="21:00"><span class="mode-time">21:00</span><h3>Brightness</h3><p>Turn it down for the evening with a slider in the app. Mini remembers the setting.</p></li>
-      <li class="day-step" data-mode="sleep" data-time="23:00"><span class="mode-time">23:00</span><h3>Sleep schedule</h3><p>Pick when it dims and when it wakes. Mini goes fully dark overnight and comes back on by itself, even with your phone in another room.</p></li>
-    </ol>
+    <div class="day-stage" data-mode="habits">
+      <div class="day-glow" aria-hidden="true"></div>
+      <img class="mode-visual" data-mode="habits" src="../assets/mini/day/habits.webp" data-fallback="../assets/mini/night-habits.webp?v=4" alt="Ritlum mini showing eight days of habits in colour" width="1800" height="1800" loading="lazy">
+      <img class="mode-visual" data-mode="clock" src="../assets/mini/day/clock-00.webp" data-fallback="../assets/mini/clock-poster.webp?v=5" alt="Ritlum mini scrolling the time across its display in white pixels" width="1800" height="1800" loading="lazy">
+      <img class="mode-visual" data-mode="dim" src="../assets/mini/day/dim.webp" data-fallback="../assets/mini/night-dim.webp?v=4" alt="Ritlum mini at a lower brightness for the evening" width="1800" height="1800" loading="lazy">
+      <img class="mode-visual" data-mode="sleep" src="../assets/mini/day/off.webp" data-fallback="../assets/mini/night-off.webp?v=4" alt="Ritlum mini dark during its sleep schedule" width="1800" height="1800" loading="lazy">
+    </div>
+    <div class="day-rail" role="tablist" aria-label="Mini through the day">
+      <i class="day-rail-fill" aria-hidden="true"></i>
+      <button class="day-stop is-active" role="tab" aria-selected="true" data-mode="habits" type="button"><span>08:00</span>Habits</button>
+      <button class="day-stop" role="tab" aria-selected="false" data-mode="clock" type="button"><span>13:00</span>Clock</button>
+      <button class="day-stop" role="tab" aria-selected="false" data-mode="dim" type="button"><span>21:00</span>Dimmed</button>
+      <button class="day-stop" role="tab" aria-selected="false" data-mode="sleep" type="button"><span>23:00</span>Asleep</button>
+    </div>
   </div>
 </section>
 

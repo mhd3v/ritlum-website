@@ -172,7 +172,9 @@ function onFrame() {
   const heroGone = hero.classList.contains('has-seq')
     ? pinProgress(hero) > .3 || hero.getBoundingClientRect().bottom < innerHeight
     : heroActions.getBoundingClientRect().bottom < 0;
-  bar.classList.toggle('is-visible', heroGone);
+  // It steps aside while the day section is pinned, so it never covers the rail.
+  const dayBox = day.getBoundingClientRect();
+  bar.classList.toggle('is-visible', heroGone && !(dayBox.top <= 1 && dayBox.bottom >= innerHeight - 1));
   updateDay();
   updateHeaderTone();
   // Highlight the nav link for the section in view.
@@ -281,19 +283,21 @@ if (reducedMotion.matches) {
   }, {threshold:.45}).observe(syncStage);
 }
 
-// Morning to midnight: the step nearest the middle of the screen sets mini's
-// mode, and the section's colour follows the clock from morning to night.
+// Morning to midnight: the section pins while mini steps through its day.
+// Scroll progress picks the mode, fills the rail and blends the section's
+// colour from morning to night; each time of day holds before it changes.
 const day = document.querySelector('.day');
 const dayStage = day.querySelector('.day-stage');
-const daySteps = [...day.querySelectorAll('.day-step')];
-const dayClock = day.querySelector('.mode-clock b');
+const dayPanels = [...day.querySelectorAll('.day-panel')];
+const dayStops = [...day.querySelectorAll('.day-stop')];
+const dayNow = day.querySelector('.day-now b');
 const DAY_COLOURS = [
   [241, 237, 228], // 08:00 morning paper
   [236, 240, 244], // 13:00 cool daylight
   [44, 37, 52],    // 21:00 dusk
   [13, 12, 16],    // 23:00 night
 ];
-// Until the day-cycle stills are rendered, fall back to the evening set.
+// Until the day stills are rendered, fall back to the evening set.
 document.querySelectorAll('.mode-visual').forEach(img => {
   const fallback = () => {
     if (img.dataset.fallback && img.getAttribute('src') !== img.dataset.fallback) {
@@ -303,48 +307,40 @@ document.querySelectorAll('.mode-visual').forEach(img => {
   img.addEventListener('error', fallback);
   if (img.complete && !img.naturalWidth && img.getAttribute('src')) fallback();
 });
-let dayMode = '';
-function setDayMode(step) {
-  const mode = step.dataset.mode;
-  if (mode === dayMode) return;
-  dayMode = mode;
-  dayStage.dataset.mode = mode;
-  dayClock.textContent = step.dataset.time;
-  daySteps.forEach(s => s.classList.toggle('is-active', s === step));
-  mode === 'clock' ? playClock() : stopClock();
+let dayIndex = -1;
+function setDayMode(index) {
+  if (index === dayIndex) return;
+  dayIndex = index;
+  const panel = dayPanels[index];
+  dayStage.dataset.mode = panel.dataset.mode;
+  dayNow.textContent = panel.dataset.time;
+  dayPanels.forEach((p, i) => p.classList.toggle('is-active', i === index));
+  dayStops.forEach((stop, i) => {
+    stop.classList.toggle('is-active', i === index);
+    stop.setAttribute('aria-selected', String(i === index));
+  });
+  panel.dataset.mode === 'clock' ? playClock() : stopClock();
 }
 function updateDay() {
-  // On narrow screens the stage covers the top of the screen, so read the
-  // steps lower down.
-  const mid = innerHeight * (innerWidth <= 1000 ? .72 : .5);
-  let best = daySteps[0];
-  let bestDistance = Infinity;
-  const centres = daySteps.map(step => {
-    const box = step.getBoundingClientRect();
-    return box.top + box.height / 2;
-  });
-  centres.forEach((c, i) => {
-    const d = Math.abs(c - mid);
-    if (d < bestDistance) { bestDistance = d; best = daySteps[i]; }
-  });
-  setDayMode(best);
-  // Blend between the stops by where the middle of the screen sits among the
-  // steps' centres.
-  let pos = 0;
-  for (let i = 0; i < centres.length - 1; i++) {
-    if (mid >= centres[i]) pos = i + clamp((mid - centres[i]) / (centres[i + 1] - centres[i]));
-  }
-  const i = Math.min(Math.floor(pos), DAY_COLOURS.length - 2);
-  const t = pos - i;
-  // Hold each time of day, then change over in the gap between steps.
-  const held = clamp((t - .35) / .4);
+  const p = pinProgress(day);
+  const pos = clamp(p * DAY_COLOURS.length, 0, DAY_COLOURS.length - .001);
+  setDayMode(Math.floor(pos));
+  day.style.setProperty('--rail', p.toFixed(4));
+  // Hold each colour for most of its step, then change over to the next.
+  const i = Math.floor(pos);
+  const last = i >= DAY_COLOURS.length - 1;
+  const held = last ? 0 : clamp((pos - i - .72) / .28);
   const eased = held * held * (3 - 2 * held);
-  const rgb = DAY_COLOURS[i].map((c, k) => Math.round(c + (DAY_COLOURS[i + 1][k] - c) * eased));
+  const next = DAY_COLOURS[last ? i : i + 1];
+  const rgb = DAY_COLOURS[i].map((c, k) => Math.round(c + (next[k] - c) * eased));
   day.style.setProperty('--day-bg', `rgb(${rgb})`);
   day.classList.toggle('is-night', (rgb[0] * .3 + rgb[1] * .59 + rgb[2] * .11) < 120);
 }
-daySteps.forEach(step => step.addEventListener('click', () => {
-  step.scrollIntoView({behavior: reducedMotion.matches ? 'auto' : 'smooth', block:'center'});
+// The rail's stops jump to their time of day.
+dayStops.forEach((stop, i) => stop.addEventListener('click', () => {
+  const travel = day.offsetHeight - innerHeight;
+  const top = day.getBoundingClientRect().top + scrollY;
+  scrollTo({top: top + travel * (i + .5) / dayStops.length, behavior: reducedMotion.matches ? 'auto' : 'smooth'});
 }));
 
 // The clock is a flipbook of transparent stills, so it sits on any colour.
@@ -359,7 +355,7 @@ fetch(`${clockBase}.json`).then(r => r.ok ? r.json() : Promise.reject()).then(ma
   frames.forEach(src => { new Image().src = src; });
   clockImage.src = frames[0];
   clockFlipbook = {frames, timeline: manifest.timeline_ms};
-  if (dayMode === 'clock') playClock();
+  if (dayPanels[dayIndex]?.dataset.mode === 'clock') playClock();
 }).catch(() => {});
 function playClock() {
   stopClock();

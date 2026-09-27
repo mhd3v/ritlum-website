@@ -11,7 +11,7 @@
   --blue:#5b9df9;--green:#62c089;--yellow:#efc557;--orange:#f0a05a;--pink:#e78aae;--cyan:#6fc8d6;--purple:#a893db;
   --pad:clamp(20px,4.4vw,72px);--max:1240px;--section:clamp(88px,10vw,148px);
   --r-lg:clamp(22px,2.4vw,32px);--r-md:20px;--r-sm:12px;
-  --fs-display:clamp(50px,7.6vw,112px);--fs-h2:clamp(38px,5vw,72px);--fs-h3:clamp(19px,1.5vw,22px);
+  --fs-display:clamp(46px,5.4vw,84px);--fs-h2:clamp(36px,4.4vw,64px);--fs-h3:clamp(19px,1.5vw,22px);
   --fs-lead:clamp(17px,1.3vw,19px);--fs-body:16px;--fs-small:14px;
   --sans:Geist,-apple-system,BlinkMacSystemFont,"SF Pro Display","Helvetica Neue",Inter,system-ui,sans-serif;
   --mono:"Geist Mono","SF Mono",ui-monospace,"SFMono-Regular",Menlo,Consolas,monospace;
@@ -20,7 +20,7 @@
 }
 *{box-sizing:border-box}
 html{scroll-behavior:smooth;scroll-padding-top:80px}
-body{margin:0;background:var(--paper);color:var(--ink);font-family:var(--sans);font-size:var(--fs-body);line-height:1.6;-webkit-font-smoothing:antialiased;text-rendering:optimizeLegibility}
+body{margin:0;overflow-x:clip;background:var(--paper);color:var(--ink);font-family:var(--sans);font-size:var(--fs-body);line-height:1.6;-webkit-font-smoothing:antialiased;text-rendering:optimizeLegibility}
 img,video{display:block;max-width:100%;height:auto}
 a{color:inherit;text-underline-offset:4px}
 button{font:inherit;color:inherit;cursor:pointer}
@@ -164,7 +164,7 @@ h3{font-size:var(--fs-h3);line-height:1.25;letter-spacing:-.02em}
 .sync-stage figure{margin:0;min-width:0;align-self:stretch;display:flex;flex-direction:column;justify-content:center;padding-bottom:clamp(28px,4vw,44px);position:relative}
 /* The render is transparent with uneven margins; this box crops the view to
    the device's own bounds (x 430-1570, y 461-1784 of 2000) so it centres. */
-.device-box{position:relative;width:100%;aspect-ratio:1140/1323}
+.device-box{position:relative;width:100%;aspect-ratio:1140/1323;overflow:hidden}
 .device-box .stack{position:absolute;width:175.44%;left:-37.72%;top:-34.85%}
 .sync-stage figcaption{position:absolute;left:0;right:0;bottom:0;text-align:center;font:500 clamp(9px,1.2vw,12px)/1.4 var(--mono);letter-spacing:.08em;text-transform:uppercase;color:var(--muted)}
 .stack{display:grid}
@@ -186,30 +186,42 @@ h3{font-size:var(--fs-h3);line-height:1.25;letter-spacing:-.02em}
 .steps-inline li{display:flex;align-items:center;gap:14px;font-size:15px}
 .steps-inline span{flex:none;width:28px;height:28px;border-radius:50%;display:grid;place-items:center;background:var(--card);box-shadow:inset 0 0 0 1px var(--line);font:600 12px/1 var(--mono)}
 
-/* Day: morning to midnight. JS blends the section colour through the day as
-   it scrolls and flips the text to light once dusk falls (.is-night). */
-.day{position:relative;margin-top:var(--section);padding:var(--section) var(--pad);background:var(--day-bg,#f1ede4);color:var(--ink);transition:color .6s}
+/* Day: morning to midnight. The section pins for a few screens; as it
+   scrolls JS steps mini through its modes, blends the colour from morning to
+   night (--day-bg, .is-night) and fills the timeline rail (--rail). */
+.day{position:relative;margin-top:var(--section);height:420vh;background:var(--day-bg,#f1ede4);color:var(--ink);transition:color .6s}
 .day.is-night{color:var(--dark-ink)}
-.day .label,.day .lead,.day .day-step p,.day .mode-time{transition:color .6s}
-.day.is-night .label,.day.is-night .lead{color:var(--dark-muted)}
-.day-body{max-width:var(--max);margin:0 auto;display:grid;grid-template-columns:minmax(0,1.3fr) minmax(0,1fr);gap:clamp(28px,5vw,80px);align-items:start}
-.day-stage{position:sticky;top:max(80px,calc(50vh - 30vw));aspect-ratio:1600/1280}
-.mode-visual{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;opacity:0;transform:scale(1.12);transition:opacity .8s var(--ease),transform 1.4s var(--ease-out)}
-.day-stage[data-mode="habits"] .mode-visual[data-mode="habits"],.day-stage[data-mode="clock"] .mode-visual[data-mode="clock"],.day-stage[data-mode="dim"] .mode-visual[data-mode="dim"],.day-stage[data-mode="sleep"] .mode-visual[data-mode="sleep"]{opacity:1;transform:scale(1.15)}
-.mode-clock{position:absolute;left:50%;top:4%;transform:translateX(-50%);display:flex;align-items:center;gap:10px;font:500 14px/1 var(--mono);letter-spacing:.08em;padding:9px 14px;border-radius:999px;background:rgba(255,255,255,.5);box-shadow:inset 0 0 0 1px var(--line);backdrop-filter:blur(10px);-webkit-backdrop-filter:blur(10px);transition:background .6s,box-shadow .6s}
-.mode-clock i{width:8px;height:8px;border-radius:50%;background:var(--yellow);box-shadow:0 0 10px var(--yellow);transition:background .6s,box-shadow .6s}
-.day.is-night .mode-clock{background:rgba(255,255,255,.06);box-shadow:inset 0 0 0 1px var(--dark-line)}
-.day.is-night .mode-clock i{background:#c9d6ff;box-shadow:0 0 10px #8fb0ff}
-.day-steps{list-style:none;margin:0;padding:0}
-.day-step{min-height:62vh;display:flex;flex-direction:column;justify-content:center;gap:10px;opacity:.28;transition:opacity .6s var(--ease)}
-.day-step:first-child{min-height:40vh;justify-content:flex-start;padding-top:8vh}
-.day-step:last-child{min-height:56vh}
-.day-step.is-active{opacity:1}
-.day-step h3{font-size:clamp(26px,2.6vw,36px);letter-spacing:-.035em}
-.day-step p{font-size:var(--fs-lead);color:var(--muted);max-width:26em;line-height:1.55}
-.day.is-night .day-step p{color:var(--dark-muted)}
-.mode-time{font:500 13px/1 var(--mono);letter-spacing:.08em;color:var(--muted)}
-.day.is-night .mode-time{color:var(--dark-muted)}
+.day-sticky{position:sticky;top:0;height:100vh;height:100svh;max-width:calc(var(--max) + var(--pad) * 2);margin:auto;padding:clamp(88px,11vh,120px) var(--pad) clamp(20px,4vh,40px);display:grid;grid-template-columns:minmax(0,.9fr) minmax(0,1.1fr);grid-template-rows:minmax(0,1fr) auto;column-gap:clamp(24px,5vw,80px);row-gap:clamp(16px,3vh,32px)}
+.day-copy{align-self:center;display:flex;flex-direction:column;gap:18px}
+.day .label{transition:color .6s}
+.day.is-night .label{color:var(--dark-muted)}
+.day-now{display:flex;align-items:center;gap:12px;margin-top:clamp(8px,3vh,28px);font:500 clamp(40px,4.4vw,64px)/1 var(--mono);letter-spacing:-.04em;font-variant-numeric:tabular-nums}
+.day-now i{width:12px;height:12px;border-radius:50%;background:var(--yellow);box-shadow:0 0 14px var(--yellow);transition:background .6s,box-shadow .6s}
+.day.is-night .day-now i{background:#dfe6ff;box-shadow:0 0 14px #9fb6ff}
+.day-panels{display:grid}
+.day-panel{grid-area:1/1;display:flex;flex-direction:column;gap:8px;opacity:0;transform:translateY(14px);transition:opacity .5s var(--ease),transform .7s var(--ease-out);pointer-events:none}
+.day-panel.is-active{opacity:1;transform:none;pointer-events:auto}
+.day-panel h3{font-size:clamp(22px,2vw,28px);letter-spacing:-.03em}
+.day-panel p{font-size:var(--fs-lead);line-height:1.55;color:var(--muted);max-width:28em;transition:color .6s}
+.day.is-night .day-panel p{color:var(--dark-muted)}
+.day-stage{position:relative;align-self:center;justify-self:center;height:100%;max-height:720px;aspect-ratio:1;max-width:100%}
+.mode-visual{position:absolute;inset:0;width:100%;height:100%;object-fit:contain;opacity:0;transform:scale(.97);transition:opacity .7s var(--ease),transform 1.2s var(--ease-out)}
+.day-stage[data-mode="habits"] .mode-visual[data-mode="habits"],.day-stage[data-mode="clock"] .mode-visual[data-mode="clock"],.day-stage[data-mode="dim"] .mode-visual[data-mode="dim"],.day-stage[data-mode="sleep"] .mode-visual[data-mode="sleep"]{opacity:1;transform:none}
+/* The light mini throws on the wall behind it, in the colours it shows. */
+.day-glow{position:absolute;inset:14%;border-radius:50%;filter:blur(clamp(40px,6vw,80px));opacity:calc(var(--g,1) * .35);transition:opacity .8s var(--ease),background .8s;
+  background:radial-gradient(circle at 30% 28%,var(--blue),transparent 55%),radial-gradient(circle at 72% 32%,var(--green),transparent 55%),radial-gradient(circle at 30% 72%,var(--pink),transparent 55%),radial-gradient(circle at 72% 70%,var(--yellow),transparent 55%)}
+.day.is-night .day-glow{opacity:calc(var(--g,1) * .7)}
+/* Late in the evening the room is dark too, so the housing drops back. */
+.day.is-night .day-stage[data-mode="dim"] .mode-visual,.day.is-night .day-stage[data-mode="sleep"] .mode-visual{filter:brightness(.62)}
+.mode-visual{transition:opacity .7s var(--ease),transform 1.2s var(--ease-out),filter .8s var(--ease)}
+.day-stage[data-mode="clock"] .day-glow{background:radial-gradient(circle,#fff,transparent 62%);--g:.7}
+.day-stage[data-mode="dim"] .day-glow{--g:.35}
+.day-stage[data-mode="sleep"] .day-glow{--g:0}
+.day-rail{grid-column:1/-1;position:relative;display:grid;grid-template-columns:repeat(4,1fr);border-top:1px solid currentColor;border-top-color:color-mix(in srgb,currentColor 18%,transparent)}
+.day-rail-fill{position:absolute;left:0;top:-1px;height:2px;width:calc(var(--rail,0) * 100%);background:currentColor}
+.day-stop{display:flex;flex-direction:column;align-items:flex-start;gap:6px;padding:14px 0 0;border:0;background:none;text-align:left;font-size:15px;font-weight:550;letter-spacing:-.01em;opacity:.42;transition:opacity .4s}
+.day-stop span{font:500 12px/1 var(--mono);letter-spacing:.08em}
+.day-stop.is-active,.day-stop:hover{opacity:1}
 
 /* App bento */
 .app .section-head{margin-bottom:clamp(40px,5vw,56px)}
@@ -296,14 +308,13 @@ footer .brand{color:var(--ink);font-size:18px}
 /* Tablet */
 @media (max-width:1000px){
   .navlinks{display:none}
-  .week,.nfc,.day-body,.specs,.faq{grid-template-columns:1fr}
-  /* The stage pins to the top on its own patch of the section colour and
-     the steps scroll up underneath it. */
-  .day-stage{top:0;z-index:2;width:min(100%,560px);margin:auto;border-top:64px solid var(--day-bg,#f1ede4);background:var(--day-bg,#f1ede4);box-sizing:content-box}
-  .day-stage:after{content:"";position:absolute;left:-50vw;right:-50vw;top:100%;height:48px;background:linear-gradient(var(--day-bg,#f1ede4),transparent)}
-  .day-body{gap:0}
-  .day-step{min-height:48vh;position:relative;z-index:1}
-  .day-step:first-child{min-height:30vh;padding-top:24px}
+  .week,.nfc,.specs,.faq{grid-template-columns:1fr}
+  .day-sticky{grid-template-columns:minmax(0,1fr);grid-template-rows:auto minmax(0,1fr) auto;padding-top:80px;row-gap:12px}
+  .day-copy{gap:10px}
+  .day-copy h2{font-size:clamp(28px,6vw,44px)}
+  .day-now{margin-top:4px;font-size:clamp(28px,6vw,40px)}
+  .day-panel p{font-size:15px}
+  .day-stage{max-height:100%}
   .week-figure{max-width:520px;width:100%;margin:auto}
   .section-head-split{grid-template-columns:1fr;gap:20px}
   .features{grid-template-columns:repeat(2,1fr)}
@@ -323,7 +334,6 @@ footer .brand{color:var(--ink);font-size:18px}
   .hero-stage{aspect-ratio:1/1;margin-top:0}
   .has-seq .hero-sticky{padding-top:88px}
   .has-seq .hero-stats{grid-template-columns:repeat(2,1fr);margin:0}
-  .day-stage{width:100%}
   .hero-video{object-fit:cover;object-position:50% 60%;-webkit-mask-image:radial-gradient(ellipse 70% 58% at 50% 56%,#000 50%,transparent 100%);mask-image:radial-gradient(ellipse 70% 58% at 50% 56%,#000 50%,transparent 100%)}
   .hero-stats{grid-template-columns:repeat(2,1fr);gap:0 16px;margin-top:-24px}
   .actions .button{flex:1 1 auto}
@@ -339,7 +349,6 @@ footer .brand{color:var(--ink);font-size:18px}
   .product-scene{height:auto;aspect-ratio:1}
   .gallery-image{width:190%}
   .gallery-arrow{top:auto;bottom:16px;margin:0;width:42px;height:42px}
-  .mode-clock{top:10px;font-size:12px}
   footer{flex-direction:column;align-items:flex-start}
 }
 @media (prefers-reduced-motion:reduce){
