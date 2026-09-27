@@ -189,7 +189,7 @@ addEventListener('scroll', requestFrame, {passive:true});
 addEventListener('resize', requestFrame);
 
 // Over dark sections the header switches to its dark treatment.
-const toneSections = [...document.querySelectorAll('.detail, .day, .closing')];
+const toneSections = [...document.querySelectorAll('.day, .closing')];
 function updateHeaderTone() {
   const probe = 40;
   header.classList.toggle('is-dark', toneSections.some(section => {
