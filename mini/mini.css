@@ -19,7 +19,7 @@
   --shadow:0 1px 2px rgba(20,19,22,.04),0 12px 32px -12px rgba(20,19,22,.12);
 }
 *{box-sizing:border-box}
-html{scroll-behavior:smooth;scroll-padding-top:80px}
+html{scroll-behavior:smooth;scroll-padding-top:80px;-webkit-text-size-adjust:100%;text-size-adjust:100%}
 body{margin:0;overflow-x:clip;background:var(--paper);color:var(--ink);font-family:var(--sans);font-size:var(--fs-body);line-height:1.6;-webkit-font-smoothing:antialiased;text-rendering:optimizeLegibility}
 img,video{display:block;max-width:100%;height:auto}
 a{color:inherit;text-underline-offset:4px}
@@ -50,9 +50,9 @@ h3{font-size:var(--fs-h3);line-height:1.25;letter-spacing:-.02em}
 .actions{display:flex;flex-wrap:wrap;gap:12px;align-items:center}
 
 /* Header: a floating pill that frosts once the page moves */
-.site-header{position:fixed;top:12px;left:0;right:0;z-index:40;pointer-events:none;transition:transform .5s var(--ease-out)}
+.site-header{position:fixed;top:12px;left:0;right:0;z-index:40;pointer-events:none;transition:transform .5s var(--ease-out);will-change:transform}
 .site-header.is-hidden{transform:translateY(-120%)}
-.nav{pointer-events:auto;height:56px;width:min(var(--max),calc(100% - 24px));margin:auto;padding:0 8px 0 20px;display:flex;align-items:center;justify-content:space-between;gap:24px;border-radius:999px;transition:background .35s,box-shadow .35s,color .35s,backdrop-filter .35s}
+.nav{pointer-events:auto;height:56px;width:min(var(--max),calc(100% - 24px));margin:auto;padding:0 8px 0 20px;display:flex;align-items:center;justify-content:space-between;gap:24px;border-radius:999px;transition:background .35s,box-shadow .35s,color .35s}
 .site-header.is-scrolled .nav{background:rgba(250,248,244,.72);backdrop-filter:saturate(1.6) blur(20px);-webkit-backdrop-filter:saturate(1.6) blur(20px);box-shadow:0 1px 0 rgba(255,255,255,.6) inset,0 0 0 1px var(--line),0 10px 30px -14px rgba(20,19,22,.25)}
 .site-header.is-dark .nav{color:var(--dark-ink)}
 .site-header.is-dark.is-scrolled .nav{background:rgba(24,22,28,.62);box-shadow:0 0 0 1px var(--dark-line),0 10px 30px -14px rgba(0,0,0,.6)}
@@ -300,8 +300,10 @@ h3{font-size:var(--fs-h3);line-height:1.25;letter-spacing:-.02em}
 footer{max-width:calc(var(--max) + var(--pad) * 2);margin:auto;padding:32px var(--pad) calc(32px + env(safe-area-inset-bottom, 0px));display:flex;justify-content:space-between;align-items:center;gap:20px;font-size:13px;color:var(--muted)}
 footer a{text-decoration:none}
 footer .brand{color:var(--ink);font-size:18px}
-.request-bar{position:fixed;z-index:30;left:50%;bottom:16px;width:min(440px,calc(100% - 32px));display:flex;align-items:center;justify-content:space-between;gap:16px;padding:10px 10px 10px 22px;border-radius:999px;background:rgba(250,248,244,.82);backdrop-filter:saturate(1.6) blur(18px);-webkit-backdrop-filter:saturate(1.6) blur(18px);box-shadow:0 12px 40px -12px rgba(20,19,22,.28),inset 0 0 0 1px var(--line);transform:translate(-50%,140%);transition:transform .5s var(--ease)}
-.request-bar.is-visible{transform:translate(-50%,0)}
+.request-bar{position:fixed;z-index:30;left:50%;bottom:16px;width:min(440px,calc(100% - 32px));display:flex;align-items:center;justify-content:space-between;gap:16px;padding:10px 10px 10px 22px;border-radius:999px;background:rgba(250,248,244,.82);backdrop-filter:saturate(1.6) blur(18px);-webkit-backdrop-filter:saturate(1.6) blur(18px);box-shadow:0 12px 40px -12px rgba(20,19,22,.28),inset 0 0 0 1px var(--line);transform:translate(-50%,140%);opacity:0;visibility:hidden;transition:transform .5s var(--ease),opacity .3s ease,visibility 0s .5s}
+/* Hidden means hidden, not just parked below the screen: iOS shows what's
+   under the bottom edge when the page bounces or the toolbar tucks away. */
+.request-bar.is-visible{transform:translate(-50%,0);opacity:1;visibility:visible;transition:transform .5s var(--ease),opacity .3s ease,visibility 0s}
 .request-bar strong{display:block;font-size:15px;line-height:1.3}
 .request-bar span{display:block;font-size:12px;color:var(--muted);line-height:1.3}
 

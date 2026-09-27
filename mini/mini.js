@@ -1,6 +1,12 @@
 document.documentElement.classList.remove('no-js');
 const reducedMotion = matchMedia('(prefers-reduced-motion: reduce)');
 const clamp = (v, lo = 0, hi = 1) => Math.min(hi, Math.max(lo, v));
+// Layout viewport size. On iOS innerWidth/innerHeight follow the visual
+// viewport, so they shrink while pinch-zoomed and grow as Safari's toolbar
+// tucks away; the pinned sections are sized in svh, so measure what CSS sees.
+const root = document.documentElement;
+const viewW = () => root.clientWidth;
+const viewH = () => root.clientHeight;
 
 // Split headings into words so each can rise out of its own mask. Line breaks
 // and inline markup are kept; screen readers get the heading's text once.
@@ -78,7 +84,7 @@ class Sequence {
   // retina desktops get the full-size frames so the product stays sharp.
   static async load(canvas) {
     const full = canvas.dataset.seq;
-    const need = Math.min(innerWidth, innerHeight * 4 / 3) * (devicePixelRatio || 1);
+    const need = Math.min(viewW(), viewH() * 4 / 3) * (devicePixelRatio || 1);
     for (const base of need <= 1300 ? [`${full}-sm`, full] : [full]) {
       const response = await fetch(`${base}.json`).catch(() => null);
       if (response?.ok) return new Sequence(canvas, base, await response.json());
@@ -175,11 +181,12 @@ const pinned = [...document.querySelectorAll('[data-pin]')];
 const pinHandlers = new Map();
 function viewProgress(el) {
   const box = el.getBoundingClientRect();
-  return clamp((innerHeight - box.top) / (innerHeight + box.height));
+  const vh = viewH();
+  return clamp((vh - box.top) / (vh + box.height));
 }
 function pinProgress(el) {
   const box = el.getBoundingClientRect();
-  const travel = box.height - innerHeight;
+  const travel = box.height - viewH();
   return travel > 0 ? clamp(-box.top / travel) : 0;
 }
 
@@ -191,11 +198,13 @@ const heroActions = document.querySelector('.hero .actions');
 const navLinks = [...document.querySelectorAll('.navlinks a')];
 const navTargets = navLinks.map(a => document.querySelector(a.getAttribute('href')));
 let lastY = scrollY;
+let travel = 0;
 let frameQueued = false;
 
 function onFrame() {
   frameQueued = false;
   const y = scrollY;
+  const vh = viewH();
   if (!reducedMotion.matches) {
     for (const el of scrollers) el.style.setProperty('--p', viewProgress(el).toFixed(4));
     for (const el of pinned) {
@@ -205,25 +214,33 @@ function onFrame() {
     }
   }
   header.classList.toggle('is-scrolled', y > 8);
-  // Tuck the header away while reading down; bring it back on any scroll up.
-  header.classList.toggle('is-hidden', y > innerHeight && y > lastY + 2);
-  if (y < lastY - 2 || y <= innerHeight) header.classList.remove('is-hidden');
-  lastY = y;
+  // Tuck the header away while reading down; bring it back on a deliberate
+  // scroll up. Movement is summed per direction so the tiny steps at the end
+  // of an iOS fling, and the bounce past either end of the page, can't flip it.
+  const maxY = root.scrollHeight - vh;
+  if (y >= 0 && y <= maxY) {
+    const dy = y - lastY;
+    travel = Math.sign(dy) === Math.sign(travel) ? travel + dy : dy;
+    if (y <= vh) header.classList.remove('is-hidden');
+    else if (travel > 24) header.classList.add('is-hidden');
+    else if (travel < -24) header.classList.remove('is-hidden');
+    lastY = y;
+  }
   // The floating buy bar appears once the hero's buttons have gone.
   const heroGone = hero.classList.contains('has-seq')
-    ? pinProgress(hero) > .3 || hero.getBoundingClientRect().bottom < innerHeight
+    ? pinProgress(hero) > .3 || hero.getBoundingClientRect().bottom < vh
     : heroActions.getBoundingClientRect().bottom < 0;
   // It steps aside while the day section is pinned, so it never covers the
   // rail, and once the closing section with its own Buy button comes into view,
   // so the footer needs no room reserved for it.
   const dayBox = day.getBoundingClientRect();
-  const dayPinned = dayBox.top <= 1 && dayBox.bottom >= innerHeight - 1;
-  const atClosing = closing.getBoundingClientRect().top < innerHeight * .85;
+  const dayPinned = dayBox.top <= 1 && dayBox.bottom >= vh - 1;
+  const atClosing = closing.getBoundingClientRect().top < vh * .85;
   bar.classList.toggle('is-visible', heroGone && !dayPinned && !atClosing);
   updateDay();
   updateHeaderTone();
   // Highlight the nav link for the section in view.
-  const mid = innerHeight * .4;
+  const mid = vh * .4;
   navLinks.forEach((link, i) => {
     const box = navTargets[i]?.getBoundingClientRect();
     link.classList.toggle('is-current', !!box && box.top <= mid && box.bottom >= mid);
@@ -259,14 +276,18 @@ if (!reducedMotion.matches) {
     const aspect = heroCanvas.width / heroCanvas.height;
     // Start: the room under the headline. End: the room between the nav and
     // the stats. The frame keeps its aspect and is capped by the width.
+    // Both are measured inside the sticky box itself, which clips the stage,
+    // so mini can never be placed past its bottom edge.
+    const sticky = hero.querySelector('.hero-sticky');
     const box = (top, bottom) => {
-      const h = Math.max(120, Math.min(bottom - top, innerWidth / aspect));
+      const h = Math.max(120, Math.min(bottom - top, sticky.clientWidth / aspect));
       return {top: top + (bottom - top - h) / 2, h};
     };
     pinHandlers.set(hero, p => {
       seq.draw(clamp((p - .04) / .72));
-      const start = box(head.offsetTop + head.offsetHeight + 12, innerHeight - 16);
-      const end = box(72, innerHeight - stats.offsetHeight + 8);
+      const room = sticky.clientHeight;
+      const start = box(head.offsetTop + head.offsetHeight + 12, room - 16);
+      const end = box(72, room - stats.offsetHeight + 8);
       const t = clamp((p - .12) / .55);
       const e = t * t * (3 - 2 * t);
       const h = start.h + (end.h - start.h) * e;
@@ -384,7 +405,7 @@ function updateDay() {
 }
 // The rail's stops jump to their time of day.
 dayStops.forEach((stop, i) => stop.addEventListener('click', () => {
-  const travel = day.offsetHeight - innerHeight;
+  const travel = day.offsetHeight - viewH();
   const top = day.getBoundingClientRect().top + scrollY;
   scrollTo({top: top + travel * (i + .5) / dayStops.length, behavior: reducedMotion.matches ? 'auto' : 'smooth'});
 }));
