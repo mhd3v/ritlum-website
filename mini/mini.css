@@ -4,7 +4,7 @@
    render is flattened onto one of these colours, so media sits on the page
    without a visible edge. */
 :root{
-  --paper:#faf8f4;--stage:#eceae7;--card:#fff;--nfc:#f6f6f6;
+  --paper:#faf8f4;--stage:#eceae7;--card:#fff;--nfc:var(--stage);
   --ink:#141316;--ink-2:#3b3935;--muted:#6c675f;--faint:#a39e96;
   --line:rgba(20,19,22,.1);--line-strong:rgba(20,19,22,.18);
   --dark:#111014;--dark-2:#1b1a1f;--dark-ink:#f7f5f1;--dark-muted:rgba(247,245,241,.62);--dark-line:rgba(255,255,255,.1);
