@@ -117,10 +117,12 @@ h3{font-size:var(--fs-h3);line-height:1.25;letter-spacing:-.02em}
 .has-seq .hero-video{display:none}
 .has-seq .hero-seq{display:block;position:absolute;inset:0;object-fit:contain}
 /* The head lifts and fades as mini turns; the stage grows into the space. */
-.has-seq .hero-head{opacity:clamp(0,calc(1 - (var(--p) - .12) * 3.2),1);transform:translateY(calc(var(--p) * -90px)) scale(calc(1 - var(--p) * .06));will-change:transform,opacity}
+/* The head is gone before mini starts to rise, so the two never overlap. */
+.has-seq .hero-head{opacity:clamp(0,calc(1 - (var(--p) - .02) * 7),1);transform:translateY(calc(var(--p) * -160px));will-change:transform,opacity}
 /* The stage covers the viewport; mini starts small under the headline and
    rises to the centre as it turns. --e is the eased turn progress. */
-.has-seq .hero-stage{--e:clamp(0,(var(--p) - .06) * 1.45,1);position:absolute;inset:0;margin:0;max-width:none;aspect-ratio:auto;transform:translateY(calc((1 - var(--e)) * 25vh)) scale(calc(.56 + var(--e) * .4));will-change:transform}
+.has-seq .hero-stage{--e:clamp(0,(var(--p) - .14) * 1.6,1);--y0:30vh;--s0:.5;position:absolute;inset:0;margin:0;max-width:none;aspect-ratio:auto;transform:translateY(calc((1 - var(--e)) * var(--y0))) scale(calc(var(--s0) + var(--e) * (.96 - var(--s0))));will-change:transform}
+@media (max-height:820px){.has-seq .hero-stage{--y0:38vh;--s0:.38}.has-seq .scroll-cue{display:none}}
 .has-seq .hero-stats{position:absolute;left:0;right:0;bottom:0;margin:0 auto;padding-bottom:clamp(28px,4vw,48px);opacity:clamp(0,calc((var(--p) - .74) * 5),1);transform:translateY(calc((1 - clamp(0,(var(--p) - .74) * 5,1)) * 24px))}
 .has-seq .scroll-cue{display:flex;position:absolute;left:50%;bottom:28px;transform:translateX(-50%);flex-direction:column;align-items:center;gap:10px;font:500 11px/1 var(--mono);letter-spacing:.14em;text-transform:uppercase;color:var(--muted);opacity:clamp(0,calc(1 - var(--p) * 8),1)}
 .scroll-cue span{width:1px;height:36px;background:linear-gradient(var(--line-strong),transparent);position:relative;overflow:hidden}
@@ -365,7 +367,7 @@ footer .brand{color:var(--ink);font-size:18px}
   .nav{height:52px}
   .hero-stage{aspect-ratio:1/1;margin-top:0}
   .has-seq .hero-sticky{padding-top:88px}
-  .has-seq .hero-stage{transform:translateY(calc((1 - var(--e)) * 24vh - var(--e) * 6vh)) scale(calc(1 + var(--e) * .4))}
+  .has-seq .hero-stage{transform:translateY(calc((1 - var(--e)) * 31vh - var(--e) * 6vh)) scale(calc(.9 + var(--e) * .5))}
   .has-seq .hero-stats{grid-template-columns:repeat(2,1fr);margin:0}
   .day-stage{width:100%}
   .detail-media{height:130vw}
