@@ -50,7 +50,8 @@ h3{font-size:var(--fs-h3);line-height:1.25;letter-spacing:-.02em}
 .actions{display:flex;flex-wrap:wrap;gap:12px;align-items:center}
 
 /* Header: a floating pill that frosts once the page moves */
-.site-header{position:fixed;top:12px;left:0;right:0;z-index:40;pointer-events:none}
+.site-header{position:fixed;top:12px;left:0;right:0;z-index:40;pointer-events:none;transition:transform .5s var(--ease-out)}
+.site-header.is-hidden{transform:translateY(-120%)}
 .nav{pointer-events:auto;height:56px;width:min(var(--max),calc(100% - 24px));margin:auto;padding:0 8px 0 20px;display:flex;align-items:center;justify-content:space-between;gap:24px;border-radius:999px;transition:background .35s,box-shadow .35s,color .35s,backdrop-filter .35s}
 .site-header.is-scrolled .nav{background:rgba(250,248,244,.72);backdrop-filter:saturate(1.6) blur(20px);-webkit-backdrop-filter:saturate(1.6) blur(20px);box-shadow:0 1px 0 rgba(255,255,255,.6) inset,0 0 0 1px var(--line),0 10px 30px -14px rgba(20,19,22,.25)}
 .site-header.is-dark .nav{color:var(--dark-ink)}
