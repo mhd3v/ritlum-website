@@ -126,10 +126,39 @@ class Sequence {
     return new Promise(resolve => {
       const img = new Image();
       img.decoding = 'async';
-      img.onload = () => { this.images[i] = img; resolve(); };
+      img.onload = () => { this.images[i] = img; this.onFrame?.(i); resolve(); };
       img.onerror = resolve;
       img.src = this.frameUrl(i);
     });
+  }
+  // Where the product sits in frame i, as fractions of the frame, measured
+  // from the frame's alpha (the soft contact shadow is ignored).
+  bounds(i) {
+    if (this.boxes?.[i]) return this.boxes[i];
+    const img = this.images[i];
+    if (!img) return null;
+    const w = Math.max(1, Math.round(img.naturalWidth / 8));
+    const h = Math.max(1, Math.round(img.naturalHeight / 8));
+    const probe = document.createElement('canvas');
+    probe.width = w;
+    probe.height = h;
+    const ctx = probe.getContext('2d', {willReadFrequently:true});
+    ctx.drawImage(img, 0, 0, w, h);
+    let data;
+    try { data = ctx.getImageData(0, 0, w, h).data; } catch { return null; }
+    let x0 = w, x1 = -1, y0 = h, y1 = -1;
+    for (let y = 0; y < h; y++) {
+      for (let x = 0; x < w; x++) {
+        if (data[(y * w + x) * 4 + 3] < 128) continue;
+        if (x < x0) x0 = x;
+        if (x > x1) x1 = x;
+        if (y < y0) y0 = y;
+        if (y > y1) y1 = y;
+      }
+    }
+    if (x1 < 0) return null;
+    (this.boxes ||= {})[i] = {x0: x0 / w, x1: (x1 + 1) / w, y0: y0 / h, y1: (y1 + 1) / h};
+    return this.boxes[i];
   }
   nearest(i) {
     for (let d = 0; d < this.count; d++) {
@@ -274,26 +303,51 @@ if (!reducedMotion.matches) {
     const head = hero.querySelector('.hero-head');
     const stats = hero.querySelector('.hero-stats');
     const aspect = heroCanvas.width / heroCanvas.height;
-    // Start: the room under the headline. End: the room between the nav and
-    // the stats. The frame keeps its aspect and is capped by the width.
-    // Both are measured inside the sticky box itself, which clips the stage,
-    // so mini can never be placed past its bottom edge.
+    // Start: the room under the headline. End: mini, facing you, grouped with
+    // the reveal line above it between the nav and the stats. The frame keeps
+    // its aspect and is capped by the width. Both are measured inside the
+    // sticky box itself, which clips the stage, so mini can never be placed
+    // past its bottom edge.
     const sticky = hero.querySelector('.hero-sticky');
+    const reveal = hero.querySelector('.hero-reveal');
     const box = (top, bottom) => {
       const h = Math.max(120, Math.min(bottom - top, sticky.clientWidth / aspect));
       return {top: top + (bottom - top - h) / 2, h};
+    };
+    // The product's own bounds in the last frame, so the empty margins of the
+    // render don't count: until it loads, use the rendered face-on framing.
+    const last = seq.count - 1;
+    const fallback = {x0: .28, x1: .72, y0: .24, y1: .88};
+    seq.onFrame = i => { if (i === last) requestFrame(); };
+    const endBox = room => {
+      const b = seq.bounds(last) || fallback;
+      const bw = b.x1 - b.x0;
+      const bh = b.y1 - b.y0;
+      const top = 72;
+      const bottom = room - stats.offsetHeight;
+      const gap = clamp(room * .035, 14, 36);
+      const title = reveal.offsetHeight;
+      const h = Math.max(120, Math.min(
+        (bottom - top - title - gap * 2) / bh,
+        sticky.clientWidth * .84 / (aspect * bw),
+        room * .6 / bh,
+      ));
+      const group = title + gap + h * bh;
+      const groupTop = top + Math.max(0, (bottom - top - group) / 2);
+      return {reveal: groupTop, top: groupTop + title + gap - b.y0 * h, h};
     };
     pinHandlers.set(hero, p => {
       seq.draw(clamp((p - .04) / .72));
       const room = sticky.clientHeight;
       const start = box(head.offsetTop + head.offsetHeight + 12, room - 16);
-      const end = box(72, room - stats.offsetHeight + 8);
+      const end = endBox(room);
       const t = clamp((p - .12) / .55);
       const e = t * t * (3 - 2 * t);
       const h = start.h + (end.h - start.h) * e;
       stage.style.setProperty('--st', `${start.top + (end.top - start.top) * e}px`);
       stage.style.setProperty('--sh', `${h}px`);
       stage.style.setProperty('--sw', `${h * aspect}px`);
+      reveal.style.setProperty('--rt', `${end.reveal}px`);
     });
     requestFrame();
   }).catch(() => videoWatcher.observe(hero.querySelector('.hero-video')));
@@ -315,6 +369,123 @@ if (!reducedMotion.matches) {
   // The hero film is only a fallback: it's watched once the turntable fails.
   document.querySelectorAll('.lazy-video:not(.hero-video)').forEach(video => videoWatcher.observe(video));
 }
+
+// The grid, decoded: a flipbook of catalog renders that lights rows, then
+// columns, then fills today. Each state is tagged with what it teaches, so the
+// matching habit or day label, and the matching line of the key, light with
+// it. Labels are pinned to the grid geometry the render recorded.
+const weekFigure = document.querySelector('.week-figure');
+const weekFrame = weekFigure.querySelector('.week-frame');
+const weekFlip = weekFrame.querySelector('.week-flip');
+const weekOverlay = weekFrame.querySelector('.week-overlay');
+const weekCaption = weekFigure.querySelector('.week-caption');
+const weekKey = document.querySelector('.week .key');
+const weekDays = [...weekOverlay.querySelectorAll('.week-days span')];
+const weekHabits = [...weekOverlay.querySelectorAll('.week-habits span')];
+const weekKeyRows = [...weekKey.querySelectorAll('[data-focus]')];
+const CAPTIONS = {
+  row: 'Each row is a habit',
+  col: 'Each column is a day',
+  history: 'A light is a day you did it',
+  fill: 'Today fills in as you log',
+  done: 'Your week, at a glance',
+};
+let explain = null;
+let explainTimer;
+let explainAt = 0;
+// The finished week is in the markup as a poster; the loop fades in over it.
+let explainOn = weekFlip.querySelector('img');
+let explainLayer = 1;
+function pinWeekLabels({grid, body}) {
+  const px = (grid.columns[7] - grid.columns[0]) / 7;
+  const py = (grid.rows[7] - grid.rows[0]) / 7;
+  const gx = grid.columns[0] - px / 2;
+  const gy = grid.rows[0] - py / 2;
+  const gw = px * 8;
+  const gh = py * 8;
+  const pct = v => `${(v * 100).toFixed(3)}%`;
+  weekFrame.style.setProperty('--gx', pct(gx));
+  weekFrame.style.setProperty('--gy', pct(gy));
+  weekFrame.style.setProperty('--gw', pct(gw));
+  weekFrame.style.setProperty('--gh', pct(gh));
+  // Clear the case by a little under half a grid step.
+  const top = body ? body.y[0] : gy - py;
+  const left = body ? body.x[0] : gx - px;
+  weekFrame.style.setProperty('--dg', pct((gy - top + py * .4) / gh));
+  weekFrame.style.setProperty('--hg', pct((gx - left + px * .4) / gw));
+}
+function setExplainFocus(focus = '') {
+  const [kind, value] = focus.split(':');
+  const n = Number(value);
+  weekOverlay.classList.toggle('has-focus', kind === 'row' || kind === 'col' || kind === 'fill');
+  weekHabits.forEach((el, i) => el.classList.toggle('is-focus', (kind === 'row' || kind === 'fill') && i === n));
+  weekDays.forEach((el, i) => el.classList.toggle('is-focus',
+    (kind === 'col' && i === n) || (kind === 'fill' && i === weekDays.length - 1)));
+  weekKey.classList.toggle('has-focus', kind in CAPTIONS && kind !== 'done');
+  weekKeyRows.forEach(el => el.classList.toggle('is-focus', el.dataset.focus === kind));
+  const text = CAPTIONS[kind] || '';
+  if (weekCaption.dataset.text === text) return;
+  weekCaption.dataset.text = text;
+  weekCaption.classList.add('is-changing');
+  setTimeout(() => {
+    weekCaption.textContent = text;
+    weekCaption.classList.remove('is-changing');
+  }, 180);
+}
+// Fade the next state in over the current one, then drop the old one, so the
+// case never goes see-through mid-fade.
+function showExplainState(state) {
+  const next = explain.images[state];
+  if (next === explainOn) return;
+  const prev = explainOn;
+  explainOn = next;
+  next.style.zIndex = ++explainLayer;
+  next.classList.add('is-on');
+  if (prev) {
+    prev.classList.replace('is-on', 'is-under');
+    setTimeout(() => prev.classList.remove('is-under'), 300);
+  }
+}
+function playExplain() {
+  clearTimeout(explainTimer);
+  const [state, ms, focus] = explain.timeline[explainAt];
+  showExplainState(state);
+  setExplainFocus(focus);
+  explainAt = (explainAt + 1) % explain.timeline.length;
+  explainTimer = setTimeout(playExplain, ms);
+}
+new IntersectionObserver((entries, observer) => {
+  if (!entries[0].isIntersecting) return;
+  observer.disconnect();
+  const base = weekFrame.dataset.explain;
+  fetch(`${base}.json`).then(r => r.ok ? r.json() : Promise.reject()).then(async manifest => {
+    const images = [];
+    for (let i = 0; i < manifest.states; i++) {
+      const img = new Image();
+      img.alt = '';
+      img.decoding = 'async';
+      img.width = manifest.width;
+      img.height = manifest.height;
+      img.src = `${base}-${String(i).padStart(2, '0')}.webp`;
+      images.push(img);
+    }
+    // Swap over once the frames the loop opens on have decoded.
+    await Promise.all(images.slice(0, 10).map(img => img.decode()));
+    weekFlip.append(...images);
+    explain = {images, timeline: manifest.timeline_ms};
+    pinWeekLabels(manifest);
+    if (reducedMotion.matches) {
+      // Hold the finished week, with no label singled out.
+      showExplainState(explain.timeline[explain.timeline.length - 1][0]);
+      setExplainFocus('done');
+      return;
+    }
+    new IntersectionObserver(([entry]) => {
+      if (entry.isIntersecting) playExplain();
+      else clearTimeout(explainTimer);
+    }, {threshold:.35}).observe(weekFrame);
+  }).catch(() => {});
+}, {rootMargin:'900px 0px'}).observe(weekFrame);
 
 // App to mini: fill today's column one habit at a time while visible.
 const syncStage = document.querySelector('.sync-stage');

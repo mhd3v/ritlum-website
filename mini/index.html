@@ -11,7 +11,7 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Geist:wght@400..700&family=Geist+Mono:wght@400..600&display=swap">
   <link rel="preload" as="fetch" href="../assets/mini/turn/turn.json" crossorigin>
-  <link rel="stylesheet" href="mini.css?v=motion-1">
+  <link rel="stylesheet" href="mini.css?v=motion-5">
 </head>
 <body>
 <a class="skip-link" href="#week">Skip to the grid</a>
@@ -39,6 +39,10 @@
       <p class="lead reveal" style="--d:3">A small desk display that turns your last eight days into light, so you can see how you’re doing without picking up your phone.</p>
       <div class="actions reveal" style="--d:4"><a class="button" href="/mini/checkout/">Buy · €60</a><a class="button button-ghost" href="#week">See how it works</a></div>
     </div>
+    <div class="hero-reveal">
+      <p class="label">Ritlum mini</p>
+      <p class="hero-reveal-title">Eight habits. Eight days.<br>One glance.</p>
+    </div>
     <div class="hero-stage">
       <canvas class="seq hero-seq" data-seq="../assets/mini/turn/turn" aria-hidden="true"></canvas>
       <video class="hero-video lazy-video" muted loop playsinline preload="none" poster="../assets/mini/hero-poster.webp?v=stage-3" data-src="../assets/mini/hero-loop.mp4?v=stage-4" data-eager aria-label="Ritlum mini powers on with a sweep of colour, then fills today’s column one habit at a time"></video>
@@ -63,17 +67,18 @@
     <h2 id="week-title" class="reveal split" style="--d:1">Your week,<br>at a glance.</h2>
     <p class="lead reveal" style="--d:2">Each light is a day you showed up. One look tells you what’s on track and what’s slipping.</p>
     <dl class="key reveal" style="--d:3">
-      <div><dt>Rows</dt><dd>Up to eight habits you choose</dd></div>
-      <div><dt>Columns</dt><dd>Your last eight days, today on the right</dd></div>
-      <div><dt>Colours</dt><dd>Each row glows in its habit’s colour</dd></div>
-      <div><dt>Lights</dt><dd>A day you completed the habit</dd></div>
+      <div data-focus="row"><dt>Rows</dt><dd>Up to eight habits you choose</dd></div>
+      <div data-focus="col"><dt>Columns</dt><dd>Your last eight days, today on the right</dd></div>
+      <div data-focus="history"><dt>Colours</dt><dd>Each row glows in its habit’s colour</dd></div>
+      <div data-focus="fill"><dt>Lights</dt><dd>A day you completed the habit</dd></div>
     </dl>
   </div>
   <figure class="week-figure reveal" style="--d:2">
-    <div class="week-frame">
-      <video class="week-video lazy-video" muted loop playsinline preload="none" poster="../assets/mini/explain-poster.webp?v=1" data-src="../assets/mini/explain-loop.mp4?v=explain-4" aria-hidden="true" tabindex="-1"></video>
+    <div class="week-frame" data-explain="../assets/mini/explain/explain">
+      <div class="week-flip" aria-hidden="true"><img class="is-on" src="../assets/mini/explain/explain-25.webp" alt="" width="1400" height="1400" loading="lazy"></div>
       <div class="week-overlay" aria-hidden="true"><div class="week-grid"><span class="week-axis week-axis-x">Days <b>&#8594;</b></span><span class="week-axis week-axis-y">Habits <b>&#8595;</b></span><div class="week-days"><span>M</span><span>T</span><span>W</span><span>T</span><span>F</span><span>S</span><span>S</span><span>Today</span></div><div class="week-habits"><span>Meditate</span><span>Exercise</span><span>Read</span><span>Hydrate</span><span>Journal</span><span>No Sugar</span><span>Walk</span><span>Sleep</span></div></div></div>
     </div>
+    <figcaption class="week-caption" aria-hidden="true"></figcaption>
   </figure>
 </section>
 
@@ -281,5 +286,5 @@
 
 <footer><a class="brand" href="../"><span class="mark" aria-hidden="true"><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i></span>Ritlum</a><span>© <span id="year"></span> · <a href="../privacy/">Privacy</a> · <a href="mailto:iam@mhd3v.com">Contact</a></span></footer>
 <aside class="request-bar" aria-label="Buy Ritlum mini"><div><strong>Ritlum mini</strong><span>€60 · First batch of ten</span></div><a class="button button-small" href="/mini/checkout/">Buy</a></aside>
-<script src="mini.js?v=motion-1" defer></script>
+<script src="mini.js?v=motion-5" defer></script>
 </body></html>
