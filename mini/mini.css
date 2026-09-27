@@ -16,9 +16,6 @@
   --sans:-apple-system,BlinkMacSystemFont,"SF Pro Display","Helvetica Neue",Inter,system-ui,sans-serif;
   --mono:"SF Mono",ui-monospace,"SFMono-Regular",Menlo,Consolas,monospace;
   --ease:cubic-bezier(.2,.7,.2,1);
-  /* Evening renders sit on a lit floor; a long, eased fade turns it into a soft
-     pool of light instead of a visible oval. */
-  --night-fade:radial-gradient(closest-side,#000 48%,rgba(0,0,0,.72) 64%,rgba(0,0,0,.35) 80%,rgba(0,0,0,.1) 92%,transparent 100%);
   --shadow:0 1px 2px rgba(20,19,22,.04),0 12px 32px -12px rgba(20,19,22,.12);
 }
 *{box-sizing:border-box}
@@ -89,8 +86,8 @@ h3{font-size:var(--fs-h3);line-height:1.25;letter-spacing:-.02em}
 .hero .actions{justify-content:center;margin-top:6px}
 .hero-head{position:relative;z-index:1}
 .hero-stage{position:relative;max-width:1180px;margin:clamp(-170px,-11vw,-60px) auto 0;aspect-ratio:1920/1136}
-/* The film is flattened onto --stage; the soft mask hides the lit floor's
-   darker far edge, so the product sits in the page, not in a rectangle. */
+/* The film is flattened onto --stage; the soft mask blends its edges into
+   the hero gradient, so the product sits in the page, not in a rectangle. */
 .hero-video{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;background:var(--stage);
   -webkit-mask-image:radial-gradient(closest-side,#000 42%,transparent 100%),linear-gradient(180deg,transparent 12%,#000 34%);-webkit-mask-composite:source-in;
   mask-image:radial-gradient(closest-side,#000 42%,transparent 100%),linear-gradient(180deg,transparent 12%,#000 34%);mask-composite:intersect}
@@ -129,11 +126,8 @@ h3{font-size:var(--fs-h3);line-height:1.25;letter-spacing:-.02em}
 .stack{display:grid}
 .stack img{grid-area:1/1;width:100%;opacity:0;transition:opacity .45s ease}
 .sync-phone .stack{filter:drop-shadow(0 24px 30px rgba(30,24,16,.16))}
-/* The render is flattened onto --stage; a light fade only softens the frame
-   edge. The phone stays above it. */
+/* Sync stills are transparent catalog renders; the phone stays above. */
 .sync-phone{position:relative;z-index:1}
-.sync-device .stack{transform:scale(1.2);margin-block:10%}
-.sync-device .stack img{-webkit-mask-image:radial-gradient(ellipse 50% 50% at 50% 55%,#000 88%,transparent 100%);mask-image:radial-gradient(ellipse 50% 50% at 50% 55%,#000 88%,transparent 100%)}
 .sync-stage[data-state="0"] [data-step="0"],.sync-stage[data-state="1"] [data-step="1"],.sync-stage[data-state="2"] [data-step="2"],.sync-stage[data-state="3"] [data-step="3"],.sync-stage[data-state="4"] [data-step="4"],.sync-stage[data-state="5"] [data-step="5"]{opacity:1}
 .sync-stage figcaption{margin-top:20px;text-align:center;font:500 12px/1.4 var(--mono);letter-spacing:.08em;text-transform:uppercase;color:var(--muted)}
 .sync-link{display:flex;justify-content:center;gap:10px}
@@ -156,8 +150,8 @@ h3{font-size:var(--fs-h3);line-height:1.25;letter-spacing:-.02em}
 .modes .lead{color:var(--dark-muted)}
 .modes-body{max-width:var(--max);margin:0 auto;display:grid;grid-template-columns:minmax(0,1.35fr) minmax(0,1fr);gap:clamp(28px,4vw,64px);align-items:center}
 .modes-stage{position:relative;aspect-ratio:1600/1280}
-/* Night renders sit on a lit floor; the mask dissolves it into --dark. */
-.mode-visual{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;opacity:0;transition:opacity .8s var(--ease);-webkit-mask-image:var(--night-fade);mask-image:var(--night-fade)}
+/* Evening stills are transparent; the clock film is flattened onto --dark. */
+.mode-visual{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;opacity:0;transition:opacity .8s var(--ease)}
 .modes-stage[data-mode="habits"] .mode-visual[data-mode="habits"],.modes-stage[data-mode="clock"] .mode-visual[data-mode="clock"],.modes-stage[data-mode="dim"] .mode-visual[data-mode="dim"],.modes-stage[data-mode="sleep"] .mode-visual[data-mode="sleep"]{opacity:1}
 .mode-clock{position:absolute;left:50%;top:6%;transform:translateX(-50%);font:500 13px/1 var(--mono);letter-spacing:.08em;color:var(--dark-muted);padding:8px 12px;border-radius:999px;background:rgba(255,255,255,.06);box-shadow:inset 0 0 0 1px var(--dark-line)}
 .mode-tabs{display:flex;flex-direction:column}
@@ -239,7 +233,7 @@ h3{font-size:var(--fs-h3);line-height:1.25;letter-spacing:-.02em}
 
 /* Closing */
 .closing{position:relative;margin-top:var(--section);min-height:clamp(520px,60vw,760px);display:flex;align-items:center;overflow:hidden;background:var(--dark);color:var(--dark-ink)}
-.closing-visual{position:absolute;right:-6%;top:50%;width:min(1000px,70%);transform:translateY(-50%);-webkit-mask-image:var(--night-fade);mask-image:var(--night-fade)}
+.closing-visual{position:absolute;right:-6%;top:50%;width:min(1000px,70%);transform:translateY(-50%)}
 .closing-copy{position:relative;padding:0 var(--pad);max-width:calc(var(--max) + var(--pad) * 2);width:100%;margin:auto;display:flex;flex-direction:column;gap:20px}
 .closing-copy p{color:var(--dark-muted);font-size:var(--fs-lead)}
 .closing .actions{margin-top:8px}
@@ -281,7 +275,6 @@ footer .brand{color:var(--ink);font-size:18px}
   /* Phones: the device takes the larger share so its grid stays readable. */
   .sync-stage{grid-template-columns:minmax(0,.78fr) minmax(0,1.22fr);gap:6px;padding:28px 10px 20px}
   .sync-device{margin-inline:-6px}
-  .sync-device .stack{transform:none;margin-block:0}
   .sync-link{display:none}
   .sync-stage figcaption{font-size:10px}
   .bento,.features,.setup-steps{grid-template-columns:1fr}
