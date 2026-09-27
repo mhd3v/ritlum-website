@@ -120,19 +120,23 @@ h3{font-size:var(--fs-h3);line-height:1.25;letter-spacing:-.02em}
 .week-axis-y{right:calc(100% + 13%);bottom:calc(100% + 3%)}
 
 /* Sync demo */
-.sync-stage{position:relative;display:grid;grid-template-columns:minmax(0,260px) 96px minmax(0,460px);justify-content:center;align-items:center;gap:clamp(8px,2vw,32px);padding:clamp(40px,5vw,72px) clamp(16px,4vw,56px) clamp(28px,3vw,40px);border-radius:var(--r-lg);background:var(--stage)}
-.sync-stage figure{margin:0;min-width:0}
+/* Phone and tracker are sized from one scene width, so their ratio holds at
+   every screen size: the phone is 39.2% of the scene and the tracker's box
+   is 43.2%, which makes the tracker 60% of the phone's height. */
+.sync-stage{--scene:min(100%,720px);position:relative;display:grid;grid-template-columns:calc(var(--scene) * .392) calc(var(--scene) * .176) calc(var(--scene) * .432);justify-content:center;align-items:center;padding:clamp(36px,5vw,72px) clamp(14px,4vw,56px) clamp(24px,3vw,40px);border-radius:var(--r-lg);background:var(--stage)}
+.sync-stage figure{margin:0;min-width:0;align-self:stretch;display:flex;flex-direction:column;justify-content:center;padding-bottom:clamp(28px,4vw,44px);position:relative}
+/* The render is transparent with uneven margins; this box crops the view to
+   the device's own bounds (x 430-1570, y 461-1784 of 2000) so it centres. */
+.device-box{position:relative;width:100%;aspect-ratio:1140/1323}
+.device-box .stack{position:absolute;width:175.44%;left:-37.72%;top:-34.85%}
+.sync-stage figcaption{position:absolute;left:0;right:0;bottom:0;text-align:center;font:500 clamp(9px,1.2vw,12px)/1.4 var(--mono);letter-spacing:.08em;text-transform:uppercase;color:var(--muted)}
 .stack{display:grid}
 .stack img{grid-area:1/1;width:100%;opacity:0;transition:opacity .45s ease}
 .sync-phone .stack{filter:drop-shadow(0 24px 30px rgba(30,24,16,.16))}
-/* Sync stills are transparent catalog renders, scaled so the device matches
-   the phone; the phone stays above. */
-.sync-device .stack{transform:scale(1.3);margin-block:12%}
 .sync-phone{position:relative;z-index:1}
 .sync-stage[data-state="0"] [data-step="0"],.sync-stage[data-state="1"] [data-step="1"],.sync-stage[data-state="2"] [data-step="2"],.sync-stage[data-state="3"] [data-step="3"],.sync-stage[data-state="4"] [data-step="4"],.sync-stage[data-state="5"] [data-step="5"]{opacity:1}
-.sync-stage figcaption{margin-top:20px;text-align:center;font:500 12px/1.4 var(--mono);letter-spacing:.08em;text-transform:uppercase;color:var(--muted)}
-.sync-link{display:flex;justify-content:center;gap:10px}
-.sync-link span{width:8px;height:8px;border-radius:50%;background:var(--faint);opacity:.35;animation:pulse 1.4s var(--ease) infinite}
+.sync-link{display:flex;justify-content:center;gap:clamp(4px,1vw,10px);padding-bottom:clamp(28px,4vw,44px)}
+.sync-link span{width:clamp(5px,1vw,8px);height:clamp(5px,1vw,8px);border-radius:50%;background:var(--faint);opacity:.35;animation:pulse 1.4s var(--ease) infinite}
 .sync-link span:nth-child(2){animation-delay:.18s}.sync-link span:nth-child(3){animation-delay:.36s}
 @keyframes pulse{0%,100%{opacity:.25;transform:scale(.85)}40%{opacity:1;transform:scale(1);background:var(--green)}}
 .sync-status{grid-column:1/-1;text-align:center;margin-top:12px;font-size:var(--fs-small);color:var(--muted);min-height:1.6em}
@@ -275,11 +279,6 @@ footer .brand{color:var(--ink);font-size:18px}
   .hero-stats{grid-template-columns:repeat(2,1fr);gap:0 16px;margin-top:-24px}
   .actions .button{flex:1 1 auto}
   /* Phones: the device takes the larger share so its grid stays readable. */
-  .sync-stage{grid-template-columns:minmax(0,.78fr) minmax(0,1.22fr);gap:6px;padding:28px 10px 20px}
-  .sync-device{margin-inline:-6px}
-  .sync-device .stack{transform:scale(1.15);margin-block:6%}
-  .sync-link{display:none}
-  .sync-stage figcaption{font-size:10px}
   .bento,.features,.setup-steps{grid-template-columns:1fr}
   .app-extras{flex-direction:column;align-items:flex-start}
   .tile-phone:first-child{grid-column:auto}
