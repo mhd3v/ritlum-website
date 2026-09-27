@@ -74,15 +74,21 @@ const pageLoaded = new Promise(resolve => {
 }));
 
 class Sequence {
+  // Small windows and phones load the lighter -sm set when there is one;
+  // retina desktops get the full-size frames so the product stays sharp.
   static async load(canvas) {
-    const base = canvas.dataset.seq;
-    const response = await fetch(`${base}.json`);
-    if (!response.ok) throw new Error(`missing ${base}.json`);
-    return new Sequence(canvas, base, await response.json());
+    const full = canvas.dataset.seq;
+    const need = Math.min(innerWidth, innerHeight * 4 / 3) * (devicePixelRatio || 1);
+    for (const base of need <= 1300 ? [`${full}-sm`, full] : [full]) {
+      const response = await fetch(`${base}.json`).catch(() => null);
+      if (response?.ok) return new Sequence(canvas, base, await response.json());
+    }
+    throw new Error(`missing ${full}.json`);
   }
   constructor(canvas, base, manifest) {
     this.canvas = canvas;
     this.ctx = canvas.getContext('2d');
+    this.ctx.imageSmoothingQuality = 'high';
     this.count = manifest.frames;
     this.images = new Array(this.count);
     this.drawn = '';
@@ -127,9 +133,15 @@ class Sequence {
     return -1;
   }
   // Draw progress p: blend the two frames either side of it when both have
-  // loaded, otherwise show the nearest frame that has.
+  // loaded, otherwise show the nearest frame that has. A blend of two angles
+  // is soft, so once scrolling pauses the canvas settles on one frame.
   draw(p, force = false) {
     this.target = p;
+    clearTimeout(this.settleTimer);
+    this.settleTimer = setTimeout(() => this.paint(Math.round(clamp(this.target) * (this.count - 1)) / (this.count - 1)), 140);
+    this.paint(p, force);
+  }
+  paint(p, force = false) {
     const f = clamp(p) * (this.count - 1);
     const lo = Math.floor(f);
     const hi = Math.min(lo + 1, this.count - 1);
