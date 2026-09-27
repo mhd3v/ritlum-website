@@ -323,7 +323,8 @@ footer .brand{color:var(--ink);font-size:18px}
   .tile-phone:first-child{grid-column:span 2}
   .tile-phone:first-child img{width:min(40%,260px)}
   .specs-head{position:static}
-  .closing{flex-direction:column;padding-top:var(--section);min-height:0}
+  .closing{flex-direction:column;padding-block:var(--section);min-height:0}
+  .closing-copy{margin-top:clamp(24px,4vw,40px)}
   .closing-visual{position:relative;right:auto;top:auto;transform:none;width:min(760px,130%);max-width:none;margin-top:8px}
   .closing-copy{align-items:center;text-align:center}
 }
