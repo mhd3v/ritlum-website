@@ -62,8 +62,17 @@ const counter = new IntersectionObserver(entries => {
 document.querySelectorAll('[data-count]').forEach(el => counter.observe(el));
 
 // Frame sequences rendered by the Blender pipeline (the hero turntable).
-// Each has a JSON manifest next to its frames; frames stream in coarse-to-fine
-// so scrubbing works before every frame has arrived.
+// Only the first frame loads up front; the rest stream in coarse-to-fine once
+// the page itself has finished loading, and the canvas crossfades between
+// neighbouring frames, so a few dozen frames scrub smoothly.
+const pageLoaded = new Promise(resolve => {
+  if (document.readyState === 'complete') resolve();
+  else addEventListener('load', resolve, {once:true});
+}).then(() => new Promise(resolve => {
+  if (window.requestIdleCallback) requestIdleCallback(resolve, {timeout:1500});
+  else setTimeout(resolve, 400);
+}));
+
 class Sequence {
   static async load(canvas) {
     const base = canvas.dataset.seq;
@@ -76,30 +85,30 @@ class Sequence {
     this.ctx = canvas.getContext('2d');
     this.count = manifest.frames;
     this.images = new Array(this.count);
-    this.index = -1;
+    this.drawn = '';
+    this.target = 0;
     this.base = base;
     canvas.width = manifest.width;
     canvas.height = manifest.height;
-    const order = [];
+    const order = [this.count - 1];
     for (const stride of [8, 4, 2, 1]) {
       for (let i = 0; i < this.count; i += stride) if (!order.includes(i)) order.push(i);
     }
-    if (!order.includes(this.count - 1)) order.splice(1, 0, this.count - 1);
     this.ready = this.fetch(order);
   }
   frameUrl(i) { return `${this.base}-${String(i).padStart(3, '0')}.webp`; }
   async fetch(order) {
-    // The first frame gates display; the rest load a few at a time.
-    await this.loadFrame(order[0]);
-    this.draw(this.target ?? 0, true);
-    const queue = order.slice(1);
+    await this.loadFrame(0);
+    this.draw(this.target, true);
+    await pageLoaded;
+    const queue = order.filter(i => i !== 0);
     const worker = async () => {
       while (queue.length) {
         await this.loadFrame(queue.shift());
-        this.draw(this.target ?? 0, true);
+        this.draw(this.target, true);
       }
     };
-    await Promise.all([worker(), worker(), worker(), worker()]);
+    await Promise.all([worker(), worker(), worker()]);
   }
   loadFrame(i) {
     return new Promise(resolve => {
@@ -110,20 +119,39 @@ class Sequence {
       img.src = this.frameUrl(i);
     });
   }
-  // Draw the frame nearest to progress p that has loaded.
+  nearest(i) {
+    for (let d = 0; d < this.count; d++) {
+      if (this.images[i - d]) return i - d;
+      if (this.images[i + d]) return i + d;
+    }
+    return -1;
+  }
+  // Draw progress p: blend the two frames either side of it when both have
+  // loaded, otherwise show the nearest frame that has.
   draw(p, force = false) {
     this.target = p;
-    const want = Math.round(clamp(p) * (this.count - 1));
-    let pick = -1;
-    for (let d = 0; d < this.count && pick < 0; d++) {
-      if (this.images[want - d]) pick = want - d;
-      else if (this.images[want + d]) pick = want + d;
+    const f = clamp(p) * (this.count - 1);
+    const lo = Math.floor(f);
+    const hi = Math.min(lo + 1, this.count - 1);
+    const mix = f - lo;
+    let a = lo, b = hi, t = mix;
+    if (!(this.images[lo] && this.images[hi])) {
+      a = b = this.nearest(Math.round(f));
+      t = 0;
+      if (a < 0) return;
     }
-    if (pick < 0 || (pick === this.index && !force)) return;
-    this.index = pick;
+    const key = `${a}:${b}:${t.toFixed(2)}`;
+    if (key === this.drawn && !force) return;
+    this.drawn = key;
     const {width, height} = this.canvas;
     this.ctx.clearRect(0, 0, width, height);
-    this.ctx.drawImage(this.images[pick], 0, 0, width, height);
+    this.ctx.globalAlpha = 1;
+    this.ctx.drawImage(this.images[a], 0, 0, width, height);
+    if (t > .01 && b !== a) {
+      this.ctx.globalAlpha = t;
+      this.ctx.drawImage(this.images[b], 0, 0, width, height);
+      this.ctx.globalAlpha = 1;
+    }
   }
 }
 
@@ -230,7 +258,7 @@ if (!reducedMotion.matches) {
       stage.style.setProperty('--sw', `${h * aspect}px`);
     });
     requestFrame();
-  }).catch(() => {});
+  }).catch(() => videoWatcher.observe(hero.querySelector('.hero-video')));
 }
 
 // Videos load when they approach the viewport and pause off-screen. Visitors
@@ -246,7 +274,8 @@ const videoWatcher = new IntersectionObserver(entries => {
   }
 }, {rootMargin:'200px 0px', threshold:.05});
 if (!reducedMotion.matches) {
-  document.querySelectorAll('.lazy-video').forEach(video => videoWatcher.observe(video));
+  // The hero film is only a fallback: it's watched once the turntable fails.
+  document.querySelectorAll('.lazy-video:not(.hero-video)').forEach(video => videoWatcher.observe(video));
 }
 
 // App to mini: fill today's column one habit at a time while visible.
@@ -348,15 +377,19 @@ const clockImage = day.querySelector('.mode-visual[data-mode="clock"]');
 const clockBase = clockImage.getAttribute('src').replace(/-00\.webp.*$/, '');
 let clockFlipbook = null;
 let clockTimer;
-fetch(`${clockBase}.json`).then(r => r.ok ? r.json() : Promise.reject()).then(manifest => {
-  const frames = [];
-  for (let i = 0; i < manifest.states; i++) frames.push(`${clockBase}-${String(i).padStart(2, '0')}.webp`);
-  // Warm the cache so the flipbook never flickers.
-  frames.forEach(src => { new Image().src = src; });
-  clockImage.src = frames[0];
-  clockFlipbook = {frames, timeline: manifest.timeline_ms};
-  if (dayPanels[dayIndex]?.dataset.mode === 'clock') playClock();
-}).catch(() => {});
+// Its frames only download once the day section is close.
+new IntersectionObserver((entries, observer) => {
+  if (!entries[0].isIntersecting) return;
+  observer.disconnect();
+  fetch(`${clockBase}.json`).then(r => r.ok ? r.json() : Promise.reject()).then(manifest => {
+    const frames = [];
+    for (let i = 0; i < manifest.states; i++) frames.push(`${clockBase}-${String(i).padStart(2, '0')}.webp`);
+    frames.forEach(src => { new Image().src = src; });
+    clockImage.src = frames[0];
+    clockFlipbook = {frames, timeline: manifest.timeline_ms};
+    if (dayPanels[dayIndex]?.dataset.mode === 'clock') playClock();
+  }).catch(() => {});
+}, {rootMargin:'1200px 0px'}).observe(day);
 function playClock() {
   stopClock();
   if (!clockFlipbook || reducedMotion.matches) return;
