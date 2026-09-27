@@ -61,7 +61,7 @@ const counter = new IntersectionObserver(entries => {
 }, {threshold:.6});
 document.querySelectorAll('[data-count]').forEach(el => counter.observe(el));
 
-// Frame sequences rendered by the Blender pipeline (turntable, exploded view).
+// Frame sequences rendered by the Blender pipeline (the hero turntable).
 // Each has a JSON manifest next to its frames; frames stream in coarse-to-fine
 // so scrubbing works before every frame has arrived.
 class Sequence {
@@ -210,25 +210,6 @@ if (!reducedMotion.matches) {
     requestFrame();
   }).catch(() => {});
 }
-
-// Inside: the exploded view scrubs with the pin, and the layer list follows.
-const inside = document.querySelector('.inside');
-const layers = [...inside.querySelectorAll('.layers li')];
-Sequence.load(inside.querySelector('.seq')).then(seq => {
-  const update = p => {
-    seq.draw(reducedMotion.matches ? 1 : clamp((p - .08) / .7));
-    layers.forEach(li => li.classList.toggle('is-on', reducedMotion.matches || p >= Number(li.dataset.at)));
-  };
-  pinHandlers.set(inside, update);
-  update(pinProgress(inside));
-}).catch(() => inside.classList.add('is-missing'));
-
-// Sections whose image hasn't been rendered yet stay out of the page.
-document.querySelectorAll('[data-needs-asset] img').forEach(img => {
-  const section = img.closest('[data-needs-asset]');
-  img.addEventListener('error', () => section.classList.add('is-missing'));
-  if (img.complete && !img.naturalWidth) section.classList.add('is-missing');
-});
 
 // Videos load when they approach the viewport and pause off-screen. Visitors
 // who prefer reduced motion keep the poster frames.

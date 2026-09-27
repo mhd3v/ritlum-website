@@ -161,22 +161,6 @@ h3{font-size:var(--fs-h3);line-height:1.25;letter-spacing:-.02em}
 .week-axis-x{left:calc(6.25% - .3em);bottom:calc(100% + 29.4%)}
 .week-axis-y{right:calc(100% + 13%);bottom:calc(100% + 3%)}
 
-/* Inside: pinned exploded view; --p drives the frames and the layer list */
-.inside{position:relative;height:280vh;--p:0}
-.inside-sticky{position:sticky;top:0;height:100vh;height:100svh;max-width:calc(var(--max) + var(--pad) * 2);margin:auto;padding:0 var(--pad);display:grid;grid-template-columns:minmax(0,.8fr) minmax(0,1.2fr);gap:clamp(24px,5vw,80px);align-items:center}
-.inside-copy{display:flex;flex-direction:column;gap:20px}
-.layers{list-style:none;margin:16px 0 0;padding:0;border-top:1px solid var(--line)}
-.layers li{display:grid;grid-template-columns:44px 1fr;gap:12px;padding:18px 0;border-bottom:1px solid var(--line);opacity:.32;transition:opacity .5s var(--ease)}
-.layers li.is-on{opacity:1}
-.layer-no{font:500 12px/1.9 var(--mono);color:var(--muted);letter-spacing:.08em}
-.layers h3{font-size:18px}
-.layers p{font-size:15px;color:var(--muted);line-height:1.55;margin-top:4px;max-height:0;overflow:hidden;transition:max-height .6s var(--ease)}
-.layers li.is-on p{max-height:6em}
-.inside-stage{position:relative;height:min(78vh,720px)}
-.inside-stage .seq{position:absolute;inset:0}
-.inside-stage:before{content:"";position:absolute;inset:8% 4%;border-radius:50%;background:radial-gradient(closest-side,rgba(255,255,255,.9),transparent);z-index:-1}
-[data-needs-asset].is-missing{display:none}
-
 /* Sync demo */
 /* Phone and tracker are sized from one scene width, so their ratio holds at
    every screen size: the phone is 39.2% of the scene and the tracker's box
@@ -325,13 +309,6 @@ footer .brand{color:var(--ink);font-size:18px}
   .day-body{gap:0}
   .day-step{min-height:48vh;position:relative;z-index:1}
   .day-step:first-child{min-height:30vh;padding-top:24px}
-  .inside{height:300vh}
-  .inside-sticky{display:flex;flex-direction:column;padding-top:88px;padding-bottom:84px;gap:8px}
-  .inside-copy h2{font-size:clamp(32px,6vw,48px)}
-  .inside-copy .lead{display:none}
-  .layers{margin-top:4px}
-  .layers li{padding:10px 0}
-  .inside-stage{flex:1;min-height:0;height:auto;width:100%}
   .week-figure{max-width:520px;width:100%;margin:auto}
   .section-head-split{grid-template-columns:1fr;gap:20px}
   .features{grid-template-columns:repeat(2,1fr)}
