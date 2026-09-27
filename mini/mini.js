@@ -186,6 +186,7 @@ function pinProgress(el) {
 const header = document.querySelector('.site-header');
 const bar = document.querySelector('.request-bar');
 const hero = document.querySelector('.hero');
+const closing = document.querySelector('.closing');
 const heroActions = document.querySelector('.hero .actions');
 const navLinks = [...document.querySelectorAll('.navlinks a')];
 const navTargets = navLinks.map(a => document.querySelector(a.getAttribute('href')));
@@ -212,9 +213,13 @@ function onFrame() {
   const heroGone = hero.classList.contains('has-seq')
     ? pinProgress(hero) > .3 || hero.getBoundingClientRect().bottom < innerHeight
     : heroActions.getBoundingClientRect().bottom < 0;
-  // It steps aside while the day section is pinned, so it never covers the rail.
+  // It steps aside while the day section is pinned, so it never covers the
+  // rail, and once the closing section with its own Buy button comes into view,
+  // so the footer needs no room reserved for it.
   const dayBox = day.getBoundingClientRect();
-  bar.classList.toggle('is-visible', heroGone && !(dayBox.top <= 1 && dayBox.bottom >= innerHeight - 1));
+  const dayPinned = dayBox.top <= 1 && dayBox.bottom >= innerHeight - 1;
+  const atClosing = closing.getBoundingClientRect().top < innerHeight * .85;
+  bar.classList.toggle('is-visible', heroGone && !dayPinned && !atClosing);
   updateDay();
   updateHeaderTone();
   // Highlight the nav link for the section in view.

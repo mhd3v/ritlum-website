@@ -297,7 +297,7 @@ h3{font-size:var(--fs-h3);line-height:1.25;letter-spacing:-.02em}
 .closing .actions{margin-top:8px}
 
 /* Footer + purchase bar */
-footer{max-width:calc(var(--max) + var(--pad) * 2);margin:auto;padding:32px var(--pad) 120px;display:flex;justify-content:space-between;align-items:center;gap:20px;font-size:13px;color:var(--muted)}
+footer{max-width:calc(var(--max) + var(--pad) * 2);margin:auto;padding:32px var(--pad) calc(32px + env(safe-area-inset-bottom, 0px));display:flex;justify-content:space-between;align-items:center;gap:20px;font-size:13px;color:var(--muted)}
 footer a{text-decoration:none}
 footer .brand{color:var(--ink);font-size:18px}
 .request-bar{position:fixed;z-index:30;left:50%;bottom:16px;width:min(440px,calc(100% - 32px));display:flex;align-items:center;justify-content:space-between;gap:16px;padding:10px 10px 10px 22px;border-radius:999px;background:rgba(250,248,244,.82);backdrop-filter:saturate(1.6) blur(18px);-webkit-backdrop-filter:saturate(1.6) blur(18px);box-shadow:0 12px 40px -12px rgba(20,19,22,.28),inset 0 0 0 1px var(--line);transform:translate(-50%,140%);transition:transform .5s var(--ease)}
