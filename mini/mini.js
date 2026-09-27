@@ -373,8 +373,7 @@ if (!reducedMotion.matches) {
 // The grid, decoded: a flipbook of catalog renders that lights rows, then
 // columns, then fills today. Each state is tagged with what it teaches, so the
 // matching habit or day label, and the matching line of the key, light with
-// it. Labels are pinned to the grid geometry the render recorded. Until the
-// stills exist, the older film and its fixed labels stay in place.
+// it. Labels are pinned to the grid geometry the render recorded.
 const weekFigure = document.querySelector('.week-figure');
 const weekFrame = weekFigure.querySelector('.week-frame');
 const weekFlip = weekFrame.querySelector('.week-flip');
@@ -394,7 +393,8 @@ const CAPTIONS = {
 let explain = null;
 let explainTimer;
 let explainAt = 0;
-let explainOn = null;
+// The finished week is in the markup as a poster; the loop fades in over it.
+let explainOn = weekFlip.querySelector('img');
 let explainLayer = 1;
 function pinWeekLabels({grid, body}) {
   const px = (grid.columns[7] - grid.columns[0]) / 7;
@@ -474,8 +474,6 @@ new IntersectionObserver((entries, observer) => {
     weekFlip.append(...images);
     explain = {images, timeline: manifest.timeline_ms};
     pinWeekLabels(manifest);
-    weekFigure.classList.add('has-flip');
-    weekFrame.querySelector('.week-video').pause();
     if (reducedMotion.matches) {
       // Hold the finished week, with no label singled out.
       showExplainState(explain.timeline[explain.timeline.length - 1][0]);
