@@ -198,6 +198,7 @@ const heroActions = document.querySelector('.hero .actions');
 const navLinks = [...document.querySelectorAll('.navlinks a')];
 const navTargets = navLinks.map(a => document.querySelector(a.getAttribute('href')));
 let lastY = scrollY;
+let travel = 0;
 let frameQueued = false;
 
 function onFrame() {
@@ -213,10 +214,18 @@ function onFrame() {
     }
   }
   header.classList.toggle('is-scrolled', y > 8);
-  // Tuck the header away while reading down; bring it back on any scroll up.
-  header.classList.toggle('is-hidden', y > vh && y > lastY + 2);
-  if (y < lastY - 2 || y <= vh) header.classList.remove('is-hidden');
-  lastY = y;
+  // Tuck the header away while reading down; bring it back on a deliberate
+  // scroll up. Movement is summed per direction so the tiny steps at the end
+  // of an iOS fling, and the bounce past either end of the page, can't flip it.
+  const maxY = root.scrollHeight - vh;
+  if (y >= 0 && y <= maxY) {
+    const dy = y - lastY;
+    travel = Math.sign(dy) === Math.sign(travel) ? travel + dy : dy;
+    if (y <= vh) header.classList.remove('is-hidden');
+    else if (travel > 24) header.classList.add('is-hidden');
+    else if (travel < -24) header.classList.remove('is-hidden');
+    lastY = y;
+  }
   // The floating buy bar appears once the hero's buttons have gone.
   const heroGone = hero.classList.contains('has-seq')
     ? pinProgress(hero) > .3 || hero.getBoundingClientRect().bottom < vh
