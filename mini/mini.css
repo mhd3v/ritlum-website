@@ -169,7 +169,10 @@ h3{font-size:var(--fs-h3);line-height:1.25;letter-spacing:-.02em}
 .week-flip img{position:absolute;inset:0;width:100%;height:100%;opacity:0;transition:opacity .26s ease}
 .week-flip img.is-on,.week-flip img.is-under{opacity:1}
 .week-flip img.is-under{transition:none}
-.has-flip .week-flip{display:block}
+.has-flip .week-flip{display:block;
+  /* Feather the frame so the render's contact shadow never ends in a hard edge. */
+  -webkit-mask-image:linear-gradient(90deg,transparent,#000 12%,#000 88%,transparent),linear-gradient(transparent,#000 12%,#000 90%,transparent);-webkit-mask-composite:source-in;
+  mask-image:linear-gradient(90deg,transparent,#000 12%,#000 88%,transparent),linear-gradient(transparent,#000 12%,#000 90%,transparent);mask-composite:intersect}
 .has-flip .week-video{display:none}
 .has-flip .week-grid{left:var(--gx);top:var(--gy);width:var(--gw);height:var(--gh)}
 .has-flip .week-days{padding-bottom:0;bottom:calc(100% + var(--dg))}
