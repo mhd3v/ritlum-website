@@ -206,7 +206,27 @@ if (!reducedMotion.matches) {
   Sequence.load(heroCanvas).then(seq => {
     hero.classList.add('has-seq');
     pinned.includes(hero) || pinned.push(hero);
-    pinHandlers.set(hero, p => seq.draw(clamp((p - .04) / .72)));
+    const stage = hero.querySelector('.hero-stage');
+    const head = hero.querySelector('.hero-head');
+    const stats = hero.querySelector('.hero-stats');
+    const aspect = heroCanvas.width / heroCanvas.height;
+    // Start: the room under the headline. End: the room between the nav and
+    // the stats. The frame keeps its aspect and is capped by the width.
+    const box = (top, bottom) => {
+      const h = Math.max(120, Math.min(bottom - top, innerWidth / aspect));
+      return {top: top + (bottom - top - h) / 2, h};
+    };
+    pinHandlers.set(hero, p => {
+      seq.draw(clamp((p - .04) / .72));
+      const start = box(head.offsetTop + head.offsetHeight + 12, innerHeight - 16);
+      const end = box(72, innerHeight - stats.offsetHeight + 8);
+      const t = clamp((p - .12) / .55);
+      const e = t * t * (3 - 2 * t);
+      const h = start.h + (end.h - start.h) * e;
+      stage.style.setProperty('--st', `${start.top + (end.top - start.top) * e}px`);
+      stage.style.setProperty('--sh', `${h}px`);
+      stage.style.setProperty('--sw', `${h * aspect}px`);
+    });
     requestFrame();
   }).catch(() => {});
 }
