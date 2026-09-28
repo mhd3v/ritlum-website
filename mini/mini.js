@@ -80,11 +80,14 @@ const pageLoaded = new Promise(resolve => {
 }));
 
 class Sequence {
-  // Small windows and phones load the lighter -sm set when there is one;
-  // retina desktops get the full-size frames so the product stays sharp.
+  // Small windows load the lighter -sm set when there is one; phones and
+  // retina screens get the full-size frames so the product stays sharp.
+  // The render's margins are wide, so at the end of the turn the canvas is
+  // far wider than the product (the hero's endBox): on a phone it overflows
+  // the screen about twice over, and that width is what the frames must fill.
   static async load(canvas) {
     const full = canvas.dataset.seq;
-    const need = Math.min(viewW(), viewH() * 4 / 3) * (devicePixelRatio || 1);
+    const need = Math.min(viewW() * .84 / .44, viewH() * .6 / .64 * 4 / 3) * (devicePixelRatio || 1);
     for (const base of need <= 1300 ? [`${full}-sm`, full] : [full]) {
       const response = await fetch(`${base}.json`).catch(() => null);
       if (response?.ok) return new Sequence(canvas, base, await response.json());
