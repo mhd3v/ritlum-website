@@ -678,3 +678,44 @@ showView(0);
 
 document.querySelector('#year').textContent = new Date().getFullYear();
 onFrame();
+
+// Notify-me form: same Supabase waitlist table as the main page.
+const notifyForm = document.querySelector('#notify');
+if (notifyForm) {
+  const SUPABASE_URL = 'https://vryollgtsaiktxyidusb.supabase.co';
+  const SUPABASE_ANON_KEY = 'sb_publishable_qJAJ33itN-OewOspeW24dA_gm5A7Jck';
+  const msg = notifyForm.querySelector('.notify-msg');
+  const btn = notifyForm.querySelector('button');
+  const input = notifyForm.querySelector('input');
+  notifyForm.addEventListener('submit', async e => {
+    e.preventDefault();
+    const email = input.value.trim();
+    if (!email || !input.checkValidity()) {
+      msg.className = 'notify-msg is-error';
+      msg.textContent = 'Please enter a valid email address.';
+      return;
+    }
+    btn.disabled = true;
+    try {
+      const res = await fetch(`${SUPABASE_URL}/rest/v1/waitlist`, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          apikey: SUPABASE_ANON_KEY,
+          Authorization: `Bearer ${SUPABASE_ANON_KEY}`,
+          Prefer: 'return=minimal',
+        },
+        body: JSON.stringify({ email }),
+      });
+      // 409 = this email already joined.
+      if (!res.ok && res.status !== 409) throw new Error(res.status);
+      input.value = '';
+      msg.className = 'notify-msg is-ok';
+      msg.textContent = 'You’re on the list. We’ll email you at launch.';
+    } catch {
+      msg.className = 'notify-msg is-error';
+      msg.textContent = 'Something went wrong. Please try again.';
+    }
+    btn.disabled = false;
+  });
+}

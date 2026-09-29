@@ -26,7 +26,7 @@
       <a href="#finishes">Finishes</a>
       <a href="#specs">Specs</a>
     </div>
-    <span class="button button-small" aria-disabled="true">Coming soon</span>
+    <a class="button button-small" href="#notify">Notify me</a>
   </nav>
 </header>
 
@@ -37,7 +37,7 @@
       <p class="label reveal">Ritlum mini · First batch of ten</p>
       <h1 id="hero-title" class="reveal split" style="--d:1">Your habits,<br>in plain sight.</h1>
       <p class="lead reveal" style="--d:3">A small desk display that turns your last eight days into light, so you can see how you’re doing without picking up your phone.</p>
-      <div class="actions reveal" style="--d:4"><span class="button" aria-disabled="true">Coming soon</span><a class="button button-ghost" href="#week">See how it works</a></div>
+      <div class="actions reveal" style="--d:4"><a class="button" href="#notify">Notify me · €60</a><a class="button button-ghost" href="#week">See how it works</a></div>
     </div>
     <div class="hero-reveal">
       <p class="label">Ritlum mini</p>
@@ -278,13 +278,16 @@
   <img class="closing-visual" src="../assets/mini/night-habits.webp?v=4" alt="" width="3200" height="2560" loading="lazy">
   <div class="closing-copy">
     <h2 id="closing-title" class="reveal split">A little progress.<br>In plain sight.</h2>
-    <p class="reveal" style="--d:1">First batch of ten, hand assembled in Germany.</p>
-    <div class="actions reveal" style="--d:2"><span class="button button-light" aria-disabled="true">Coming soon</span></div>
+    <p class="reveal" style="--d:1">€60 · Coming soon. First batch of ten, hand assembled in Germany.</p>
+    <form class="notify reveal" id="notify" style="--d:2" novalidate>
+      <div class="notify-row"><input type="email" name="email" required autocomplete="email" placeholder="you@email.com" aria-label="Email address"><button class="button button-light" type="submit">Notify me</button></div>
+      <p class="notify-msg" role="status" aria-live="polite">No spam. One email at launch.</p>
+    </form>
   </div>
 </section>
 </main>
 
 <footer><a class="brand" href="../"><span class="mark" aria-hidden="true"><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i></span>Ritlum</a><span>© <span id="year"></span> · <a href="../privacy/">Privacy</a> · <a href="mailto:contact@ritlum.com">Contact</a></span></footer>
-<aside class="request-bar" aria-label="Ritlum mini coming soon"><div><strong>Ritlum mini</strong><span>Coming soon</span></div><span class="button button-small" aria-disabled="true">Coming soon</span></aside>
+<aside class="request-bar" aria-label="Ritlum mini coming soon"><div><strong>Ritlum mini</strong><span>€60 · Coming soon</span></div><a class="button button-small" href="#notify">Notify me</a></aside>
 <script src="mini.js?v=motion-6" defer></script>
 </body></html>
