@@ -227,8 +227,8 @@ h3{font-size:var(--fs-h3);line-height:1.25;letter-spacing:-.02em}
 .day-copy{align-self:center;display:flex;flex-direction:column;gap:18px}
 .day .label{transition:color .6s}
 .day.is-night .label{color:var(--dark-muted)}
-.day-now{display:flex;align-items:center;gap:12px;margin-top:clamp(8px,3vh,28px);font:500 clamp(40px,4.4vw,64px)/1 var(--mono);letter-spacing:-.04em;font-variant-numeric:tabular-nums}
-.day-now i{width:12px;height:12px;border-radius:50%;background:var(--yellow);box-shadow:0 0 14px var(--yellow);transition:background .6s,box-shadow .6s}
+.day-now{display:flex;align-items:center;gap:12px;margin-top:clamp(8px,3vh,28px);font:500 clamp(26px,2.4vw,36px)/1 var(--mono);letter-spacing:-.04em;font-variant-numeric:tabular-nums}
+.day-now i{width:10px;height:10px;border-radius:50%;background:var(--yellow);box-shadow:0 0 14px var(--yellow);transition:background .6s,box-shadow .6s}
 .day.is-night .day-now i{background:#dfe6ff;box-shadow:0 0 14px #9fb6ff}
 .day-panels{display:grid}
 .day-panel{grid-area:1/1;display:flex;flex-direction:column;gap:8px;opacity:0;transform:translateY(14px);transition:opacity .5s var(--ease),transform .7s var(--ease-out);pointer-events:none}
@@ -343,7 +343,7 @@ footer .brand{color:var(--ink);font-size:18px}
   .day-sticky{grid-template-columns:minmax(0,1fr);grid-template-rows:auto minmax(0,1fr) auto;padding-top:80px;row-gap:12px}
   .day-copy{gap:10px}
   .day-copy h2{font-size:clamp(28px,6vw,44px)}
-  .day-now{margin-top:4px;font-size:clamp(28px,6vw,40px)}
+  .day-now{margin-top:4px;font-size:clamp(24px,5vw,30px)}
   .day-panel p{font-size:15px}
   .day-stage{max-height:100%}
   .week-figure{max-width:520px;width:100%;margin:auto}
@@ -390,3 +390,12 @@ footer .brand{color:var(--ink);font-size:18px}
   .split .w>span{transform:none}
   .ticker-track{animation:none}
 }
+.notify{margin-top:28px;max-width:460px}
+.notify-row{display:flex;gap:10px}
+.notify input{flex:1;min-width:0;min-height:50px;padding:0 20px;border-radius:999px;border:1px solid var(--dark-line);background:rgba(255,255,255,.08);color:var(--dark-ink);font:inherit;font-size:15px}
+.notify input::placeholder{color:var(--dark-muted)}
+.notify input:focus-visible{outline:2px solid var(--blue);outline-offset:3px}
+.notify-msg{margin:12px 0 0;font-size:13px;color:var(--dark-muted)}
+.notify-msg.is-error{color:#ff8a8a}.notify-msg.is-ok{color:var(--green)}
+.notify button:disabled{opacity:.6;cursor:default}
+@media (max-width:640px){.notify-row{flex-direction:column}}
