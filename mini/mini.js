@@ -229,6 +229,19 @@ const closing = document.querySelector('.closing');
 const heroActions = document.querySelector('.hero .actions');
 const navLinks = [...document.querySelectorAll('.navlinks a')];
 const navTargets = navLinks.map(a => document.querySelector(a.getAttribute('href')));
+const navToggle = document.querySelector('.nav-toggle');
+function setMenu(open) {
+  header.classList.toggle('is-menu-open', open);
+  navToggle.setAttribute('aria-expanded', String(open));
+  navToggle.setAttribute('aria-label', open ? 'Close menu' : 'Open menu');
+  if (open) header.classList.remove('is-hidden');
+}
+const menuOpen = () => header.classList.contains('is-menu-open');
+navToggle.addEventListener('click', () => setMenu(!menuOpen()));
+navLinks.forEach(a => a.addEventListener('click', () => setMenu(false)));
+addEventListener('keydown', e => { if (e.key === 'Escape' && menuOpen()) { setMenu(false); navToggle.focus(); } });
+addEventListener('pointerdown', e => { if (menuOpen() && !header.contains(e.target)) setMenu(false); });
+matchMedia('(min-width:1001px)').addEventListener('change', e => { if (e.matches) setMenu(false); });
 let lastY = scrollY;
 let travel = 0;
 let frameQueued = false;
@@ -254,7 +267,7 @@ function onFrame() {
     const dy = y - lastY;
     travel = Math.sign(dy) === Math.sign(travel) ? travel + dy : dy;
     if (y <= vh) header.classList.remove('is-hidden');
-    else if (travel > 24) header.classList.add('is-hidden');
+    else if (travel > 24 && !menuOpen()) header.classList.add('is-hidden');
     else if (travel < -24) header.classList.remove('is-hidden');
     lastY = y;
   }
