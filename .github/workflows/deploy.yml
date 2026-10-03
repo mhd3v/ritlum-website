@@ -37,7 +37,7 @@ jobs:
       - name: Assemble site
         run: |
           mkdir -p site
-          cp index.html CNAME .nojekyll device.png hero-device-v3.png rt-*.jsx site/
+          cp index.html CNAME .nojekyll hero-device-v3.png site/
           cp -r assets privacy mini .well-known site/
           cp -r blog-src/dist site/blog
 
