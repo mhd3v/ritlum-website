@@ -6,7 +6,7 @@ export async function GET(context) {
   return rss({
     title: "Ritlum Blog",
     description:
-      "Notes on building habits that stick, and the NFC desk tracker that makes logging them effortless.",
+      "Notes on building habits that stick, and on Ritlum mini, the desk display that keeps them in view.",
     site: context.site,
     trailingSlash: false,
     items: posts.map((post) => ({

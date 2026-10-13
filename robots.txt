@@ -1,0 +1,5 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://ritlum.com/sitemap.xml
+Sitemap: https://ritlum.com/blog/sitemap.xml

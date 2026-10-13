@@ -5,16 +5,18 @@ interface Props {
   title: string;
   description: string;
   pubDate: Date;
+  updatedDate?: Date;
   youtubeId?: string;
 }
 
-const { title, description, pubDate, youtubeId } = Astro.props;
+const { title, description, pubDate, updatedDate, youtubeId } = Astro.props;
 
-const formattedDate = pubDate.toLocaleDateString("en-US", {
-  year: "numeric",
-  month: "long",
-  day: "numeric",
-});
+const formatDate = (date: Date) =>
+  date.toLocaleDateString("en-US", {
+    year: "numeric",
+    month: "long",
+    day: "numeric",
+  });
 
 const canonicalURL = new URL(Astro.url.pathname, Astro.site);
 
@@ -24,6 +26,7 @@ const jsonLd = {
   headline: title,
   description,
   datePublished: pubDate.toISOString(),
+  dateModified: (updatedDate ?? pubDate).toISOString(),
   url: canonicalURL.toString(),
   author: { "@type": "Organization", name: "Ritlum" },
   publisher: { "@type": "Organization", name: "Ritlum" },
@@ -32,7 +35,7 @@ const jsonLd = {
 ---
 
 <BaseLayout
-  title={`${title} — Ritlum Blog`}
+  title={`${title} | Ritlum Blog`}
   description={description}
   ogType="article"
 >
@@ -44,7 +47,10 @@ const jsonLd = {
       <header>
         <p class="eyebrow">Ritlum Blog</p>
         <h1>{title}</h1>
-        <p class="updated">{formattedDate}</p>
+        <p class="updated">
+          {formatDate(pubDate)}
+          {updatedDate && ` · Updated ${formatDate(updatedDate)}`}
+        </p>
       </header>
 
       {

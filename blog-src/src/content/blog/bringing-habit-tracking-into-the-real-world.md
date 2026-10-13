@@ -1,68 +1,65 @@
 ---
 title: "Bringing Habit Tracking Into the Real World: NFC + a Smart Desk Tracker"
-description: "Why tapping a physical NFC token beats opening an app every time, and how Ritlum's desk tracker turns habit logging into a two-second ritual."
+description: "Habit apps are easy to forget because they live behind a lock screen. Here is how Ritlum uses NFC tags and a desk tracker to move logging and progress into the room."
 pubDate: 2026-07-20
+updatedDate: 2026-10-13
 youtubeId: "PJFXKPc90xE"
 ---
 
-Most habit trackers don't fail because people stop doing the habit. They fail because people stop *logging* it. You meditate, you do the pushups, you read the ten pages — then a week later you open the app and the streak's broken anyway, because logging it meant unlocking your phone, finding the app, and tapping through a few screens. Repeat that friction across five habits a day and it's no surprise the app is the first thing to go.
+A habit app has an awkward job. It only helps if you open it, and it sits on the one device built to pull your attention somewhere else. You finish a run, pick up your phone to log it, see three notifications, and twenty minutes later the run still isn't logged.
 
-That's what the demo above shows: tap the token, the desk tracker lights up, done. No unlock, no app switch, no typing. This is what NFC habit tracking looks like in practice, and it's the core idea behind Ritlum's desk tracker.
+Ritlum tries to take the phone out of the middle. Logging moves to an NFC tag stuck where the habit happens. Progress moves to the Ritlum desk tracker, a grid of lights that sits on your desk. The video above shows both.
 
-## Why habit-tracking apps fail in the first place
+## Two places a habit app loses you
 
-Almost every habit app on the App Store works the same way: you do the thing, then you open a phone to record that you did it. That second step is where most people drop off, and it's not a willpower problem — it's a design problem. A habit loop is cue, routine, reward. The cue is finishing your workout or closing your book; the routine is the habit itself; the reward is seeing your streak tick up. When the reward is buried three taps behind a Face ID unlock and an app search, the loop takes longer to close, and every extra second is a chance to get distracted and forget.
+The first is logging. Recording a habit usually means unlocking the phone, finding the app and tapping the right row. That is a small cost, but you pay it several times a day, and always right after the thing you wanted to do. A paper chart on the fridge has no such cost, which is a big part of why paper charts work.
 
-Physical habit trackers — the manual kind, sticker charts, checkbox grids — actually solve this reasonably well, because marking something off takes one motion. The problem is they don't sync anywhere, don't show trends, and don't survive a habit you do outside the room they're pinned in. Ritlum is an attempt to get the one-motion logging of a paper chart with the streaks, history, and reminders of a proper app.
+The second is seeing your progress. A streak is motivating when you notice it. Inside an app you only notice it when you go looking, and the days you most need the reminder are the days you don't open the app.
 
-## What the tap actually feels like
+## Logging with an NFC tag
 
-Ritlum's desk tracker is a frosted panel that sits on your desk with a small NFC token for each habit. The token itself does nothing on its own — it's a passive NFC tag, the same tech as a contactless payment card or a transit card. It has no battery and needs no pairing. The moment it touches the tracker, that row on the LED matrix lights up, and the log is already synced to the app. There's no loading spinner to wait on, because there's nothing to wait for.
+An NFC tag is a thin sticker with a tiny chip in it. It has no battery and never needs charging. In the Ritlum app you link a tag to one habit, then stick it somewhere that habit happens: the kettle, your running shoes, the book on your nightstand.
 
-That immediacy matters more than it sounds. If the "reward" of seeing your progress arrives ten seconds and three taps after the routine, the loop is weaker than it should be. A tap-and-glow response closes it instantly, which is closer to how a habit loop is supposed to work.
+When you have done the habit, hold the top of your iPhone to the tag. A notification appears. Tap it and the habit is logged for today. You never hunt for the app, and the tag sits in the spot where you would otherwise forget.
 
-## How NFC habit tracking actually works
+Tags are optional. You can still check in from the app or from the Home Screen widget, and everything ends up in the same history.
 
-Under the hood, it's simpler than it looks:
+## Seeing it on your desk
 
-- **Each habit gets a token.** You assign a habit to a token once in the app — meditation, reading, a workout, whatever you're tracking. The token itself just stores an ID; all the logic lives in the tracker and the app.
-- **Tapping writes a timestamped log.** The tracker reads the token's ID, lights the matching LED row, and pushes a completion event to the app over Bluetooth.
-- **The app does the rest.** Streaks, completion rates, and trends update automatically — no manual entry, no backfilling a missed day from memory.
-- **It works offline-first.** If your phone isn't nearby, the tracker still lights up locally and syncs the log the next time it connects, so a dead Bluetooth connection doesn't cost you a streak.
-- **Firmware updates over the air**, so new tracker features roll out without needing to touch the hardware.
+The desk tracker is a grid of coloured lights. Each row is one habit, shown in that habit's colour. Each column is one day, with today on the right. A lit square means you did that habit that day, so a full row is an unbroken streak and a gap is a day you missed. The tracker in the video shows the last sixteen days.
 
-None of this requires you to unlock a phone, open an app, or type anything. That's the entire point — the token and the tap are the interface.
+It connects to the Ritlum app on your iPhone over Bluetooth. Log a habit by tag, widget or app, and its square lights up a moment later. If your phone is out of range, the tracker keeps showing what it last received and catches up when the phone comes back.
 
-## Ambient progress, not another notification
+Because it is always on, you don't have to decide to check it. It is in the corner of your eye while you work, like a wall calendar with crosses on it.
 
-The tracker sits on your desk and holds up to eight habits, one per row, each in its own color. You don't have to open anything to know where you stand — the panel itself is the status update, visible every time you glance at your desk instead of buried in a home screen you have to seek out.
+## What the tracker does not do
 
-The app still does everything you'd expect from a proper habit tracker underneath: streaks, completion rates, and trends that make your momentum obvious, a Home Screen widget for a glance at today's progress, and cloud sync that works offline-first across devices. The NFC token doesn't replace that — it just removes the one step that was making people quit.
+The tracker has no microphone, no camera and no account of its own, and it does not use Wi-Fi. It only knows what the app sends it. Your habit data stays on your iPhone unless you turn on cloud sync in the app.
 
-## Build your own: the DIY kit
+It is also not a screen full of text. It shows up to eight habits as rows of light, plus an optional pixel clock. You can dim it from the app and set a sleep schedule so it goes dark at night and wakes up again in the morning.
 
-Instead of pricing the tracker like a typical hardware product, Ritlum offers it as a DIY kit — a matte shell with a frosted acrylic front, wired for up to eight tokens (one per row), USB-C powered and always on, with free OTA firmware updates. Each kit ships with the tracker body, four tokens, and a cable, so you can start with your highest-priority habits and add tokens as you go. If you like building things and want to know exactly how your habit data gets logged, this is the more transparent option compared to a sealed black-box gadget.
+## Common questions
 
-## Frequently asked questions
+### Do I need the desk tracker to use NFC tags?
 
-**Do I need to unlock my phone to log a habit?**
-No. Tapping the NFC token on the tracker logs the habit and lights up the matching LED row without touching your phone. The app is where you review streaks and trends, not where you log completions.
+No. NFC logging is part of the app and works with or without a tracker. The free version of the app includes three habits and one NFC tag.
 
-**What is an NFC habit tracker, exactly?**
-It's a physical device — in Ritlum's case, a desk tracker — paired with passive NFC tokens, one per habit. Tapping a token against the tracker records that habit as done for the day, the same way tapping a contactless card pays for a coffee.
+### Do I need Ritlum Pro to connect a tracker?
 
-**Does the tracker need Wi-Fi to work?**
-No. Logging happens locally on the tracker the instant you tap, so it works without an internet connection. It syncs to the app over Bluetooth when your phone is nearby, and stores logs offline-first if it isn't.
+No. Connecting a tracker works with the free app.
 
-**How many habits can one tracker hold?**
-Up to eight, one per row on the LED matrix, each shown in its own color.
+### Does it work with Android?
 
-**Can I build my own instead of buying one assembled?**
-Yes — the tracker is available as a DIY kit with the shell, up to eight token slots, a USB-C cable, and four tokens to start.
+Not yet. The Ritlum app is only available for iPhone, and the tracker is set up through the app.
 
-**Is my habit data private?**
-Yes. You can use the app without an account and keep habit data on your device; cloud sync is optional and only activates if you sign in.
+### How many habits can the tracker show?
+
+Up to eight, one per row. You pick which habits appear and in what order.
+
+### Can I buy one?
+
+Not yet. The tracker in the video is the larger original. The first one you will be able to buy is Ritlum mini, a smaller version that shows eight days. The first run is ten units, assembled by hand in Germany, with five NFC tags in the box.
 
 ## Try it
 
-The iOS app is live on TestFlight now, and the desk tracker is available as a [DIY kit](https://ritlum.com/#kit) if you want to build your own. If you've ever had a 40-day streak die because you forgot to open an app, this is the fix.
+The Ritlum app is [free on the App Store](https://apps.apple.com/us/app/ritlum-habit-tracker/id6788856420). If you want to hear when the mini is available, [join the list on the home page](/#notify). You will get one email at launch.

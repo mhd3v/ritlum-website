@@ -228,7 +228,7 @@ const hero = document.querySelector('.hero');
 const closing = document.querySelector('.closing');
 const heroActions = document.querySelector('.hero .actions');
 const navLinks = [...document.querySelectorAll('.navlinks a')];
-const navTargets = navLinks.map(a => document.querySelector(a.getAttribute('href')));
+const navTargets = navLinks.map(a => a.hash && a.pathname === location.pathname ? document.querySelector(a.hash) : null);
 const navToggle = document.querySelector('.nav-toggle');
 function setMenu(open) {
   header.classList.toggle('is-menu-open', open);
@@ -692,6 +692,8 @@ showView(0);
 document.querySelector('#year').textContent = new Date().getFullYear();
 onFrame();
 
+document.querySelectorAll('a[href*="apps.apple.com"]').forEach(a => a.addEventListener('click', () => window.gtag?.('event', 'app_store_click', {transport_type: 'beacon'})));
+
 // Notify-me form: same Supabase waitlist table as the main page.
 const notifyForm = document.querySelector('#notify');
 if (notifyForm) {
@@ -722,6 +724,7 @@ if (notifyForm) {
       });
       // 409 = this email already joined.
       if (!res.ok && res.status !== 409) throw new Error(res.status);
+      if (res.ok) window.gtag?.('event', 'generate_lead', {lead_source: 'mini_waitlist'});
       input.value = '';
       msg.className = 'notify-msg is-ok';
       msg.textContent = 'You’re on the list. We’ll email you at launch.';
