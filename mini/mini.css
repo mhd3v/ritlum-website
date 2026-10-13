@@ -97,7 +97,9 @@ h3{font-size:var(--fs-h3);line-height:1.25;letter-spacing:-.02em}
 .no-js .reveal{opacity:1;transform:none}
 /* Split headings: each word rises out of its own mask */
 .split.is-split{opacity:1;transform:none}
-.split .w{display:inline-block;overflow:hidden;vertical-align:top;padding-bottom:.08em;margin-bottom:-.08em}
+/* The mask is padded past the glyph box so tight tracking, descenders and
+   punctuation aren't cut off, then pulled back so the layout doesn't move. */
+.split .w{display:inline-block;overflow:hidden;vertical-align:top;padding:.06em .08em .2em;margin:-.06em -.08em -.2em}
 .split .w>span{display:inline-block;transform:translateY(108%);transition:transform 1.1s var(--ease-out);transition-delay:calc(var(--d,0) * 90ms + var(--i) * 45ms)}
 .split.is-in .w>span{transform:none}
 /* Scroll-linked media: JS writes --p (0 entering, 1 leaving) */

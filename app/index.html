@@ -1,0 +1,263 @@
+<!doctype html>
+<html lang="en" class="no-js">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <link rel="icon" type="image/svg+xml" href="../assets/favicon.svg">
+  <title>Ritlum: a habit tracker app for iPhone with NFC and widgets</title>
+  <meta name="description" content="Ritlum is a habit tracker app for iPhone. Check off, count or time your daily goals, log them with an NFC tag, and follow your streaks and stats. Free to start, no account needed.">
+  <meta name="theme-color" content="#faf8f4">
+  <link rel="canonical" href="https://ritlum.com/app/">
+  <meta name="apple-itunes-app" content="app-id=6788856420">
+  <meta property="og:type" content="website">
+  <meta property="og:site_name" content="Ritlum">
+  <meta property="og:title" content="Ritlum: a habit tracker app for iPhone">
+  <meta property="og:description" content="Ritlum is a habit tracker app for iPhone. Check off, count or time your daily goals, log them with an NFC tag, and follow your streaks and stats. Free to start, no account needed.">
+  <meta property="og:url" content="https://ritlum.com/app/">
+  <meta property="og:image" content="https://ritlum.com/assets/app/og.jpg">
+  <meta property="og:image:width" content="1200">
+  <meta property="og:image:height" content="630">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="Ritlum: a habit tracker app for iPhone">
+  <meta name="twitter:description" content="Ritlum is a habit tracker app for iPhone. Check off, count or time your daily goals, log them with an NFC tag, and follow your streaks and stats. Free to start, no account needed.">
+  <meta name="twitter:image" content="https://ritlum.com/assets/app/og.jpg">
+  <script type="application/ld+json">{"@context":"https://schema.org","@graph":[{"@type":"MobileApplication","@id":"https://ritlum.com/app/#app","name":"Ritlum: Habit Tracker","description":"Ritlum is a habit tracker app for iPhone. Check off, count or time your daily goals, log them with an NFC tag, and follow your streaks and stats. Free to start, no account needed.","operatingSystem":"iOS 17.0 or later","applicationCategory":"LifestyleApplication","url":"https://ritlum.com/app/","installUrl":"https://apps.apple.com/us/app/ritlum-habit-tracker/id6788856420","downloadUrl":"https://apps.apple.com/us/app/ritlum-habit-tracker/id6788856420","image":"https://ritlum.com/assets/app/og.jpg","inLanguage":["en","de","es","fr","pt"],"publisher":{"@type":"Organization","@id":"https://ritlum.com/#org","name":"Ritlum","url":"https://ritlum.com/"},"offers":{"@type":"Offer","price":"0","priceCurrency":"USD"}},{"@type":"FAQPage","@id":"https://ritlum.com/app/#faq","mainEntity":[{"@type":"Question","name":"Is Ritlum free?","acceptedAnswer":{"@type":"Answer","text":"Yes. The free version includes three habits and one NFC tag. Ritlum Pro adds unlimited habits, full stats and trends and unlimited NFC tags, as a monthly or yearly subscription or a one-time purchase."}},{"@type":"Question","name":"Do I need an account?","acceptedAnswer":{"@type":"Answer","text":"No. Ritlum works without signing up, and your habits stay on your iPhone. If you want a backup or sync between devices, you can turn on cloud sync with Sign in with Apple."}},{"@type":"Question","name":"What kinds of habits can I track?","acceptedAnswer":{"@type":"Answer","text":"Habits can repeat daily, weekly or monthly. Each one is a check-off, a count with a target, or a timer."}},{"@type":"Question","name":"How does NFC logging work?","acceptedAnswer":{"@type":"Answer","text":"Link an NFC tag to a habit in the app and stick it where the habit happens. Hold your iPhone to the tag, tap the notification that appears, and the habit is logged for today."}},{"@type":"Question","name":"Does it have Home Screen widgets?","acceptedAnswer":{"@type":"Answer","text":"Yes. One widget shows your habit grid and another shows how many habits you’ve completed today."}},{"@type":"Question","name":"Do I need Ritlum mini to use the app?","acceptedAnswer":{"@type":"Answer","text":"No. The app is a complete habit tracker by itself. Ritlum mini is an optional desk display that shows the same grid in light."}},{"@type":"Question","name":"Is there an Android version?","acceptedAnswer":{"@type":"Answer","text":"Not yet. Ritlum is only available for iPhone, on iOS 17 or later."}}]},{"@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"Ritlum","item":"https://ritlum.com/"},{"@type":"ListItem","position":2,"name":"App","item":"https://ritlum.com/app/"}]}]}</script>
+  <!-- Google tag (gtag.js) -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-TZEBVLWPWQ"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag() { dataLayer.push(arguments); }
+    gtag("js", new Date());
+    gtag("config", "G-TZEBVLWPWQ");
+  </script>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Geist:wght@400..7&family=Geist+Mono:wght@400..600&display=swap">
+  <link rel="stylesheet" href="../mini/mini.css?v=motion-7">
+  <link rel="stylesheet" href="app.css?v=10">
+</head>
+<body>
+<a class="skip-link" href="#today">Skip to the app</a>
+
+<header class="site-header">
+  <nav class="nav" aria-label="Primary">
+    <a class="brand" href="../" aria-label="Ritlum home"><span class="mark" aria-hidden="true"><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i></span>Ritlum</a>
+    <div class="navlinks" id="navlinks">
+      <a href="#today">Today</a>
+      <a href="#goals">Goals</a>
+      <a href="#nfc">NFC</a>
+      <a href="#stats">Stats</a>
+      <a href="#widgets">Widgets</a>
+      <a href="#tracker">Tracker</a>
+      <a href="#pricing">Free and Pro</a>
+    </div>
+    <div class="nav-actions">
+      <a class="button button-small" href="https://apps.apple.com/us/app/ritlum-habit-tracker/id6788856420" target="_blank" rel="noopener noreferrer">Get the app</a>
+      <button class="nav-toggle" type="button" aria-label="Open menu" aria-expanded="false" aria-controls="navlinks"><span aria-hidden="true"><i></i><i></i><i></i></span></button>
+    </div>
+  </nav>
+</header>
+
+<main>
+<section class="app-hero" id="top" aria-labelledby="hero-title">
+  <div class="hero-head">
+    <p class="label reveal">Ritlum for iPhone</p>
+    <h1 id="hero-title" class="reveal split" style="--d:1">Every habit, every day,<br>at a glance.</h1>
+    <p class="lead reveal" style="--d:3">Ritlum is a habit tracker app for iPhone. Check off a goal, count your progress or run a timer, and watch your week fill in.</p>
+    <div class="actions reveal" style="--d:4"><a class="app-store-link" href="https://apps.apple.com/us/app/ritlum-habit-tracker/id6788856420" target="_blank" rel="noopener noreferrer"><img src="../assets/download-on-app-store.svg" alt="Download on the App Store" width="176" height="59"></a></div>
+  </div>
+  <div class="hero-phones reveal" style="--d:4" data-scroll>
+    <img class="phone" src="../assets/app/stats-overview.webp" alt="The Stats screen with completions, success rate and current streak for the last seven days" width="920" height="2000">
+    <img class="phone is-main" src="../assets/app/today.webp" alt="Ritlum’s Today screen: a grid of six habits across the week, five of six completed today" width="920" height="2000">
+    <img class="phone" src="../assets/app/meditate-nfc-logged.webp" alt="A habit’s detail screen showing it done for today with a 33 day streak" width="920" height="2000">
+  </div>
+</section>
+
+<div class="wash wash-flush">
+<section class="section week" id="today" aria-labelledby="today-title">
+  <div class="week-copy">
+    <p class="label reveal">The Today screen</p>
+    <h2 id="today-title" class="reveal split" style="--d:1">Your week<br>on one screen.</h2>
+    <p class="lead reveal" style="--d:2">Open the app and the grid is the first thing you see. Each habit has a row in its own colour and each day has a column, so a missed day is easy to spot.</p>
+    <dl class="key reveal" style="--d:3">
+      <div><dt>Grid</dt><dd>Every habit across the week, today on the right</dd></div>
+      <div><dt>Today</dt><dd>A count of what’s done and what’s left</dd></div>
+      <div><dt>Streaks</dt><dd>A running streak for each habit and for the day</dd></div>
+      <div><dt>Log</dt><dd>Tap a habit in the list to check it off</dd></div>
+    </dl>
+  </div>
+  <figure class="phone-figure reveal" style="--d:2"><img class="phone" src="../assets/app/today.webp" alt="The Today screen with the weekly habit grid above today’s list of habits" width="920" height="2000" loading="lazy"></figure>
+</section>
+
+</div>
+
+<section class="section app" id="goals" aria-labelledby="goals-title">
+  <div class="section-head">
+    <p class="label reveal">Three kinds of goals</p>
+    <h2 id="goals-title" class="reveal split" style="--d:1">Check it. Count it.<br>Time it.</h2>
+    <p class="lead reveal" style="--d:2">Some habits are done or not done. Others have a number or a duration. Ritlum tracks all three, on a daily, weekly or monthly schedule.</p>
+  </div>
+  <div class="bento">
+    <article class="tile tile-phone reveal">
+      <div class="tile-copy"><h3>Check-off</h3><p>One tap marks it done for the day. Meditate, take your vitamins, make the bed.</p></div>
+      <img src="../assets/app/meditate-nfc-logged.webp" alt="The Meditate habit marked done for today, with its week of check marks and streak" width="920" height="2000" loading="lazy">
+    </article>
+    <article class="tile tile-phone reveal" style="--d:1">
+      <div class="tile-copy"><h3>Count</h3><p>Set a daily target and add to it as you go. Eight glasses of water, twenty pages, ten thousand steps.</p></div>
+      <img src="../assets/app/hydrate-count.webp" alt="The Hydrate habit at six of eight, with buttons to add one, two or three" width="920" height="2000" loading="lazy">
+    </article>
+    <article class="tile tile-phone reveal" style="--d:2">
+      <div class="tile-copy"><h3>Timer</h3><p>Start a session and let it run in the background. Twenty minutes of reading, an hour of practice.</p></div>
+      <img src="../assets/app/read-timer.webp" alt="A timer session running for the Read habit, eleven seconds into a twenty minute target" width="920" height="2000" loading="lazy">
+    </article>
+  </div>
+</section>
+
+<section class="section nfc" id="nfc" aria-labelledby="nfc-title">
+  <div class="nfc-copy">
+    <p class="label reveal">NFC check-ins</p>
+    <h2 id="nfc-title" class="reveal split" style="--d:1">Tap a tag.<br>Habit logged.</h2>
+    <p class="lead reveal" style="--d:2">Stick an NFC tag where the habit happens: the kettle, your running shoes, the book on your nightstand. Hold your iPhone to it and the habit is logged, without hunting for the app.</p>
+    <ol class="steps-inline reveal" style="--d:3">
+      <li><span>1</span>Link a tag to a habit in the app</li>
+      <li><span>2</span>Hold your iPhone to the tag</li>
+      <li><span>3</span>Tap the notification to log it</li>
+    </ol>
+    <p class="callout reveal" style="--d:4"><span class="mark" aria-hidden="true"><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i></span><span>Optionally, connect a <a href="../">Ritlum mini</a> to see your habits light up on your desk as you log them.</span></p>
+  </div>
+  <div class="media-card nfc-card reveal" style="--d:2" data-scroll>
+    <video class="lazy-video" muted loop playsinline preload="none" poster="../assets/mini/nfc-poster.webp?v=3" data-src="../assets/mini/nfc-loop.mp4?v=3" aria-label="An iPhone taps an NFC tag, the Ritlum app logs the habit, and the matching row lights up on Ritlum mini"></video>
+  </div>
+</section>
+
+<section class="band" id="stats" aria-labelledby="stats-title">
+  <div class="band-inner">
+    <div class="section-head">
+      <p class="label reveal">Stats and history</p>
+      <h2 id="stats-title" class="reveal split" style="--d:1">See what’s<br>working.</h2>
+      <p class="lead reveal" style="--d:2">Streaks tell you about today. Stats tell you about the month: which habits are holding, which are slipping, and which days of the week go best.</p>
+    </div>
+    <ul class="band-points reveal" style="--d:2">
+      <li><h3>Overview</h3><p>Completions, success rate and your current streak, compared with the week before.</p></li>
+      <li><h3>Trends</h3><p>Your completion rate over time, week by week, with the days you missed.</p></li>
+      <li><h3>History</h3><p>Every day you’ve tracked, with what you logged and when.</p></li>
+    </ul>
+    <div class="band-phones reveal" style="--d:3" data-scroll>
+      <img class="phone" src="../assets/app/stats-overview.webp" alt="Stats overview: 28 completions, a 90 percent success rate and a three month streak" width="920" height="2000" loading="lazy">
+      <img class="phone" src="../assets/app/stats-trends.webp" alt="Stats trends: completion over two weeks rising to 90 percent" width="920" height="2000" loading="lazy">
+      <img class="phone" src="../assets/app/history.webp" alt="History: the last fourteen days and everything logged today" width="920" height="2000" loading="lazy">
+    </div>
+  </div>
+</section>
+
+<section class="section duo" id="widgets" aria-labelledby="widgets-title">
+  <figure class="duo-figure reveal" data-scroll>
+    <img class="phone" src="../assets/app/widgets-home.webp" alt="Two Ritlum widgets on an iPhone Home Screen: the habit grid and today’s count" width="920" height="2000" loading="lazy">
+    <img class="phone" src="../assets/app/reminders.webp" alt="The Reminders screen with a different reminder schedule for each habit" width="920" height="2000" loading="lazy">
+  </figure>
+  <div class="duo-copy">
+    <p class="label reveal">Widgets and reminders</p>
+    <h2 id="widgets-title" class="reveal split" style="--d:1">There when<br>you need it.</h2>
+    <p class="lead reveal" style="--d:2">A habit you can see is easier to keep. Put your grid on the Home Screen, and set reminders that match how each habit actually goes.</p>
+    <dl class="key reveal" style="--d:3">
+      <div><dt>Widgets</dt><dd>Your habit grid or today’s count on the Home Screen</dd></div>
+      <div><dt>Reminders</dt><dd>Daily, on set days, or every few hours</dd></div>
+      <div><dt>Summary</dt><dd>An optional evening recap of the day</dd></div>
+      <div><dt>Themes</dt><dd>Light and dark, built in</dd></div>
+    </dl>
+  </div>
+</section>
+
+<div class="wash">
+<section class="section connection" aria-labelledby="private-title">
+  <div class="section-head section-head-split">
+    <div><p class="label reveal">Yours by default</p><h2 id="private-title" class="reveal split" style="--d:1">No account.<br>No catch.</h2></div>
+    <p class="lead reveal" style="--d:2">Install it and start tracking. Ritlum doesn’t ask you to sign up, and your habits stay on your iPhone unless you decide otherwise.</p>
+  </div>
+  <div class="features">
+    <article class="reveal"><svg class="icon" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="8" r="4"/><path d="M4 21c0-4 3.6-6 8-6s8 2 8 6M4 4l16 16"/></svg><h3>No sign-up</h3><p>Open the app and add your first habit. There is nothing to register.</p></article>
+    <article class="reveal" style="--d:1"><svg class="icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12.5a10 10 0 0 1 14 0M8 15.5a6 6 0 0 1 8 0M12 19h.01M4 4l16 16"/></svg><h3>Works offline</h3><p>Logging, streaks and stats all work without a connection.</p></article>
+    <article class="reveal" style="--d:2"><svg class="icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M7 18a4.5 4.5 0 0 1-.5-9A6 6 0 0 1 18 10.5a3.8 3.8 0 0 1-.5 7.5H7Z"/></svg><h3>Sync if you want it</h3><p>Turn on cloud sync with Sign in with Apple to back up your habits and keep your devices in step.</p></article>
+    <article class="reveal" style="--d:3"><svg class="icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3 5 6v5c0 4.5 3 8.3 7 10 4-1.7 7-5.5 7-10V6l-7-3Z"/><path d="m9 12 2 2 4-4"/></svg><h3>Private by default</h3><p>Your habit data stays on your iPhone until you turn sync on.</p></article>
+  </div>
+</section>
+
+</div>
+
+<section class="section app" id="tracker" aria-labelledby="tracker-title">
+  <div class="section-head">
+    <p class="label reveal">The Tracker tab</p>
+    <h2 id="tracker-title" class="reveal split" style="--d:1">Set up your tracker,<br>your way.</h2>
+    <p class="lead reveal" style="--d:2">If you have a Ritlum tracker on your desk, the app is where you configure it. Pair it once over Bluetooth, then decide what it shows and when.</p>
+  </div>
+  <div class="bento">
+    <article class="tile tile-phone reveal">
+      <div class="tile-copy"><h3>Pick the habits</h3><p>Choose up to eight habits and drag them into the order you want, or mirror your Home screen. A live preview shows the tracker as it looks right now.</p></div>
+      <img src="../assets/mini/app/tracker-display.webp" alt="The Tracker Display screen with a live preview of the grid and five habits in row order" width="920" height="2000" loading="lazy">
+    </article>
+    <article class="tile tile-phone reveal" style="--d:1">
+      <div class="tile-copy"><h3>Brightness and clock</h3><p>Turn the lights up or down, or switch to clock mode. Firmware updates install from here too, over Bluetooth.</p></div>
+      <img src="../assets/mini/app/tracker.webp" alt="The Tracker tab with habits shown, brightness, clock mode, sleep schedule and firmware update" width="920" height="2000" loading="lazy">
+    </article>
+    <article class="tile tile-phone reveal" style="--d:2">
+      <div class="tile-copy"><h3>Sleep schedule</h3><p>Set when the tracker dims at night and when it wakes. It keeps to the schedule even when your phone is elsewhere.</p></div>
+      <img src="../assets/mini/app/sleep-schedule.webp" alt="The Sleep Schedule sheet dimming the tracker at 12:00 AM and waking it at 7:00 AM" width="920" height="2000" loading="lazy">
+    </article>
+  </div>
+  <div class="mini-card reveal" data-scroll>
+    <div class="mini-card-copy">
+      <p class="label">Ritlum mini · Coming soon</p>
+      <h2 id="mini-title">Your grid,<br>on your desk.</h2>
+      <p class="lead">Ritlum mini is a small display that shows your last eight days of habits in light. It connects to the app over Bluetooth and works with the free version.</p>
+      <a class="button button-light" href="../">Meet Ritlum mini</a>
+    </div>
+    <div class="mini-card-visual"><img src="../assets/mini/night-habits.webp?v=4" alt="Ritlum mini, a small desk display with a grid of coloured lights" width="3200" height="2560" loading="lazy"></div>
+  </div>
+</section>
+
+<section class="section specs" id="pricing" aria-labelledby="pricing-title">
+  <div class="specs-head">
+    <p class="label reveal">Free and Pro</p>
+    <h2 id="pricing-title" class="reveal split" style="--d:1">Free to start.</h2>
+    <p class="lead reveal" style="--d:2">The free version is a complete habit tracker for three habits. Ritlum Pro removes the limits.</p>
+  </div>
+  <dl class="spec-list reveal" style="--d:1">
+    <div><dt>Free</dt><dd>Three habits and one NFC tag</dd></div>
+    <div><dt>Ritlum Pro</dt><dd>Unlimited habits, full stats and trends, unlimited NFC tags</dd></div>
+    <div><dt>Pro options</dt><dd>Monthly, yearly or a one-time purchase</dd></div>
+    <div><dt>Ritlum mini</dt><dd>Connects with the free app</dd></div>
+    <div><dt>Account</dt><dd>Not required</dd></div>
+    <div><dt>Requires</dt><dd>iPhone with iOS 17 or later</dd></div>
+    <div><dt>Languages</dt><dd>English, German, Spanish, French and Portuguese</dd></div>
+  </dl>
+</section>
+
+<section class="section faq" aria-labelledby="faq-title">
+  <div class="specs-head">
+    <p class="label reveal">Questions</p>
+    <h2 id="faq-title" class="reveal split" style="--d:1">Questions and answers</h2>
+  </div>
+  <div class="faq-list reveal" style="--d:1">
+    <details><summary>Is Ritlum free?</summary><p>Yes. The free version includes three habits and one NFC tag. Ritlum Pro adds unlimited habits, full stats and trends and unlimited NFC tags, as a monthly or yearly subscription or a one-time purchase.</p></details>
+    <details><summary>Do I need an account?</summary><p>No. Ritlum works without signing up, and your habits stay on your iPhone. If you want a backup or sync between devices, you can turn on cloud sync with Sign in with Apple.</p></details>
+    <details><summary>What kinds of habits can I track?</summary><p>Habits can repeat daily, weekly or monthly. Each one is a check-off, a count with a target, or a timer.</p></details>
+    <details><summary>How does NFC logging work?</summary><p>Link an NFC tag to a habit in the app and stick it where the habit happens. Hold your iPhone to the tag, tap the notification that appears, and the habit is logged for today.</p></details>
+    <details><summary>Does it have Home Screen widgets?</summary><p>Yes. One widget shows your habit grid and another shows how many habits you’ve completed today.</p></details>
+    <details><summary>Do I need Ritlum mini to use the app?</summary><p>No. The app is a complete habit tracker by itself. Ritlum mini is an optional desk display that shows the same grid in light.</p></details>
+    <details><summary>Is there an Android version?</summary><p>Not yet. Ritlum is only available for iPhone, on iOS 17 or later.</p></details>
+  </div>
+</section>
+
+<section class="closing app-closing" aria-labelledby="closing-title" data-scroll>
+  <img class="phone closing-phone" src="../assets/app/today-dark.webp" alt="" width="920" height="2000" loading="lazy">
+  <div class="closing-copy">
+    <h2 id="closing-title" class="reveal split">Start with<br>three habits.</h2>
+    <p class="reveal" style="--d:1">Free on the App Store. No account needed.</p>
+    <a class="app-store-link reveal" style="--d:2" href="https://apps.apple.com/us/app/ritlum-habit-tracker/id6788856420" target="_blank" rel="noopener noreferrer"><img src="../assets/download-on-app-store.svg" alt="Download on the App Store" width="176" height="59"></a>
+  </div>
+</section>
+</main>
+
+<footer><a class="brand" href="../"><span class="mark" aria-hidden="true"><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i></span>Ritlum</a><span>© <span id="year"></span> · <a href="../">Ritlum mini</a> · <a href="../blog/">Blog</a> · <a href="../privacy/">Privacy</a> · <a href="mailto:contact@ritlum.com">Contact</a></span></footer>
+<script src="app.js?v=1" defer></script>
+</body></html>
