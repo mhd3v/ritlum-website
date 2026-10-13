@@ -62,4 +62,4 @@ Not yet. The tracker in the video is the larger original. The first one you will
 
 ## Try it
 
-The Ritlum app is [free on the App Store](https://apps.apple.com/us/app/ritlum-habit-tracker/id6788856420). If you want to hear when the mini is available, [join the list on the home page](/#notify). You will get one email at launch.
+The Ritlum app is [free on the App Store](https://apps.apple.com/us/app/ritlum-habit-tracker/id6788856420), and there is [more about what it does here](/app/). If you want to hear when the mini is available, [join the list on the home page](/#notify). You will get one email at launch.
