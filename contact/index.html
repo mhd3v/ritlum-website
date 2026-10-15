@@ -229,21 +229,11 @@
       .topic:hover { border-color: rgba(61, 123, 247, 0.45); transform: translateY(-1px); }
 
       .topic strong {
-        display: flex;
-        align-items: center;
-        gap: 9px;
+        display: block;
         font-size: 16px;
         letter-spacing: -0.2px;
       }
 
-      .topic strong::before {
-        content: "";
-        width: 9px;
-        height: 9px;
-        flex: none;
-        border-radius: 50%;
-        background: var(--dot);
-      }
 
       .topic span {
         display: block;
@@ -366,27 +356,27 @@
         <h2>What can we help with?</h2>
         <p class="section-intro">Pick a topic to start an email with the right subject line.</p>
         <div class="topics">
-          <a class="topic" style="--dot: #5b9df9" href="mailto:contact@ritlum.com?subject=Ritlum%20app%20support">
+          <a class="topic" href="mailto:contact@ritlum.com?subject=Ritlum%20app%20support">
             <strong>App support</strong>
             <span>Something not working, a habit that won’t log, widgets, reminders or NFC tags.</span>
           </a>
-          <a class="topic" style="--dot: #62c089" href="mailto:contact@ritlum.com?subject=Ritlum%20mini%20support">
+          <a class="topic" href="mailto:contact@ritlum.com?subject=Ritlum%20mini%20support">
             <strong>Ritlum mini</strong>
             <span>Pairing, the light grid, clock mode, firmware updates or a problem with your tracker.</span>
           </a>
-          <a class="topic" style="--dot: #f0a05a" href="mailto:contact@ritlum.com?subject=Ritlum%20Pro%20and%20purchases">
+          <a class="topic" href="mailto:contact@ritlum.com?subject=Ritlum%20Pro%20and%20purchases">
             <strong>Purchases &amp; Pro</strong>
             <span>Questions about Ritlum Pro, restoring a purchase or a subscription.</span>
           </a>
-          <a class="topic" style="--dot: #e78aae" href="mailto:contact@ritlum.com?subject=Ritlum%20account%20deletion">
+          <a class="topic" href="mailto:contact@ritlum.com?subject=Ritlum%20account%20deletion">
             <strong>Delete my account</strong>
             <span>Remove your account and cloud-synced data. Write from the address linked to your account.</span>
           </a>
-          <a class="topic" style="--dot: #a893db" href="mailto:contact@ritlum.com?subject=Ritlum%20privacy%20request">
+          <a class="topic" href="mailto:contact@ritlum.com?subject=Ritlum%20privacy%20request">
             <strong>Privacy request</strong>
             <span>Access, correct or export your data, or ask how it’s handled.</span>
           </a>
-          <a class="topic" style="--dot: #6fc8d6" href="mailto:contact@ritlum.com?subject=Ritlum%20feedback">
+          <a class="topic" href="mailto:contact@ritlum.com?subject=Ritlum%20feedback">
             <strong>Feedback &amp; ideas</strong>
             <span>Feature requests, translations, press or anything else on your mind.</span>
           </a>
