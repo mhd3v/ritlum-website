@@ -1,0 +1,452 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <link rel="icon" type="image/svg+xml" href="../assets/favicon.svg" />
+    <title>Contact &amp; Support — Ritlum</title>
+    <link rel="canonical" href="https://ritlum.com/contact/" />
+    <meta
+      name="description"
+      content="Get help with the Ritlum habit tracker app and Ritlum mini, ask about purchases or your data, or send feedback."
+    />
+
+    <!-- Google tag (gtag.js) -->
+    <script
+      async
+      src="https://www.googletagmanager.com/gtag/js?id=G-TZEBVLWPWQ"
+    ></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag() {
+        dataLayer.push(arguments);
+      }
+      gtag("js", new Date());
+      gtag("config", "G-TZEBVLWPWQ");
+    </script>
+
+    <style>
+      :root {
+        color-scheme: light;
+        --bg: #faf8f4;
+        --bg-alt: #f2efea;
+        --card: #ffffff;
+        --ink: #0a0a0a;
+        --ink-2: #3a3a3a;
+        --muted: #7a7570;
+        --faint: #aaa49c;
+        --border: rgba(15, 15, 15, 0.08);
+        --blue: #3d7bf7;
+      }
+
+      * { box-sizing: border-box; }
+
+      html { scroll-behavior: smooth; }
+
+      body {
+        margin: 0;
+        background: var(--bg);
+        color: var(--ink);
+        font-family: -apple-system, BlinkMacSystemFont, "SF Pro Text", "SF Pro", system-ui, sans-serif;
+        -webkit-font-smoothing: antialiased;
+        text-rendering: optimizeLegibility;
+      }
+
+      a { color: inherit; text-underline-offset: 3px; }
+
+      ::selection { background: rgba(91, 157, 249, 0.3); }
+
+      .nav {
+        position: sticky;
+        top: 0;
+        z-index: 10;
+        background: rgba(250, 248, 244, 0.88);
+        border-bottom: 1px solid var(--border);
+        backdrop-filter: saturate(180%) blur(16px);
+        -webkit-backdrop-filter: saturate(180%) blur(16px);
+      }
+
+      .nav-inner,
+      .footer-inner {
+        width: min(100% - 40px, 1040px);
+        margin: 0 auto;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 20px;
+      }
+
+      .nav-inner { min-height: 68px; }
+
+      .wordmark {
+        display: inline-flex;
+        align-items: center;
+        gap: 9px;
+        color: var(--ink);
+        font-size: 21px;
+        font-weight: 650;
+        letter-spacing: -0.6px;
+        text-decoration: none;
+      }
+
+      .logo {
+        width: 27px;
+        height: 27px;
+        padding: 5px;
+        display: grid;
+        grid-template-columns: repeat(3, 1fr);
+        gap: 2px;
+        border-radius: 6.5px;
+        background: #16151a;
+      }
+
+      .logo i { border-radius: 50%; }
+      .logo i:nth-child(1), .logo i:nth-child(9) { background: #5b9df9; }
+      .logo i:nth-child(2) { background: #62c089; }
+      .logo i:nth-child(4) { background: #f0a05a; }
+      .logo i:nth-child(5) { background: #e78aae; }
+      .logo i:nth-child(6) { background: #6fc8d6; }
+      .logo i:nth-child(8) { background: #a893db; }
+      .logo i:nth-child(3), .logo i:nth-child(7) { background: rgba(255, 255, 255, 0.1); }
+
+      .back-link {
+        color: var(--muted);
+        font-size: 14px;
+        font-weight: 550;
+        text-decoration: none;
+      }
+
+      main {
+        width: min(100% - 40px, 760px);
+        margin: 0 auto;
+        padding: 88px 0 100px;
+      }
+
+      .eyebrow {
+        margin: 0 0 18px;
+        color: var(--faint);
+        font-size: 12px;
+        font-weight: 700;
+        letter-spacing: 1.4px;
+        text-transform: uppercase;
+      }
+
+      h1 {
+        margin: 0;
+        font-size: clamp(42px, 8vw, 68px);
+        line-height: 0.98;
+        letter-spacing: -2.6px;
+      }
+
+      .intro {
+        max-width: 650px;
+        margin: 24px 0 0;
+        color: var(--muted);
+        font-size: 18px;
+        line-height: 1.6;
+        letter-spacing: -0.15px;
+      }
+
+      .updated {
+        margin: 16px 0 0;
+        color: var(--faint);
+        font-size: 13px;
+      }
+
+      .email-card {
+        margin: 44px 0 0;
+        padding: 28px;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 20px;
+        flex-wrap: wrap;
+        border-radius: 22px;
+        background: #16151a;
+        color: #f7f5f1;
+      }
+
+      .email-card p { margin: 0; color: rgba(247, 245, 241, 0.68); font-size: 14px; }
+
+      .email-card .address {
+        display: block;
+        margin-top: 4px;
+        color: #ffffff;
+        font-size: clamp(22px, 5vw, 28px);
+        font-weight: 650;
+        letter-spacing: -0.6px;
+        text-decoration: none;
+      }
+
+      .button {
+        display: inline-flex;
+        align-items: center;
+        min-height: 44px;
+        padding: 0 20px;
+        border-radius: 999px;
+        background: #ffffff;
+        color: #16151a;
+        font-size: 15px;
+        font-weight: 600;
+        text-decoration: none;
+      }
+
+      .button:hover { background: #ecebe7; }
+
+      section { margin-top: 64px; }
+
+      h2 {
+        margin: 0 0 15px;
+        font-size: 25px;
+        line-height: 1.2;
+        letter-spacing: -0.7px;
+      }
+
+      .section-intro {
+        margin: 0 0 20px;
+        color: var(--muted);
+        font-size: 15.5px;
+        line-height: 1.6;
+      }
+
+      .topics {
+        display: grid;
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+        gap: 14px;
+      }
+
+      .topic {
+        display: block;
+        padding: 20px 22px;
+        background: var(--card);
+        border: 1px solid var(--border);
+        border-radius: 18px;
+        box-shadow: 0 1px 2px rgba(20, 20, 20, 0.03), 0 12px 36px rgba(20, 20, 20, 0.04);
+        text-decoration: none;
+        transition: border-color 0.15s ease, transform 0.15s ease;
+      }
+
+      .topic:hover { border-color: rgba(61, 123, 247, 0.45); transform: translateY(-1px); }
+
+      .topic strong {
+        display: flex;
+        align-items: center;
+        gap: 9px;
+        font-size: 16px;
+        letter-spacing: -0.2px;
+      }
+
+      .topic strong::before {
+        content: "";
+        width: 9px;
+        height: 9px;
+        flex: none;
+        border-radius: 50%;
+        background: var(--dot);
+      }
+
+      .topic span {
+        display: block;
+        margin-top: 6px;
+        color: var(--muted);
+        font-size: 14px;
+        line-height: 1.55;
+      }
+
+      p,
+      li {
+        color: var(--ink-2);
+        font-size: 15.5px;
+        line-height: 1.72;
+      }
+
+      p { margin: 0 0 14px; }
+
+      ul {
+        margin: 12px 0 18px;
+        padding-left: 22px;
+      }
+
+      li { padding-left: 4px; margin: 8px 0; }
+
+      details {
+        border-bottom: 1px solid var(--border);
+      }
+
+      details:first-of-type { border-top: 1px solid var(--border); }
+
+      summary {
+        padding: 18px 28px 18px 0;
+        position: relative;
+        font-size: 16px;
+        font-weight: 600;
+        letter-spacing: -0.2px;
+        cursor: pointer;
+        list-style: none;
+      }
+
+      summary::-webkit-details-marker { display: none; }
+
+      summary::after {
+        content: "+";
+        position: absolute;
+        right: 2px;
+        top: 50%;
+        transform: translateY(-50%);
+        color: var(--muted);
+        font-size: 20px;
+        font-weight: 400;
+      }
+
+      details[open] summary::after { content: "\2212"; }
+
+      details p { margin: 0 0 18px; }
+
+      footer {
+        margin-top: 0;
+        background: var(--bg-alt);
+        border-top: 1px solid var(--border);
+      }
+
+      .footer-inner {
+        min-height: 100px;
+        color: var(--muted);
+        font-size: 13px;
+        flex-wrap: wrap;
+      }
+
+      .footer-links { display: flex; gap: 22px; flex-wrap: wrap; }
+      .footer-links a { text-decoration: none; }
+
+      @media (max-width: 600px) {
+        .nav-inner,
+        .footer-inner,
+        main { width: min(100% - 32px, 760px); }
+        main { padding: 62px 0 74px; }
+        .back-link { font-size: 13px; }
+        h1 { letter-spacing: -2px; }
+        .email-card { margin-top: 34px; padding: 22px; }
+        .topics { grid-template-columns: 1fr; }
+        section { margin-top: 52px; }
+        .footer-inner { padding: 26px 0; align-items: flex-start; flex-direction: column; }
+      }
+    </style>
+  </head>
+  <body>
+    <nav class="nav" aria-label="Main navigation">
+      <div class="nav-inner">
+        <a class="wordmark" href="../" aria-label="Ritlum home">
+          <span class="logo" aria-hidden="true">
+            <i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i>
+          </span>
+          <span>Ritlum</span>
+        </a>
+        <a class="back-link" href="../">Back to ritlum.com</a>
+      </div>
+    </nav>
+
+    <main>
+      <header>
+        <p class="eyebrow">Help and support</p>
+        <h1>Contact us</h1>
+        <p class="intro">
+          Questions about the Ritlum app or Ritlum mini, a bug to report, or an idea for what should come next? Send us an email and we’ll get back to you.
+        </p>
+      </header>
+
+      <div class="email-card">
+        <div>
+          <p>Email</p>
+          <a class="address" href="mailto:contact@ritlum.com">contact@ritlum.com</a>
+        </div>
+        <a class="button" href="mailto:contact@ritlum.com?subject=Ritlum%20support">Send an email</a>
+      </div>
+
+      <section id="topics">
+        <h2>What can we help with?</h2>
+        <p class="section-intro">Pick a topic to start an email with the right subject line.</p>
+        <div class="topics">
+          <a class="topic" style="--dot: #5b9df9" href="mailto:contact@ritlum.com?subject=Ritlum%20app%20support">
+            <strong>App support</strong>
+            <span>Something not working, a habit that won’t log, widgets, reminders or NFC tags.</span>
+          </a>
+          <a class="topic" style="--dot: #62c089" href="mailto:contact@ritlum.com?subject=Ritlum%20mini%20support">
+            <strong>Ritlum mini</strong>
+            <span>Pairing, the light grid, clock mode, firmware updates or a problem with your tracker.</span>
+          </a>
+          <a class="topic" style="--dot: #f0a05a" href="mailto:contact@ritlum.com?subject=Ritlum%20Pro%20and%20purchases">
+            <strong>Purchases &amp; Pro</strong>
+            <span>Questions about Ritlum Pro, restoring a purchase or a subscription.</span>
+          </a>
+          <a class="topic" style="--dot: #e78aae" href="mailto:contact@ritlum.com?subject=Ritlum%20account%20deletion">
+            <strong>Delete my account</strong>
+            <span>Remove your account and cloud-synced data. Write from the address linked to your account.</span>
+          </a>
+          <a class="topic" style="--dot: #a893db" href="mailto:contact@ritlum.com?subject=Ritlum%20privacy%20request">
+            <strong>Privacy request</strong>
+            <span>Access, correct or export your data, or ask how it’s handled.</span>
+          </a>
+          <a class="topic" style="--dot: #6fc8d6" href="mailto:contact@ritlum.com?subject=Ritlum%20feedback">
+            <strong>Feedback &amp; ideas</strong>
+            <span>Feature requests, translations, press or anything else on your mind.</span>
+          </a>
+        </div>
+      </section>
+
+      <section id="details">
+        <h2>Helpful details to include</h2>
+        <p>If you’re reporting a problem, these help us sort it out faster:</p>
+        <ul>
+          <li>Your iPhone model and iOS version.</li>
+          <li>The Ritlum app version, shown in iPhone Settings → General → iPhone Storage → Ritlum.</li>
+          <li>What you expected to happen and what happened instead.</li>
+          <li>A screenshot or screen recording, if you can.</li>
+          <li>For Ritlum mini, what its lights are showing.</li>
+        </ul>
+      </section>
+
+      <section id="faq">
+        <h2>Quick answers</h2>
+        <details>
+          <summary>How do I restore a Ritlum Pro purchase?</summary>
+          <p>Purchases are tied to your Apple ID. On a new or reset iPhone, sign in with the same Apple ID and restore your purchase from the Ritlum Pro screen in the app.</p>
+        </details>
+        <details>
+          <summary>How do I cancel a subscription or request a refund?</summary>
+          <p>Subscriptions and payments are handled by Apple. Cancel from Settings → your name → Subscriptions on your iPhone. Refunds are requested through Apple at <a href="https://reportaproblem.apple.com" target="_blank" rel="noopener">reportaproblem.apple.com</a>.</p>
+        </details>
+        <details>
+          <summary>Do I need an account to use Ritlum?</summary>
+          <p>No. Ritlum works without signing up and your habits stay on your iPhone. Turn on cloud sync if you want a backup or to use Ritlum on more than one device.</p>
+        </details>
+        <details>
+          <summary>How do I delete my data?</summary>
+          <p>Data stored only on your device is removed when you delete it in the app or uninstall Ritlum. To delete your account and cloud-synced data, <a href="mailto:contact@ritlum.com?subject=Ritlum%20account%20deletion">email us</a> from the address linked to your account. See the <a href="../privacy/">Privacy Policy</a> for details.</p>
+        </details>
+        <details>
+          <summary>Is there an Android version?</summary>
+          <p>Not yet. Ritlum is only available for iPhone, on iOS 17 or later.</p>
+        </details>
+      </section>
+    </main>
+
+    <footer>
+      <div class="footer-inner">
+        <a class="wordmark" href="../" aria-label="Ritlum home">
+          <span class="logo" aria-hidden="true">
+            <i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i>
+          </span>
+          <span>Ritlum</span>
+        </a>
+        <div class="footer-links">
+          <a href="../">Home</a>
+          <a href="../app/">App</a>
+          <a href="../blog/">Blog</a>
+          <a href="../privacy/">Privacy</a>
+          <a href="./" aria-current="page">Contact</a>
+        </div>
+        <span>© 2026 Ritlum</span>
+      </div>
+    </footer>
+  </body>
+</html>
