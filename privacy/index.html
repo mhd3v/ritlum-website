@@ -25,6 +25,10 @@
       gtag("config", "G-TZEBVLWPWQ");
     </script>
 
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Geist:wght@400..700&display=swap">
+
     <style>
       :root {
         color-scheme: light;
@@ -81,33 +85,43 @@
       .wordmark {
         display: inline-flex;
         align-items: center;
-        gap: 9px;
+        gap: 10px;
         color: var(--ink);
-        font-size: 21px;
+        font-family: Geist, -apple-system, BlinkMacSystemFont, "SF Pro Display", "Helvetica Neue", Inter, system-ui, sans-serif;
+        font-size: 19px;
         font-weight: 650;
-        letter-spacing: -0.6px;
+        letter-spacing: -0.03em;
         text-decoration: none;
       }
 
+      footer .wordmark { font-size: 18px; }
+
       .logo {
-        width: 27px;
-        height: 27px;
+        width: 26px;
+        height: 26px;
         padding: 5px;
         display: grid;
         grid-template-columns: repeat(3, 1fr);
         gap: 2px;
-        border-radius: 6.5px;
-        background: #16151a;
+        border-radius: 7px;
+        background: #111014;
       }
 
-      .logo i { border-radius: 50%; }
+      .logo i { border-radius: 50%; background: #3a383e; }
       .logo i:nth-child(1), .logo i:nth-child(9) { background: #5b9df9; }
       .logo i:nth-child(2) { background: #62c089; }
       .logo i:nth-child(4) { background: #f0a05a; }
       .logo i:nth-child(5) { background: #e78aae; }
       .logo i:nth-child(6) { background: #6fc8d6; }
       .logo i:nth-child(8) { background: #a893db; }
-      .logo i:nth-child(3), .logo i:nth-child(7) { background: rgba(255, 255, 255, 0.1); }
+      .wordmark:hover .logo i { animation: blink 1.2s cubic-bezier(0.2, 0.7, 0.2, 1) infinite; }
+      .wordmark:hover .logo i:nth-child(3n+2) { animation-delay: 0.15s; }
+      .wordmark:hover .logo i:nth-child(3n) { animation-delay: 0.3s; }
+      @keyframes blink { 50% { opacity: 0.35; } }
+
+      @media (prefers-reduced-motion: reduce) {
+        .wordmark:hover .logo i { animation: none; }
+      }
 
       .back-link {
         color: var(--muted);
@@ -417,7 +431,7 @@
 
       <section class="contact" id="contact">
         <h2>Questions or requests?</h2>
-        <p>Contact Ritlum at <a href="mailto:contact@ritlum.com">contact@ritlum.com</a>.</p>
+        <p>Contact Ritlum at <a href="mailto:contact@ritlum.com">contact@ritlum.com</a>, or visit the <a href="../contact/">contact page</a>.</p>
       </section>
     </main>
 
@@ -434,6 +448,7 @@
           <a href="../app/">App</a>
           <a href="../blog/">Blog</a>
           <a href="./" aria-current="page">Privacy</a>
+          <a href="../contact/">Contact</a>
         </div>
         <span>© 2026 Ritlum</span>
       </div>
