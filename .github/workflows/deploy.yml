@@ -37,7 +37,7 @@ jobs:
       - name: Assemble site
         run: |
           mkdir -p site
-          cp index.html robots.txt sitemap.xml CNAME .nojekyll site/
+          cp index.html 404.html robots.txt sitemap.xml CNAME .nojekyll site/
           cp -r assets app privacy contact mini extension-demo .well-known site/
           cp -r blog-src/dist site/blog
 

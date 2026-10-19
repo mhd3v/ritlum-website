@@ -1,0 +1,186 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="robots" content="noindex" />
+    <meta name="apple-itunes-app" content="app-id=6788856420" />
+    <link rel="icon" type="image/svg+xml" href="/assets/favicon.svg" />
+    <title>Page not found — Ritlum</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Geist:wght@400..700&display=swap">
+    <style>
+      :root {
+        color-scheme: light;
+        --bg: #faf8f4;
+        --bg-alt: #f2efea;
+        --card: #ffffff;
+        --ink: #0a0a0a;
+        --ink-2: #3a3a3a;
+        --muted: #7a7570;
+        --faint: #aaa49c;
+        --border: rgba(15, 15, 15, 0.08);
+      }
+
+      * { box-sizing: border-box; }
+
+      body {
+        margin: 0;
+        min-height: 100vh;
+        display: flex;
+        flex-direction: column;
+        background: var(--bg);
+        color: var(--ink);
+        font-family: -apple-system, BlinkMacSystemFont, "SF Pro Text", "SF Pro", system-ui, sans-serif;
+        -webkit-font-smoothing: antialiased;
+      }
+
+      a { color: inherit; text-underline-offset: 3px; }
+
+      .nav { border-bottom: 1px solid var(--border); }
+
+      .nav-inner {
+        width: min(100% - 40px, 1040px);
+        min-height: 68px;
+        margin: 0 auto;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+      }
+
+      .wordmark {
+        display: inline-flex;
+        align-items: center;
+        gap: 10px;
+        font-family: Geist, -apple-system, BlinkMacSystemFont, system-ui, sans-serif;
+        font-size: 19px;
+        font-weight: 650;
+        letter-spacing: -0.03em;
+        text-decoration: none;
+      }
+
+      .logo {
+        width: 26px;
+        height: 26px;
+        padding: 5px;
+        display: grid;
+        grid-template-columns: repeat(3, 1fr);
+        gap: 2px;
+        border-radius: 7px;
+        background: #111014;
+      }
+
+      .logo i { border-radius: 50%; background: #3a383e; }
+      .logo i:nth-child(1), .logo i:nth-child(9) { background: #5b9df9; }
+      .logo i:nth-child(2) { background: #62c089; }
+      .logo i:nth-child(4) { background: #f0a05a; }
+      .logo i:nth-child(5) { background: #e78aae; }
+      .logo i:nth-child(6) { background: #6fc8d6; }
+      .logo i:nth-child(8) { background: #a893db; }
+
+      main {
+        flex: 1;
+        width: min(100% - 40px, 560px);
+        margin: 0 auto;
+        padding: 96px 0;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+      }
+
+      .eyebrow {
+        margin: 0 0 16px;
+        color: var(--faint);
+        font-size: 12px;
+        font-weight: 700;
+        letter-spacing: 1.4px;
+        text-transform: uppercase;
+      }
+
+      h1 {
+        margin: 0 0 16px;
+        font-family: Geist, -apple-system, BlinkMacSystemFont, system-ui, sans-serif;
+        font-size: clamp(38px, 8vw, 56px);
+        line-height: 1;
+        letter-spacing: -0.04em;
+      }
+
+      p {
+        margin: 0 0 28px;
+        color: var(--ink-2);
+        font-size: 18px;
+        line-height: 1.55;
+      }
+
+      .code {
+        align-self: flex-start;
+        margin: 0 0 28px;
+        padding: 12px 18px;
+        border-radius: 14px;
+        background: var(--card);
+        border: 1px solid var(--border);
+        font: 600 22px/1 ui-monospace, SFMono-Regular, Menlo, monospace;
+        letter-spacing: 0.12em;
+      }
+
+      .actions { display: flex; flex-wrap: wrap; gap: 12px; }
+
+      .button {
+        display: inline-flex;
+        align-items: center;
+        min-height: 48px;
+        padding: 0 22px;
+        border-radius: 999px;
+        font-weight: 600;
+        text-decoration: none;
+      }
+
+      .button.primary { background: var(--ink); color: #fff; }
+      .button.secondary { background: var(--bg-alt); color: var(--ink); }
+
+      [hidden] { display: none !important; }
+    </style>
+  </head>
+  <body>
+    <nav class="nav" aria-label="Main navigation">
+      <div class="nav-inner">
+        <a class="wordmark" href="/" aria-label="Ritlum home">
+          <span class="logo" aria-hidden="true"><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i></span>
+          <span>Ritlum</span>
+        </a>
+      </div>
+    </nav>
+
+    <main id="not-found">
+      <p class="eyebrow">404</p>
+      <h1>This page doesn’t exist</h1>
+      <p>The link may be old or mistyped. Everything else about Ritlum is on the home page.</p>
+      <div class="actions">
+        <a class="button primary" href="/">Go to ritlum.com</a>
+      </div>
+    </main>
+
+    <main id="pairing" hidden>
+      <p class="eyebrow">Browser extension</p>
+      <h1>Open this in Ritlum</h1>
+      <p>This code links a browser to your Ritlum account. Install Ritlum on your iPhone, then go to Settings → Browser extension → Enter code.</p>
+      <div class="code" id="pairing-code"></div>
+      <div class="actions">
+        <a class="button primary" href="https://apps.apple.com/us/app/ritlum-habit-tracker/id6788856420">Get Ritlum on the App Store</a>
+        <a class="button secondary" href="/">About Ritlum</a>
+      </div>
+    </main>
+
+    <script>
+      const match = location.pathname.match(/^\/pair\/([A-Za-z0-9]{8})\/?$/);
+      if (match) {
+        const code = match[1].toUpperCase();
+        document.getElementById('pairing-code').textContent = `${code.slice(0, 4)}-${code.slice(4)}`;
+        document.getElementById('not-found').hidden = true;
+        document.getElementById('pairing').hidden = false;
+        document.title = 'Link a browser — Ritlum';
+      }
+    </script>
+  </body>
+</html>
