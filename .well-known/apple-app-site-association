@@ -9,6 +9,10 @@
           {
             "/": "/nfc/*",
             "comment": "Open Habit Tracker NFC links in the iOS app."
+          },
+          {
+            "/": "/pair/*",
+            "comment": "Open browser extension pairing links in the iOS app."
           }
         ]
       }
