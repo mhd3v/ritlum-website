@@ -8,4 +8,6 @@ export default defineConfig({
   base: "/blog",
   trailingSlash: "always",
   integrations: [mdx()],
+  // Safari 15-17 still needs -webkit-backdrop-filter for the nav blur.
+  vite: { build: { cssTarget: ["chrome107", "safari15"] } },
 });
