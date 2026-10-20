@@ -2,13 +2,37 @@
 title: "Bringing Habit Tracking Into the Real World: NFC + a Smart Desk Tracker"
 description: "Habit apps are easy to forget because they live behind a lock screen. Here is how Ritlum uses NFC tags and a desk tracker to move logging and progress into the room."
 pubDate: 2026-07-20
-updatedDate: 2026-10-13
-youtubeId: "PJFXKPc90xE"
+updatedDate: 2026-10-20
+image: "/blog/images/nfc-tag-tap.webp"
+ogImage: "https://ritlum.com/blog/images/nfc-tag-tap.jpg"
+imageAlt: "An iPhone held to a Ritlum NFC tag, showing the Ritlum NFC Tag notification"
+cta:
+  title: "Try Ritlum on your iPhone"
+  label: "Get the app"
+  href: "https://apps.apple.com/us/app/ritlum-habit-tracker/id6788856420"
+  note: "Free on the App Store. Ritlum mini is coming soon."
+faq:
+  - q: "Do I need the desk tracker to use NFC tags?"
+    a: "No. NFC logging is part of the app and works with or without a tracker. The free version of the app includes three habits and one NFC tag."
+  - q: "Do I need Ritlum Pro to connect a tracker?"
+    a: "No. Connecting a tracker works with the free app."
+  - q: "Does it work with Android?"
+    a: "Not yet. The Ritlum app is only available for iPhone, and the tracker is set up through the app."
+  - q: "How many habits can the tracker show?"
+    a: "Up to eight, one per row. You pick which habits appear and in what order."
+  - q: "Can I buy one?"
+    a: "Not yet. The tracker in the video is the larger original. The first one you will be able to buy is Ritlum mini, a smaller version that shows eight days. The first run is ten units, assembled by hand in Germany, with five NFC tags in the box. You can join the list on ritlum.com to get one email when it launches."
 ---
+
+import YouTube from "../../components/YouTube.astro";
+import Figure from "../../components/Figure.astro";
+
 
 A habit app has an awkward job. It only helps if you open it, and it sits on the one device built to pull your attention somewhere else. You finish a run, pick up your phone to log it, see three notifications, and twenty minutes later the run still isn't logged.
 
-Ritlum tries to take the phone out of the middle. Logging moves to an NFC tag stuck where the habit happens. Progress moves to the Ritlum desk tracker, a grid of lights that sits on your desk. The video above shows both.
+Ritlum tries to take the phone out of the middle. Logging moves to an NFC tag stuck where the habit happens. Progress moves to the Ritlum desk tracker, a grid of lights that sits on your desk. This short film shows both:
+
+<YouTube id="PJFXKPc90xE" title="Ritlum: NFC habit logging and the desk tracker" />
 
 ## Two places a habit app loses you
 
@@ -22,6 +46,15 @@ An NFC tag is a thin sticker with a tiny chip in it. It has no battery and never
 
 When you have done the habit, hold the top of your iPhone to the tag. A notification appears. Tap it and the habit is logged for today. You never hunt for the app, and the tag sits in the spot where you would otherwise forget.
 
+<Figure
+  phone
+  src="/blog/images/app-nfc-logged.webp"
+  alt="The Ritlum app showing Meditate done for today, logged just now via NFC tap, with a 33-day streak"
+  width={920}
+  height={2000}
+  caption="One tap on the tag, and the habit is logged."
+/>
+
 Tags are optional. You can still check in from the app or from the Home Screen widget, and everything ends up in the same history.
 
 ## Seeing it on your desk
@@ -32,34 +65,20 @@ It connects to the Ritlum app on your iPhone over Bluetooth. Log a habit by tag,
 
 Because it is always on, you don't have to decide to check it. It is in the corner of your eye while you work, like a wall calendar with crosses on it.
 
+<Figure
+  src="/blog/images/desk-tracker-habits.webp"
+  alt="Ritlum mini, a small triangular desk tracker with rows of coloured lights, one row per habit"
+  width={1400}
+  height={875}
+  caption="Ritlum mini: one row per habit, one column per day."
+/>
+
 ## What the tracker does not do
 
 The tracker has no microphone, no camera and no account of its own, and it does not use Wi-Fi. It only knows what the app sends it. Your habit data stays on your iPhone unless you turn on cloud sync in the app.
 
 It is also not a screen full of text. It shows up to eight habits as rows of light, plus an optional pixel clock. You can dim it from the app and set a sleep schedule so it goes dark at night and wakes up again in the morning.
 
-## Common questions
-
-### Do I need the desk tracker to use NFC tags?
-
-No. NFC logging is part of the app and works with or without a tracker. The free version of the app includes three habits and one NFC tag.
-
-### Do I need Ritlum Pro to connect a tracker?
-
-No. Connecting a tracker works with the free app.
-
-### Does it work with Android?
-
-Not yet. The Ritlum app is only available for iPhone, and the tracker is set up through the app.
-
-### How many habits can the tracker show?
-
-Up to eight, one per row. You pick which habits appear and in what order.
-
-### Can I buy one?
-
-Not yet. The tracker in the video is the larger original. The first one you will be able to buy is Ritlum mini, a smaller version that shows eight days. The first run is ten units, assembled by hand in Germany, with five NFC tags in the box.
-
 ## Try it
 
-The Ritlum app is [free on the App Store](https://apps.apple.com/us/app/ritlum-habit-tracker/id6788856420), and there is [more about what it does here](/app/). If you want to hear when the mini is available, [join the list on the home page](/#notify). You will get one email at launch.
+The Ritlum app is free on iPhone, and there is [more about what it does here](/app/). To hear when Ritlum mini is available, [join the list](/#notify).

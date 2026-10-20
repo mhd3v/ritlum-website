@@ -1,0 +1,770 @@
+---
+const days = 16;
+const rows = [
+  { color: "#f0a05a", pattern: "0011111111111110" },
+  { color: "#62c089", pattern: "1101110111101111" },
+  { color: "#5b9df9", pattern: "1011011101110110" },
+  { color: "#a893db", pattern: "0110101101011010" },
+];
+---
+
+<figure class="demo" data-step="0">
+  <div
+    class="stage"
+    role="img"
+    aria-label="Animation: on a coding practice site, the cursor clicks Submit, the result reads Accepted, a Ritlum card confirms the habit was logged, and the habit then shows as done in the Ritlum app and lights up on the desk tracker."
+  >
+    <div class="browser">
+      <div class="chrome">
+        <span class="lights"><i></i><i></i><i></i></span>
+        <span class="url">
+          <svg viewBox="0 0 24 24" aria-hidden="true"><rect x="5" y="11" width="14" height="10" rx="2"></rect><path d="M8 11V8a4 4 0 0 1 8 0v3"></path></svg>
+          practice.example/problems/two-sum
+        </span>
+      </div>
+
+      <div class="page">
+        <div class="problem">
+          <p class="p-title">1. Two Sum</p>
+          <span class="pill">Easy</span>
+          <span class="line w90"></span>
+          <span class="line w75"></span>
+          <span class="line w85"></span>
+          <span class="line w40"></span>
+          <span class="example"><span class="line w60"></span><span class="line w45"></span></span>
+        </div>
+
+        <div class="editor">
+          <pre><code><b>def</b> twoSum(nums, target):
+    seen = &#123;&#125;
+    <b>for</b> i, n <b>in</b> enumerate(nums):
+        <b>if</b> target - n <b>in</b> seen:
+            <b>return</b> [seen[target - n], i]
+        seen[n] = i</code></pre>
+          <div class="result">
+            <span class="judging">Judging…</span>
+            <span class="accepted">Accepted</span>
+            <span class="runtime">Runtime 52 ms</span>
+          </div>
+          <div class="actions">
+            <span class="btn run">Run</span>
+            <span class="btn submit">Submit</span>
+          </div>
+        </div>
+
+        <div class="toast">
+          <span class="badge"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12l5 5L20 7"></path></svg></span>
+          <span class="t-text">
+            <span class="t-title">Logged “Daily LeetCode”</span>
+            <span class="t-sub">Done for today · Ritlum</span>
+            <span class="t-note">Add a note</span>
+          </span>
+          <span class="t-bar"></span>
+        </div>
+
+        <svg class="cursor" viewBox="0 0 24 24" aria-hidden="true"><path d="M5 3l14 8-6.2 1.6L10 19z"></path></svg>
+      </div>
+    </div>
+
+    <div class="synced">
+      <div class="app">
+        <p class="label">Ritlum app · Today</p>
+        <div class="row lc">
+          <span class="dot" style="background:#f0a05a"></span>
+          <span class="r-text">
+            <span class="r-name">Daily LeetCode</span>
+            <span class="r-meta"><span class="before">13-day streak</span><span class="after">14-day streak</span></span>
+          </span>
+          <span class="check" style="--c:#f0a05a"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12l5 5L20 7"></path></svg></span>
+        </div>
+        <div class="row">
+          <span class="dot" style="background:#62c089"></span>
+          <span class="r-text">
+            <span class="r-name">Read 20 pages</span>
+            <span class="r-meta">Done</span>
+          </span>
+          <span class="check done" style="--c:#62c089"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12l5 5L20 7"></path></svg></span>
+        </div>
+        <div class="row">
+          <span class="dot" style="background:#5b9df9"></span>
+          <span class="r-text">
+            <span class="r-name">Drink water</span>
+            <span class="r-meta">5 of 8</span>
+          </span>
+          <svg class="ring" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="10"></circle><circle class="fill" cx="12" cy="12" r="10" pathLength="8" style="stroke:#5b9df9"></circle></svg>
+        </div>
+      </div>
+
+      <div class="tracker">
+        <p class="label">Desk tracker</p>
+        <div class="grid" style={`--days:${days}`}>
+          {
+            rows.map((row, r) =>
+              [...row.pattern].map((on, d) => (
+                <i
+                  class:list={[{ on: on === "1", today: r === 0 && d === days - 1 }]}
+                  style={`--c:${row.color}`}
+                />
+              )),
+            )
+          }
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <figcaption>
+    <ol class="steps">
+      <li data-for="1">You click <strong>Submit</strong></li>
+      <li data-for="3">The site says <strong>Accepted</strong></li>
+      <li data-for="4">Ritlum logs the habit</li>
+      <li data-for="5">Your phone and tracker update</li>
+    </ol>
+  </figcaption>
+</figure>
+
+<script>
+  const timeline: [number, number][] = [
+    [0, 0],
+    [700, 1],
+    [1750, 2],
+    [2800, 3],
+    [3600, 4],
+    [4700, 5],
+    [9800, 6],
+  ];
+  const loopMs = 10400;
+
+  for (const demo of document.querySelectorAll<HTMLElement>(".demo")) {
+    const page = demo.querySelector<HTMLElement>(".page")!;
+    const submit = demo.querySelector<HTMLElement>(".submit")!;
+    const steps = [...demo.querySelectorAll<HTMLElement>(".steps li")];
+
+    const placeCursor = () => {
+      const p = page.getBoundingClientRect();
+      const b = submit.getBoundingClientRect();
+      demo.style.setProperty("--cx", `${b.left - p.left + b.width * 0.55}px`);
+      demo.style.setProperty("--cy", `${b.top - p.top + b.height * 0.45}px`);
+    };
+
+    const setStep = (step: number) => {
+      demo.dataset.step = String(step);
+      const shown = Math.min(step, 5);
+      steps.forEach((li, i) => {
+        const at = Number(li.dataset.for);
+        const next = Number(steps[i + 1]?.dataset.for ?? 99);
+        li.classList.toggle("active", shown >= at && shown < next);
+        li.classList.toggle("done", shown >= next);
+      });
+    };
+
+    placeCursor();
+    new ResizeObserver(placeCursor).observe(page);
+
+    if (matchMedia("(prefers-reduced-motion: reduce)").matches) {
+      demo.classList.add("still");
+      setStep(5);
+      continue;
+    }
+
+    let timers: number[] = [];
+    let loop = 0;
+    const run = () => {
+      timers.forEach(clearTimeout);
+      timers = timeline.map(([at, step]) => window.setTimeout(() => setStep(step), at));
+    };
+    const start = () => {
+      if (loop) return;
+      run();
+      loop = window.setInterval(run, loopMs);
+    };
+    const stop = () => {
+      clearInterval(loop);
+      loop = 0;
+      timers.forEach(clearTimeout);
+    };
+
+    new IntersectionObserver(([entry]) => (entry.isIntersecting ? start() : stop()), {
+      threshold: 0.35,
+    }).observe(demo);
+  }
+</script>
+
+<style>
+  .demo {
+    --orange: #f0a05a;
+    --green: #2fb463;
+    --green-ink: #1c7a44;
+    margin: 32px 0 36px;
+  }
+
+  .stage {
+    padding: 18px;
+    border-radius: 24px;
+    background: var(--bg-alt);
+    border: 1px solid var(--border);
+    display: grid;
+    gap: 14px;
+    transition: opacity 0.5s;
+  }
+
+  .demo[data-step="6"] .stage {
+    opacity: 0;
+  }
+
+  .browser {
+    border-radius: 16px;
+    overflow: hidden;
+    background: var(--card);
+    border: 1px solid var(--border);
+    box-shadow:
+      0 1px 2px rgba(20, 20, 20, 0.03),
+      0 12px 32px rgba(20, 20, 20, 0.06);
+  }
+
+  .chrome {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 10px 12px;
+    background: #f6f4f0;
+    border-bottom: 1px solid var(--border);
+  }
+
+  .lights {
+    display: flex;
+    gap: 6px;
+  }
+
+  .lights i {
+    width: 10px;
+    height: 10px;
+    border-radius: 50%;
+    background: #ddd8d1;
+  }
+
+  .url {
+    flex: 1;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    min-width: 0;
+    padding: 5px 10px;
+    border-radius: 8px;
+    background: var(--card);
+    color: var(--muted);
+    font-size: 12px;
+    white-space: nowrap;
+    overflow: hidden;
+  }
+
+  .url svg {
+    width: 11px;
+    height: 11px;
+    flex: none;
+    fill: none;
+    stroke: currentColor;
+    stroke-width: 2.4;
+  }
+
+  .page {
+    position: relative;
+    display: grid;
+    grid-template-columns: 0.8fr 1.2fr;
+    min-height: 236px;
+  }
+
+  .problem {
+    display: flex;
+    flex-direction: column;
+    gap: 9px;
+    padding: 18px;
+    border-right: 1px solid var(--border);
+  }
+
+  .p-title {
+    margin: 0;
+    font-size: 15px;
+    font-weight: 650;
+  }
+
+  .pill {
+    align-self: flex-start;
+    margin-bottom: 4px;
+    padding: 2px 9px;
+    border-radius: 999px;
+    background: #e6f4eb;
+    color: var(--green-ink);
+    font-size: 11px;
+    font-weight: 600;
+  }
+
+  .line {
+    display: block;
+    height: 7px;
+    border-radius: 4px;
+    background: #ece8e2;
+  }
+
+  .w90 { width: 90%; }
+  .w85 { width: 85%; }
+  .w75 { width: 75%; }
+  .w60 { width: 60%; }
+  .w45 { width: 45%; }
+  .w40 { width: 40%; }
+
+  .example {
+    display: grid;
+    gap: 7px;
+    margin-top: 6px;
+    padding: 10px;
+    border-radius: 10px;
+    background: #f6f4f0;
+  }
+
+  .editor {
+    display: flex;
+    flex-direction: column;
+    padding: 16px 16px 14px;
+    background: #fcfbf9;
+  }
+
+  pre {
+    margin: 0;
+    color: #3a3a3a;
+    font: 12px/1.65 ui-monospace, "SF Mono", Menlo, monospace;
+    white-space: pre;
+    overflow: hidden;
+  }
+
+  pre b {
+    color: #9b5de5;
+    font-weight: 500;
+  }
+
+  .result {
+    position: relative;
+    height: 22px;
+    margin-top: auto;
+    font-size: 13px;
+    font-weight: 650;
+  }
+
+  .result > span {
+    position: absolute;
+    left: 0;
+    opacity: 0;
+    transform: translateY(4px);
+    transition:
+      opacity 0.25s,
+      transform 0.25s;
+  }
+
+  .judging {
+    color: var(--muted);
+  }
+
+  .accepted {
+    color: var(--green-ink);
+  }
+
+  .result .runtime {
+    left: 76px;
+    color: var(--muted);
+    font-weight: 500;
+  }
+
+  .demo[data-step="2"] .judging,
+  .demo:is([data-step="3"], [data-step="4"], [data-step="5"], [data-step="6"]) :is(.accepted, .runtime) {
+    opacity: 1;
+    transform: none;
+  }
+
+  .actions {
+    display: flex;
+    justify-content: flex-end;
+    gap: 8px;
+    margin-top: 8px;
+  }
+
+  .btn {
+    padding: 7px 16px;
+    border-radius: 999px;
+    font-size: 13px;
+    font-weight: 600;
+    transition:
+      transform 0.12s,
+      filter 0.12s;
+  }
+
+  .run {
+    background: var(--bg-alt);
+    color: var(--ink);
+  }
+
+  .submit {
+    background: var(--green);
+    color: #fff;
+  }
+
+  .demo[data-step="2"] .submit {
+    transform: scale(0.94);
+    filter: brightness(0.9);
+  }
+
+  .cursor {
+    position: absolute;
+    left: 0;
+    top: 0;
+    width: 22px;
+    height: 22px;
+    fill: var(--ink);
+    stroke: #fff;
+    stroke-width: 1.5;
+    stroke-linejoin: round;
+    transform: translate(calc(var(--cx, 300px) - 160px), calc(var(--cy, 200px) - 120px));
+    transition: transform 0.95s cubic-bezier(0.45, 0, 0.2, 1);
+    filter: drop-shadow(0 2px 3px rgba(0, 0, 0, 0.2));
+  }
+
+  .demo:not([data-step="0"]) .cursor {
+    transform: translate(var(--cx, 300px), var(--cy, 200px));
+  }
+
+  .demo.still .cursor {
+    display: none;
+  }
+
+  .toast {
+    position: absolute;
+    top: 12px;
+    right: 12px;
+    width: 250px;
+    max-width: calc(100% - 24px);
+    display: flex;
+    gap: 10px;
+    padding: 12px 12px 14px;
+    overflow: hidden;
+    border-radius: 16px;
+    background: var(--card);
+    border: 1px solid var(--border);
+    box-shadow:
+      0 12px 36px rgba(0, 0, 0, 0.14),
+      0 1px 3px rgba(0, 0, 0, 0.06);
+    opacity: 0;
+    transform: translateY(-10px);
+    transition:
+      opacity 0.3s,
+      transform 0.3s ease-out;
+  }
+
+  .demo:is([data-step="4"], [data-step="5"], [data-step="6"]) .toast {
+    opacity: 1;
+    transform: none;
+  }
+
+  .badge {
+    display: grid;
+    place-items: center;
+    width: 26px;
+    height: 26px;
+    flex: none;
+    border-radius: 50%;
+    background: var(--orange);
+    color: #fff;
+  }
+
+  .badge svg,
+  .check svg {
+    width: 14px;
+    height: 14px;
+    fill: none;
+    stroke: currentColor;
+    stroke-width: 3;
+    stroke-linecap: round;
+    stroke-linejoin: round;
+  }
+
+  .t-text {
+    display: flex;
+    flex-direction: column;
+    min-width: 0;
+  }
+
+  .t-title {
+    font-size: 13px;
+    font-weight: 600;
+  }
+
+  .t-sub {
+    color: var(--muted);
+    font-size: 11.5px;
+  }
+
+  .t-note {
+    margin-top: 5px;
+    color: var(--ink-2);
+    font-size: 11.5px;
+    font-weight: 600;
+  }
+
+  .t-bar {
+    position: absolute;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    height: 3px;
+    background: var(--orange);
+    transform-origin: left;
+  }
+
+  .demo:is([data-step="4"], [data-step="5"], [data-step="6"]) .t-bar {
+    transform: scaleX(0);
+    transition: transform 6s linear;
+  }
+
+  .demo.still .t-bar {
+    transform: scaleX(0.6);
+    transition: none;
+  }
+
+  .synced {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 14px;
+  }
+
+  .label {
+    margin: 0 0 10px;
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 0.8px;
+    text-transform: uppercase;
+  }
+
+  .app {
+    padding: 14px;
+    border-radius: 16px;
+    background: var(--card);
+    border: 1px solid var(--border);
+  }
+
+  .app .label {
+    color: var(--faint);
+  }
+
+  .row {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 7px 0;
+  }
+
+  .row + .row {
+    border-top: 1px solid var(--border);
+  }
+
+  .dot {
+    width: 9px;
+    height: 9px;
+    flex: none;
+    border-radius: 50%;
+  }
+
+  .r-text {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    min-width: 0;
+  }
+
+  .r-name {
+    font-size: 13px;
+    font-weight: 600;
+  }
+
+  .r-meta {
+    position: relative;
+    color: var(--muted);
+    font-size: 11.5px;
+  }
+
+  .r-meta .after {
+    position: absolute;
+    left: 0;
+    opacity: 0;
+    color: var(--ink);
+    font-weight: 600;
+  }
+
+  .check {
+    display: grid;
+    place-items: center;
+    width: 24px;
+    height: 24px;
+    flex: none;
+    border-radius: 50%;
+    border: 2px solid #e4e0da;
+    color: transparent;
+    transition:
+      background 0.3s,
+      border-color 0.3s,
+      color 0.3s,
+      transform 0.3s;
+  }
+
+  .check.done,
+  .demo:is([data-step="5"], [data-step="6"]) .lc .check {
+    background: var(--c);
+    border-color: var(--c);
+    color: #fff;
+  }
+
+  .demo[data-step="5"]:not(.still) .lc .check {
+    animation: pop 0.4s ease-out;
+  }
+
+  .ring {
+    width: 24px;
+    height: 24px;
+    flex: none;
+    fill: none;
+    stroke: #e4e0da;
+    stroke-width: 2.5;
+    transform: rotate(-90deg);
+  }
+
+  .ring .fill {
+    stroke-dasharray: 5 8;
+    stroke-linecap: round;
+  }
+
+  .r-meta span {
+    transition: opacity 0.3s;
+  }
+
+  .demo:is([data-step="5"], [data-step="6"]) .lc .before {
+    opacity: 0;
+  }
+
+  .demo:is([data-step="5"], [data-step="6"]) .lc .after {
+    opacity: 1;
+  }
+
+  .tracker {
+    display: flex;
+    flex-direction: column;
+    padding: 14px;
+    border-radius: 16px;
+    background: #16151a;
+  }
+
+  .tracker .label {
+    color: rgba(255, 255, 255, 0.45);
+  }
+
+  .grid {
+    flex: 1;
+    display: grid;
+    grid-template-columns: repeat(var(--days), 1fr);
+    align-content: center;
+    gap: 4px;
+  }
+
+  .grid i {
+    aspect-ratio: 1;
+    border-radius: 50%;
+    background: rgba(255, 255, 255, 0.07);
+    transition:
+      background 0.3s,
+      box-shadow 0.3s;
+  }
+
+  .grid i.on,
+  .demo:is([data-step="5"], [data-step="6"]) .grid i.today {
+    background: var(--c);
+    box-shadow: 0 0 6px var(--c);
+  }
+
+  .demo[data-step="5"]:not(.still) .grid i.today {
+    animation: pop 0.5s ease-out;
+  }
+
+  @keyframes pop {
+    40% {
+      transform: scale(1.35);
+    }
+  }
+
+  figcaption {
+    margin-top: 14px;
+  }
+
+  .steps {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 10px;
+    margin: 0;
+    padding: 0;
+    list-style: none;
+    counter-reset: step;
+  }
+
+  .steps li {
+    counter-increment: step;
+    padding-top: 10px;
+    border-top: 2px solid var(--border);
+    color: var(--faint);
+    font-size: 13px;
+    line-height: 1.4;
+    transition:
+      color 0.3s,
+      border-color 0.3s;
+  }
+
+  .steps li::before {
+    content: counter(step) ". ";
+    font-weight: 700;
+  }
+
+  .steps li.done {
+    color: var(--muted);
+  }
+
+  .steps li.active {
+    color: var(--ink);
+    border-color: var(--ink);
+  }
+
+  .steps strong {
+    font-weight: 650;
+  }
+
+  @media (max-width: 640px) {
+    .stage {
+      padding: 12px;
+      border-radius: 20px;
+    }
+
+    .page {
+      grid-template-columns: 1fr;
+      min-height: 220px;
+    }
+
+    .problem {
+      display: none;
+    }
+
+    pre {
+      font-size: 11px;
+    }
+
+    .synced {
+      grid-template-columns: 1fr;
+    }
+
+    .steps {
+      grid-template-columns: 1fr 1fr;
+    }
+  }
+</style>

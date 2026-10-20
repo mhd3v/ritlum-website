@@ -1,0 +1,94 @@
+---
+interface Props {
+  id: string;
+  title: string;
+}
+
+const { id, title } = Astro.props;
+---
+
+<figure class="video">
+  <button class="poster" type="button" data-id={id} data-title={title} aria-label={`Play video: ${title}`}>
+    <img src={`https://i.ytimg.com/vi/${id}/maxresdefault.jpg`} alt="" loading="lazy" width="1280" height="720" />
+    <span class="play" aria-hidden="true">
+      <svg viewBox="0 0 24 24"><path d="M8 5.5v13l11-6.5z"></path></svg>
+    </span>
+  </button>
+</figure>
+
+<script>
+  for (const button of document.querySelectorAll<HTMLButtonElement>(".video .poster")) {
+    button.addEventListener("click", () => {
+      const iframe = document.createElement("iframe");
+      iframe.src = `https://www.youtube-nocookie.com/embed/${button.dataset.id}?autoplay=1`;
+      iframe.title = button.dataset.title ?? "";
+      iframe.allow = "accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share";
+      iframe.allowFullscreen = true;
+      button.replaceWith(iframe);
+    });
+  }
+</script>
+
+<style>
+  .video {
+    position: relative;
+    aspect-ratio: 16 / 9;
+    margin: 32px 0 36px;
+    border-radius: 20px;
+    overflow: hidden;
+    background: #16151a;
+    box-shadow:
+      0 1px 2px rgba(20, 20, 20, 0.03),
+      0 12px 36px rgba(20, 20, 20, 0.06);
+  }
+
+  .poster,
+  .video :global(iframe) {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    border: 0;
+  }
+
+  .poster {
+    padding: 0;
+    cursor: pointer;
+    background: none;
+  }
+
+  .poster img {
+    display: block;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+
+  .play {
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    display: grid;
+    place-items: center;
+    width: 72px;
+    height: 72px;
+    border-radius: 50%;
+    background: rgba(17, 16, 20, 0.78);
+    color: #fff;
+    transform: translate(-50%, -50%);
+    backdrop-filter: blur(8px);
+    -webkit-backdrop-filter: blur(8px);
+    transition: transform 0.2s;
+  }
+
+  .poster:hover .play {
+    transform: translate(-50%, -50%) scale(1.06);
+  }
+
+  .play svg {
+    width: 28px;
+    height: 28px;
+    margin-left: 3px;
+    fill: currentColor;
+  }
+</style>

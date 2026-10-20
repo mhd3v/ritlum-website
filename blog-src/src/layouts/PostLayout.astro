@@ -7,9 +7,16 @@ interface Props {
   pubDate: Date;
   updatedDate?: Date;
   youtubeId?: string;
+  image?: string;
+  imageAlt?: string;
+  ogImage?: string;
+  cta?: { title: string; label: string; href: string; note?: string };
+  faq?: { q: string; a: string }[];
 }
 
-const { title, description, pubDate, updatedDate, youtubeId } = Astro.props;
+const { title, description, pubDate, updatedDate, youtubeId, image, imageAlt, cta, faq } =
+  Astro.props;
+const ogImage = Astro.props.ogImage ?? (image && new URL(image, Astro.site).toString());
 
 const formatDate = (date: Date) =>
   date.toLocaleDateString("en-US", {
@@ -31,6 +38,17 @@ const jsonLd = {
   author: { "@type": "Organization", name: "Ritlum" },
   publisher: { "@type": "Organization", name: "Ritlum" },
   mainEntityOfPage: canonicalURL.toString(),
+  ...(ogImage && { image: ogImage }),
+};
+
+const faqJsonLd = faq?.length && {
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  mainEntity: faq.map(({ q, a }) => ({
+    "@type": "Question",
+    name: q,
+    acceptedAnswer: { "@type": "Answer", text: a },
+  })),
 };
 ---
 
@@ -38,14 +56,19 @@ const jsonLd = {
   title={`${title} | Ritlum Blog`}
   description={description}
   ogType="article"
+  ogImage={ogImage}
 >
   <Fragment slot="head">
     <script type="application/ld+json" set:html={JSON.stringify(jsonLd)} />
+    {faqJsonLd && <script type="application/ld+json" set:html={JSON.stringify(faqJsonLd)} />}
   </Fragment>
   <main>
     <article>
       <header>
-        <p class="eyebrow">Ritlum Blog</p>
+        <a class="back" href="/blog/">
+          <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M15 5l-7 7 7 7"></path></svg>
+          All posts
+        </a>
         <h1>{title}</h1>
         <p class="updated">
           {formatDate(pubDate)}
@@ -67,9 +90,50 @@ const jsonLd = {
         )
       }
 
+      {
+        image && !youtubeId && (
+          <img class="hero" src={image} alt={imageAlt ?? ""} width="1280" height="800" />
+        )
+      }
+
       <div class="prose">
         <slot />
       </div>
+
+      {
+        faq?.length && (
+          <section class="faq" aria-labelledby="faq-title">
+            <h2 id="faq-title">FAQ</h2>
+            {faq.map(({ q, a }) => (
+              <details>
+                <summary>
+                  {q}
+                  <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 5v14M5 12h14"></path></svg>
+                </summary>
+                <p>{a}</p>
+              </details>
+            ))}
+          </section>
+        )
+      }
+
+      {
+        cta && (
+          <aside class="cta">
+            <div class="cta-copy">
+              <span class="cta-mark" aria-hidden="true">
+                <i /><i /><i /><i /><i /><i /><i /><i /><i />
+              </span>
+              <h2>{cta.title}</h2>
+              {cta.note && <p>{cta.note}</p>}
+              <a class="cta-button" href={cta.href} rel="noopener">
+                {cta.label}
+                <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"></path></svg>
+              </a>
+            </div>
+          </aside>
+        )
+      }
     </article>
   </main>
 </BaseLayout>
@@ -78,16 +142,38 @@ const jsonLd = {
   main {
     width: min(100% - 40px, 760px);
     margin: 0 auto;
-    padding: 88px 0 100px;
+    padding: 64px 0 100px;
   }
 
-  .eyebrow {
-    margin: 0 0 18px;
-    color: var(--faint);
-    font-size: 12px;
-    font-weight: 700;
-    letter-spacing: 1.4px;
-    text-transform: uppercase;
+  .back {
+    display: inline-flex;
+    align-items: center;
+    gap: 4px;
+    margin: 0 0 22px -8px;
+    padding: 6px 12px 6px 8px;
+    border-radius: 999px;
+    color: var(--muted);
+    font-size: 14px;
+    font-weight: 550;
+    text-decoration: none;
+    transition:
+      color 0.2s,
+      background 0.2s;
+  }
+
+  .back:hover {
+    color: var(--ink);
+    background: rgba(20, 19, 22, 0.06);
+  }
+
+  .back svg {
+    width: 16px;
+    height: 16px;
+    fill: none;
+    stroke: currentColor;
+    stroke-width: 2;
+    stroke-linecap: round;
+    stroke-linejoin: round;
   }
 
   h1 {
@@ -124,40 +210,52 @@ const jsonLd = {
     border: 0;
   }
 
+  .hero {
+    display: block;
+    width: 100%;
+    height: auto;
+    margin: 40px 0 8px;
+    border-radius: 20px;
+    border: 1px solid var(--border);
+    box-shadow:
+      0 1px 2px rgba(20, 20, 20, 0.03),
+      0 12px 36px rgba(20, 20, 20, 0.06);
+  }
+
   .prose {
     margin-top: 40px;
   }
 
-  .prose :global(p),
-  .prose :global(li) {
+  .prose > :global(p),
+  .prose > :global(:is(ul, ol) > li) {
     color: var(--ink-2);
     font-size: 17px;
     line-height: 1.72;
   }
 
-  .prose :global(p) {
+  .prose > :global(p) {
     margin: 0 0 20px;
   }
 
-  .prose :global(h2) {
+  .prose > :global(h2) {
     margin: 44px 0 14px;
     font-size: 25px;
     line-height: 1.2;
     letter-spacing: -0.7px;
   }
 
-  .prose :global(h3) {
+  .prose > :global(h3) {
     margin: 30px 0 8px;
     font-size: 18px;
     letter-spacing: -0.2px;
   }
 
-  .prose :global(ul) {
+  .prose > :global(:is(ul, ol)) {
     margin: 12px 0 20px;
     padding-left: 22px;
   }
 
-  .prose :global(li) {
+  .prose > :global(:is(ul, ol) > li) {
     padding-left: 4px;
     margin: 8px 0;
   }
@@ -169,6 +267,177 @@ const jsonLd = {
 
   .prose :global(strong) {
     color: var(--ink);
+  }
+
+  .faq {
+    margin-top: 52px;
+  }
+
+  .faq h2 {
+    margin: 0 0 14px;
+    font-size: 25px;
+    letter-spacing: -0.7px;
+  }
+
+  .faq details {
+    border-top: 1px solid var(--border);
+    padding: 16px 0;
+  }
+
+  .faq details:last-child {
+    border-bottom: 1px solid var(--border);
+  }
+
+  .faq summary {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 16px;
+    cursor: pointer;
+    font-size: 17px;
+    font-weight: 600;
+    list-style: none;
+  }
+
+  .faq summary::-webkit-details-marker {
+    display: none;
+  }
+
+  .faq summary svg {
+    width: 28px;
+    height: 28px;
+    flex: none;
+    padding: 6px;
+    border-radius: 50%;
+    background: var(--bg-alt);
+    color: var(--muted);
+    fill: none;
+    stroke: currentColor;
+    stroke-width: 2;
+    stroke-linecap: round;
+    transition:
+      transform 0.25s,
+      background 0.2s,
+      color 0.2s;
+  }
+
+  .faq summary:hover svg {
+    color: var(--ink);
+  }
+
+  .faq details[open] summary svg {
+    transform: rotate(45deg);
+    background: var(--ink);
+    color: #fff;
+  }
+
+  .faq details p {
+    margin: 10px 44px 0 0;
+    color: var(--ink-2);
+    font-size: 16px;
+    line-height: 1.65;
+  }
+
+  .cta {
+    margin-top: 56px;
+    padding: 36px;
+    overflow: hidden;
+    border-radius: 26px;
+    background: #111014;
+    color: #f7f5f1;
+  }
+
+  .cta-copy {
+    max-width: 420px;
+  }
+
+  .cta-mark {
+    width: 34px;
+    height: 34px;
+    padding: 7px;
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 2.5px;
+    border-radius: 9px;
+    background: #1f1d24;
+  }
+
+  .cta-mark i {
+    border-radius: 50%;
+    background: #3a383e;
+  }
+  .cta-mark i:nth-child(1),
+  .cta-mark i:nth-child(9) {
+    background: #5b9df9;
+  }
+  .cta-mark i:nth-child(2) {
+    background: #62c089;
+  }
+  .cta-mark i:nth-child(4) {
+    background: #f0a05a;
+  }
+  .cta-mark i:nth-child(5) {
+    background: #e78aae;
+  }
+  .cta-mark i:nth-child(6) {
+    background: #6fc8d6;
+  }
+  .cta-mark i:nth-child(8) {
+    background: #a893db;
+  }
+
+  .cta h2 {
+    margin: 20px 0 8px;
+    font-size: 26px;
+    line-height: 1.15;
+    letter-spacing: -0.7px;
+  }
+
+  .cta p {
+    margin: 0;
+    color: rgba(247, 245, 241, 0.62);
+    font-size: 15px;
+    line-height: 1.5;
+  }
+
+  .cta-button {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    margin-top: 22px;
+    padding: 12px 20px;
+    border-radius: 999px;
+    background: #f7f5f1;
+    color: #111014;
+    font-size: 15px;
+    font-weight: 600;
+    text-decoration: none;
+    transition: transform 0.2s;
+  }
+
+  .cta-button:hover {
+    transform: translateY(-1px);
+  }
+
+  .cta-button svg {
+    width: 16px;
+    height: 16px;
+    fill: none;
+    stroke: currentColor;
+    stroke-width: 2.2;
+    stroke-linecap: round;
+    stroke-linejoin: round;
+    transition: transform 0.2s;
+  }
+
+  .cta-button:hover svg {
+    transform: translateX(2px);
+  }
+
+  @media (max-width: 640px) {
+    .cta {
+      padding: 28px 24px;
+    }
   }
 
   @media (max-width: 600px) {

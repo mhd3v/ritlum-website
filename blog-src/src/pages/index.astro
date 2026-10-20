@@ -5,33 +5,51 @@ import BaseLayout from "../layouts/BaseLayout.astro";
 const posts = (await getCollection("blog")).sort(
   (a, b) => b.data.pubDate.valueOf() - a.data.pubDate.valueOf(),
 );
+
+const formatDate = (date: Date) =>
+  date.toLocaleDateString("en-US", { year: "numeric", month: "long", day: "numeric" });
+const readingTime = (body = "") => `${Math.max(1, Math.round(body.split(/\s+/).length / 230))} min read`;
 ---
 
 <BaseLayout
   title="Ritlum Blog"
-  description="Notes on building habits that stick, and on Ritlum mini, the desk display that keeps them in view."
+  description="Notes on building habits that stick, and on Ritlum: the habit tracker app, the desk tracker, and the Chrome extension."
 >
   <main>
     <header>
       <p class="eyebrow">Ritlum Blog</p>
       <h1>Habits, brought into the light</h1>
+      <p class="lede">Notes on building Ritlum and on making habits stick.</p>
     </header>
 
     <ul class="post-list">
       {
-        posts.map((post) => (
-          <li>
+        posts.map((post, i) => (
+          <li class:list={{ featured: i === 0 }}>
             <a class="post-card" href={`/blog/${post.id}/`}>
-              <span class="post-date">
-                {post.data.pubDate.toLocaleDateString("en-US", {
-                  year: "numeric",
-                  month: "long",
-                  day: "numeric",
-                })}
+              <span class="thumb">
+                {post.data.image ? (
+                  <img
+                    src={post.data.image}
+                    alt=""
+                    loading={i === 0 ? "eager" : "lazy"}
+                    width="1280"
+                    height="800"
+                  />
+                ) : (
+                  <span class="thumb-fallback" aria-hidden="true">
+                    <i /><i /><i /><i /><i /><i /><i /><i /><i />
+                  </span>
+                )}
               </span>
-              <h2>{post.data.title}</h2>
-              <p>{post.data.description}</p>
-              <span class="read-more">Read →</span>
+              <span class="text">
+                <span class="meta">
+                  {formatDate(post.data.pubDate)} · {readingTime(post.body)}
+                </span>
+                <h2>{post.data.title}</h2>
+                <p>{post.data.description}</p>
+                <span class="read-more">Read →</span>
+              </span>
             </a>
           </li>
         ))
@@ -42,9 +60,9 @@ const posts = (await getCollection("blog")).sort(
 
 <style>
   main {
-    width: min(100% - 40px, 760px);
+    width: min(100% - 40px, 1040px);
     margin: 0 auto;
-    padding: 88px 0 100px;
+    padding: 72px 0 100px;
   }
 
   .eyebrow {
@@ -63,35 +81,107 @@ const posts = (await getCollection("blog")).sort(
     letter-spacing: -2px;
   }
 
+  .lede {
+    max-width: 520px;
+    margin: 16px 0 0;
+    color: var(--muted);
+    font-size: 18px;
+    line-height: 1.55;
+  }
+
   .post-list {
     list-style: none;
     margin: 52px 0 0;
     padding: 0;
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 22px;
+  }
+
+  .post-list li {
     display: flex;
-    flex-direction: column;
-    gap: 16px;
   }
 
   .post-card {
-    display: block;
-    padding: 26px 28px;
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    overflow: hidden;
     background: var(--card);
     border: 1px solid var(--border);
-    border-radius: 20px;
+    border-radius: 22px;
     color: var(--ink);
     text-decoration: none;
     box-shadow: 0 1px 2px rgba(20, 20, 20, 0.03);
-    transition: box-shadow 200ms ease, transform 200ms ease;
+    transition:
+      box-shadow 200ms ease,
+      transform 200ms ease;
   }
 
   .post-card:hover {
     box-shadow:
       0 1px 2px rgba(20, 20, 20, 0.04),
-      0 12px 32px rgba(20, 20, 20, 0.06);
-    transform: translateY(-1px);
+      0 16px 40px rgba(20, 20, 20, 0.08);
+    transform: translateY(-2px);
   }
 
-  .post-date {
+  .thumb {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    aspect-ratio: 16 / 10;
+    padding: 7%;
+    overflow: hidden;
+    background: #eceae7;
+    border-bottom: 1px solid var(--border);
+  }
+
+  .thumb img {
+    display: block;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    border-radius: 12px;
+    box-shadow:
+      0 0 0 1px rgba(20, 19, 22, 0.06),
+      0 18px 40px -18px rgba(20, 19, 22, 0.35);
+    transition: transform 400ms ease;
+  }
+
+  .post-card:hover .thumb img {
+    transform: scale(1.02);
+  }
+
+  .thumb-fallback {
+    display: grid;
+    grid-template-columns: repeat(3, 28px);
+    gap: 8px;
+    place-content: center;
+    height: 100%;
+    background: #16151a;
+  }
+
+  .thumb-fallback i {
+    aspect-ratio: 1;
+    border-radius: 50%;
+    background: #5b9df9;
+  }
+  .thumb-fallback i:nth-child(2) { background: #62c089; }
+  .thumb-fallback i:nth-child(4) { background: #f0a05a; }
+  .thumb-fallback i:nth-child(5) { background: #e78aae; }
+  .thumb-fallback i:nth-child(6) { background: #6fc8d6; }
+  .thumb-fallback i:nth-child(8) { background: #a893db; }
+  .thumb-fallback i:nth-child(3),
+  .thumb-fallback i:nth-child(7) { background: rgba(255, 255, 255, 0.1); }
+
+  .text {
+    display: flex;
+    flex: 1;
+    flex-direction: column;
+    padding: 22px 24px 24px;
+  }
+
+  .meta {
     color: var(--faint);
     font-size: 13px;
     font-weight: 550;
@@ -99,24 +189,70 @@ const posts = (await getCollection("blog")).sort(
 
   .post-card h2 {
     margin: 10px 0 8px;
-    font-size: 23px;
+    font-size: 21px;
     letter-spacing: -0.5px;
-    line-height: 1.2;
+    line-height: 1.25;
   }
 
   .post-card p {
     margin: 0;
     color: var(--muted);
-    font-size: 15.5px;
+    font-size: 15px;
     line-height: 1.6;
   }
 
   .read-more {
-    display: inline-block;
-    margin-top: 14px;
+    margin-top: auto;
+    padding-top: 16px;
     color: var(--blue);
     font-size: 14px;
     font-weight: 600;
+  }
+
+  .featured {
+    grid-column: 1 / -1;
+  }
+
+  .featured .post-card {
+    flex-direction: row;
+  }
+
+  .featured .thumb {
+    flex: 0 0 58%;
+    aspect-ratio: 16 / 10;
+  }
+
+  .featured .text {
+    justify-content: center;
+    padding: 32px;
+  }
+
+  .featured h2 {
+    font-size: clamp(24px, 2.6vw, 30px);
+    letter-spacing: -0.8px;
+    line-height: 1.15;
+  }
+
+  .featured .read-more {
+    margin-top: 0;
+  }
+
+  @media (max-width: 760px) {
+    .post-list {
+      grid-template-columns: 1fr;
+    }
+
+    .featured .post-card {
+      flex-direction: column;
+    }
+
+    .featured .thumb {
+      flex: none;
+    }
+
+    .featured .text {
+      padding: 22px 24px 24px;
+    }
   }
 
   @media (max-width: 600px) {

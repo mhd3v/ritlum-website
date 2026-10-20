@@ -1,0 +1,82 @@
+---
+title: "Ritlum for Chrome: A Habit Tracker That Logs Itself"
+description: "Ritlum started with a LeetCode streak. The new Ritlum Chrome extension closes the loop: click Submit, see Accepted, and your habit logs itself."
+pubDate: 2026-10-20
+image: "/blog/images/ritlum-chrome-extension.webp"
+imageAlt: "The Ritlum Chrome extension popup showing today's habits and an automation that logs a coding habit when a submission is accepted"
+ogImage: "https://ritlum.com/blog/images/ritlum-chrome-extension.jpg"
+cta:
+  title: "Log habits without leaving the browser"
+  label: "Add to Chrome"
+  href: "https://chromewebstore.google.com/detail/ritlum/amaipmcmebglefkkgnneibaookmkpfpg"
+  note: "Free. Links with the Ritlum app on iPhone."
+faq:
+  - q: "Does the Ritlum extension read my browsing history?"
+    a: "No. It only runs on sites where you create an automation, and Chrome asks for your permission for each one. On those pages it only watches for the button and message you picked. Nothing else from the page, and none of your history, leaves your browser."
+  - q: "Can it log LeetCode problems automatically?"
+    a: "Yes. Pick the Submit button on a LeetCode problem page as the trigger and require the word Accepted to appear afterwards. Accepted solutions log your habit, and wrong answers don't."
+  - q: "What if I click Submit twice in one day?"
+    a: "A habit you do once a day only logs once a day. A count habit, like solving three problems, goes up by one each time."
+  - q: "Does it work offline?"
+    a: "If you're offline when an automation fires, the extension queues it and sends it the next time it can reach Ritlum. Each log has its own ID, so a retry never counts twice."
+  - q: "Which browsers does it support?"
+    a: "Chrome. Browsers that install extensions from the Chrome Web Store, such as Edge and Brave, usually work too."
+  - q: "Do I need the Ritlum app?"
+    a: "Yes. The extension links to your Ritlum account. You link it by scanning a QR code with the Ritlum app for iPhone, and you can unlink it from either side at any time."
+---
+
+import ExtensionDemo from "../../components/ExtensionDemo.astro";
+
+Ritlum started with a LeetCode streak.
+
+I was grinding practice problems and noticed that the thing keeping me going wasn't the problems. It was the little green squares. Once I had a few days in a row, breaking the streak felt worse than doing one more problem. I wanted that same pull for the rest of my habits: reading, the gym, drinking enough water. That idea became Ritlum.
+
+The odd part is that LeetCode itself became one of the habits I tracked in Ritlum, and logging it was the most annoying of all. I'd get an Accepted, feel good, close the tab, and forget to check the habit off. The streak on LeetCode stayed intact while the one in Ritlum broke.
+
+So the newest piece of Ritlum is a [Chrome extension](https://chromewebstore.google.com/detail/ritlum/amaipmcmebglefkkgnneibaookmkpfpg) that logs a habit when you do it in the browser. Click Submit, see Accepted, and the habit is checked off. In a way it's a full circle: the streak that inspired the app now keeps itself.
+
+## The problem with habits that happen in a browser
+
+A lot of habits now live in a browser tab. Practice problems, language lessons, a reading list, a workout log, a course module. You do the habit on one site and then have to go log it somewhere else.
+
+That second step is small, but it comes right after you finish, which is exactly when you stop paying attention. A habit tracker only works if logging costs almost nothing. For habits on your phone, Ritlum already has the widget and [NFC tags](/blog/bringing-habit-tracking-into-the-real-world/). The browser was the gap.
+
+## How it works
+
+The extension watches for one moment on a site you choose, then logs the habit for you. Here's the LeetCode version:
+
+<ExtensionDemo />
+
+Setting one up takes about a minute:
+
+1. **Pick a habit.** Open the extension on the site and choose which Ritlum habit this is for.
+2. **Click the button that marks the moment.** Press "Pick what completes it", then click the button on the page, such as Submit. The page won't react while you pick.
+3. **Optionally, wait for a confirmation.** Tell it a message like "Accepted" has to appear after the click. Failed submissions then don't count. This is the part that makes it work for LeetCode.
+4. **Choose where it applies and save.** Review the URL pattern so it covers every problem page, not just the one you're on.
+
+From then on, the next time you click Submit and get Accepted, a small card appears in the corner: *Logged "Daily LeetCode"*. You can add a note about how it went, like which problem it was or how long it took. The habit shows as done in the Ritlum app a moment later, and if you have a [Ritlum desk tracker](/app/), today's light comes on in that habit's row.
+
+Each automation has a **Test** button that checks it without logging anything.
+
+## Not just LeetCode
+
+Anything with a clear "done" moment works:
+
+- **Language lessons:** the button at the end of a lesson, with "Lesson complete" as the confirmation.
+- **Reading:** a "Mark as read" or "Finish" button in your reader or reading list.
+- **Courses:** "Complete and continue" on a lesson page.
+- **Workouts:** the "Save workout" button in a web-based training log.
+- **Writing:** "Publish" on your blog, if the habit is shipping one post a week.
+
+Count habits work too. If your goal is three problems a day, each Accepted adds one and the card shows "2 of 3 today".
+
+For habits with no clear trigger, the extension's popup has a **Today** list, like the app's Today screen, so you can check things off without picking up your phone.
+
+## Getting started
+
+1. Install [Ritlum from the Chrome Web Store](https://chromewebstore.google.com/detail/ritlum/amaipmcmebglefkkgnneibaookmkpfpg).
+2. Open the extension. It shows a QR code.
+3. In the [Ritlum app](/app/) on your iPhone, go to **Settings → Browser extension** and scan it, or type the short code.
+4. Go to a site where one of your habits happens and set up your first automation.
+
+If it misbehaves on a site, [let me know](/contact/) which one.
