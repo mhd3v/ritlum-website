@@ -5,6 +5,9 @@
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <meta name="robots" content="noindex" />
     <meta name="apple-itunes-app" content="app-id=6788856420" />
+    <script>
+      document.querySelector('meta[name="apple-itunes-app"]').content += `, app-argument=${location.href}`;
+    </script>
     <link rel="icon" type="image/svg+xml" href="/assets/favicon.svg" />
     <title>Page not found — Ritlum</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -124,7 +127,61 @@
         letter-spacing: 0.12em;
       }
 
-      .actions { display: flex; flex-wrap: wrap; gap: 12px; }
+      .steps {
+        margin: 0 0 32px;
+        padding: 0;
+        list-style: none;
+        counter-reset: step;
+        display: grid;
+        gap: 14px;
+      }
+
+      .steps li {
+        counter-increment: step;
+        display: flex;
+        gap: 14px;
+        align-items: baseline;
+        color: var(--ink-2);
+        font-size: 17px;
+        line-height: 1.5;
+      }
+
+      .steps li::before {
+        content: counter(step);
+        flex: none;
+        width: 26px;
+        height: 26px;
+        display: inline-grid;
+        place-items: center;
+        border-radius: 50%;
+        background: var(--card);
+        border: 1px solid var(--border);
+        color: var(--ink);
+        font-size: 13px;
+        font-weight: 700;
+        transform: translateY(-1px);
+      }
+
+      .note {
+        margin: 24px 0 0;
+        color: var(--muted);
+        font-size: 15px;
+      }
+
+      .actions { display: flex; flex-wrap: wrap; align-items: center; gap: 12px; }
+
+      .text-link {
+        margin-left: 8px;
+        color: var(--muted);
+        font-size: 15px;
+        font-weight: 500;
+        text-decoration: none;
+      }
+
+      .text-link:hover { color: var(--ink); }
+
+      .app-store-link { display: inline-flex; border-radius: 10px; }
+      .app-store-link img { display: block; width: 160px; height: auto; }
 
       .button {
         display: inline-flex;
@@ -164,22 +221,58 @@
     <main id="pairing" hidden>
       <p class="eyebrow">Browser extension</p>
       <h1>Open this in Ritlum</h1>
-      <p>This code links a browser to your Ritlum account. Install Ritlum on your iPhone, then go to Settings → Browser extension → Enter code.</p>
+      <p>This code links a browser to your Ritlum account. Install Ritlum on your iPhone to use it.</p>
       <div class="code" id="pairing-code"></div>
+      <ol class="steps">
+        <li>Download Ritlum from the App Store and sign in.</li>
+        <li>Go to Settings → Browser extension → Enter code.</li>
+        <li>Type the code above, or scan the QR code again.</li>
+      </ol>
       <div class="actions">
-        <a class="button primary" href="https://apps.apple.com/us/app/ritlum-habit-tracker/id6788856420">Get Ritlum on the App Store</a>
-        <a class="button secondary" href="/">About Ritlum</a>
+        <a class="app-store-link" href="https://apps.apple.com/us/app/ritlum-habit-tracker/id6788856420"><img src="/assets/download-on-app-store.svg" alt="Download on the App Store" width="176" height="59"></a>
+        <a class="text-link" href="/">What is Ritlum? →</a>
       </div>
+      <p class="note" data-non-apple hidden>Ritlum is only available for iPhone for now.</p>
+    </main>
+
+    <main id="nfc" hidden>
+      <p class="eyebrow">NFC tag</p>
+      <h1>This tag checks off a habit</h1>
+      <p>It’s linked to a habit in Ritlum, the habit tracker for iPhone. Tap it with the app installed and the habit is logged for today.</p>
+      <ol class="steps">
+        <li>Download Ritlum from the App Store.</li>
+        <li>Sign in with the account the tag was set up on, so your habits sync.</li>
+        <li>Tap the tag again.</li>
+      </ol>
+      <div class="actions">
+        <a class="app-store-link" href="https://apps.apple.com/us/app/ritlum-habit-tracker/id6788856420"><img src="/assets/download-on-app-store.svg" alt="Download on the App Store" width="176" height="59"></a>
+        <a class="text-link" href="/">What is Ritlum? →</a>
+      </div>
+      <p class="note" data-non-apple hidden>Ritlum is only available for iPhone for now.</p>
     </main>
 
     <script>
-      const match = location.pathname.match(/^\/pair\/([A-Za-z0-9]{8})\/?$/);
-      if (match) {
-        const code = match[1].toUpperCase();
-        document.getElementById('pairing-code').textContent = `${code.slice(0, 4)}-${code.slice(4)}`;
+      const path = location.pathname;
+      const pair = path.match(/^\/pair\/([A-Za-z0-9]{8})\/?$/);
+      const nfc = /^\/nfc\/[0-9a-f-]{36}\/?$/i.test(path);
+
+      function show(id, title) {
         document.getElementById('not-found').hidden = true;
-        document.getElementById('pairing').hidden = false;
-        document.title = 'Link a browser — Ritlum';
+        document.getElementById(id).hidden = false;
+        document.title = title;
+      }
+
+      if (pair) {
+        const code = pair[1].toUpperCase();
+        document.getElementById('pairing-code').textContent = `${code.slice(0, 4)}-${code.slice(4)}`;
+        show('pairing', 'Link a browser — Ritlum');
+      } else if (nfc) {
+        show('nfc', 'Check in with Ritlum');
+      }
+
+      // iPadOS reports a Mac user agent, so treat Macintosh as Apple too
+      if (!/iPhone|iPad|iPod|Macintosh/.test(navigator.userAgent)) {
+        document.querySelectorAll('[data-non-apple]').forEach((el) => { el.hidden = false; });
       }
     </script>
   </body>
