@@ -260,6 +260,36 @@ const faqJsonLd = faq?.length && {
     margin: 8px 0;
   }
 
+  .prose > :global(table) {
+    width: 100%;
+    margin: 12px 0 24px;
+    border-collapse: collapse;
+    font-size: 15px;
+    line-height: 1.5;
+  }
+
+  .prose > :global(table) :global(:is(th, td)) {
+    padding: 10px 12px 10px 0;
+    border-bottom: 1px solid var(--border);
+    text-align: left;
+    vertical-align: top;
+  }
+
+  .prose > :global(table) :global(th) {
+    color: var(--ink);
+    font-weight: 600;
+  }
+
+  .prose > :global(table) :global(td) {
+    color: var(--ink-2);
+  }
+
+  .prose > :global(table) :global(td:first-child) {
+    color: var(--ink);
+    font-weight: 550;
+    white-space: nowrap;
+  }
+
   .prose :global(a) {
     color: var(--blue);
     font-weight: 550;
